@@ -56,38 +56,35 @@ def termos():
     return """
 <b>Geral</b>
 Todas as funcionalidades deste bot estão sujeitos aos termos e condições dos contratos aplicáveis que \
-regem seu uso, que podem mudar de tempos em tempos. A Isenção de Responsabilidade deve ser lida por \
-você juntamente com quaisquer termos, condições ou isenções de responsabilidade fornecidas pelo bot. \
-No caso de qualquer conflito, os termos fornecidos aqui prevalecerão. Os recursos e conteúdos \
-fornecidos por este podem ser alterados a qualquer momento sem aviso prévio. Acredita-se que as \
-informações fornecidas por este sejam confiáveis quando postadas, mas não há garantia de que elas \
-sejam precisas, completas ou atuais em todos os momentos. Devido à natureza dinâmica da Internet, os \
+regem seu uso, que podem mudar de tempos em tempos. No caso de qualquer conflito, os termos fornecidos aqui \
+prevalecerão. Os recursos e conteúdos fornecidos por este podem ser alterados a qualquer momento sem aviso prévio. \
+Acredita-se que as informações fornecidas por este sejam confiáveis quando postadas, mas não há garantia de que elas \
+sejam precisas, completas ou atuais em todos os momentos. Devido à natureza dinâmica da internet, os \
 recursos que estão disponíveis gratuitamente e publicamente no bot podem exigir uma taxa ou restringir \
 o acesso no dia seguinte, e a localização dos itens pode mudar à medida que menus e funcionalidades \
-são reorganizados. O usuário concorda expressamente que o uso deste bot é de total responsabilidade e \
-prerrogativa do usuário. Nenhum material pode ser modificado, editado ou retirado de contexto, de modo \
-que seu uso crie uma declaração ou impressão falsa ou enganosa sobre as posições, declarações ou ações.
+são reorganizados. O usuário concorda expressamente que o uso deste bot é de sua total responsabilidade. \
+Nenhum material pode ser modificado, editado ou retirado de contexto, de modo que seu uso crie uma declaração \
+ou impressão falsa ou enganosa sobre as posições, declarações ou ações.
 
 <b>Condições para Produtos e Serviços</b>
 Os termos e condições aplicáveis a qualquer produto, serviço ou informação serão aqueles determinados no momento \
-da prestação do produto, serviço ou informação. Se você optar por acessar este bot, você o faz por sua própria \
-iniciativa e é responsável pela conformidade com as leis locais, nacionais ou internacionais aplicáveis.
+da prestação do produto, serviço ou informação. Se você optar por acessar este bot, você o faz por iniciativa própria \
+e é responsável pela conformidade com as leis locais, nacionais ou internacionais aplicáveis.
 
 <b>Confidencialidade</b>
-Trataremos todas as informações a seu respeito como confidenciais. Não divulgaremos, normalmente, qualquer informação \
-que detenha sobre você, exceto nas seguintes circunstâncias: (i) sob obrigação de fazê-lo sob a lei brasileira; \
-(ii) onde você forneceu sua autorização prévia por escrito para fazê-lo; (iii) onde é de nosso interesse fazê-lo; ou \
-(iv) onde é de interesse público fazê-lo. Você não pode usar, exportar ou reexportar as informações ou qualquer cópia \
-ou adaptação em violação de quaisquer leis ou regulamentos aplicáveis."
+Trataremos todas as informações a seu respeito como confidenciais. Não divulgaremos qualquer informação \
+que detenhamos sobre você, exceto nas seguintes circunstâncias: (i) sob obrigação de fazê-lo sob a lei brasileira e \
+(ii) onde você forneceu sua autorização prévia por escrito para fazê-lo. Você não pode usar, exportar ou reexportar as \
+informações ou qualquer cópia ou adaptação em violação de quaisquer leis ou regulamentos aplicáveis."
 
 <b>Nenhuma Garantia</b>
-Nós, mantedores do bot, não fazemos quaisquer garantias, declarações, endossos ou condições, expressas ou implícitas, \
+Nós, desenvolvedores do bot, não fazemos quaisquer garantias, declarações, endossos ou condições, expressas ou implícitas, \
 com relação ao bot ou as informações contidas nele, incluindo, sem limitação, garantias de comerciabilidade, operação, \
 não infração, utilidade, integridade, precisão, atualidade, confiabilidade e adequação a uma finalidade específica. \
 Além disso, não representamos ou garantimos que o bot estará disponível e atenderá aos seus requisitos, que o acesso \
 será ininterrupto, que não haverá atrasos, falhas, erros, omissões ou perda de informações transmitidas, que nenhum \
 vírus ou outra contaminação ou propriedades destrutivas serão transmitidas ou que nenhum dano ocorrerá no sistema do \
-seu computador e / ou celular. Você é o único responsável pela proteção e backup adequados de dados e / ou equipamentos \
+seu computador e/ou celular. Você é o único responsável pela proteção e backup adequados de dados e/ou equipamentos \
 e por tomar precauções razoáveis e apropriadas para verificar se há vírus de computador ou outras propriedades destrutivas.
 
 <b>Copyright Universidade Católica de Pelotas (UCPel)</b>
