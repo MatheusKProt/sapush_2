@@ -108,7 +108,7 @@ def not_logged_in(first_name):
 
 def alert(msg):
     return """
-<b>Aviso</b>\n\n{}""".format(msg)
+<b>Comunicado</b>\n\n{}""".format(msg)
 
 
 def invalid_login(first_name):
@@ -198,9 +198,10 @@ def yes(first_name):
 {}, você concordou com os Termos de Uso.""".format(first_name)
 
 
-def login_requirement():
+def login_requirement(first_name):
     return """
-Para ter acesso a todas as funcionalidades, você deverá realizar o login em seu sapu utilizando o comando /login [usuário] [senha]."""
+{}, para ter acesso a todas as funcionalidades, você deverá realizar o login em seu sapu utilizando o comando \ 
+/login [usuário] [senha].""".format(first_name)
 
 
 def no(first_name):
