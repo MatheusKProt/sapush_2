@@ -3,6 +3,7 @@ from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
 
 import admins
 import config
+import push
 import users
 
 
@@ -18,7 +19,7 @@ def main():
     dp.add_handler(CommandHandler("login", users.login, pass_args=True))
     dp.add_handler(CommandHandler("deletar", users.deletar))
     # dp.add_handler(CommandHandler("sugerir", users.sugerir, pass_args=True))
-    # dp.add_handler(CommandHandler("notas", users.notas))
+    dp.add_handler(CommandHandler("notas", users.notas))
     # dp.add_handler(CommandHandler("frequencia", users.frequencia))
     # dp.add_handler(CommandHandler("horarios", users.horarios))
     # dp.add_handler(CommandHandler("historico", users.historico))
@@ -37,6 +38,9 @@ def main():
     # dp.add_handler(CommandHandler("reboot", admins.reboot))
     # dp.add_handler(CommandHandler("update", admins.update))
     # dp.add_handler(CommandHandler("commands", admins.commands))
+
+    # inicia notificação push
+    updater.job_queue.run_repeating(push.notas, 60)
 
     updater.start_polling()
     updater.idle()

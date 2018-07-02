@@ -141,13 +141,14 @@ def not_registered(first_name):
 utilizando o comando /login [usuário] [senha].""".format(first_name)
 
 
-def push_grades(first_name, materia, nota, avaliacao, peso, estado):
+def push_grades(first_name, materia, nota, avaliacao, peso_x_nota, peso):
     return """
 {}, sua nota acabou de ser publicada no sistema!
 
-{}
-{} na {} com peso {}.
-Até o momento, você está {}""".format(first_name, materia, nota, avaliacao, peso, estado)
+<b>{}</b>
+<b>{}</b>
+<b>{}</b> com peso <b>10</b>
+<b>{}</b> com peso <b>{}</b>""".format(first_name, materia, avaliacao, nota, peso_x_nota, peso)
 
 
 def not_allowed(first_name):
@@ -197,7 +198,7 @@ def yes(first_name):
 
 def login_requirement(first_name):
     return """
-{}, para ter acesso a todas as funcionalidades, você deverá realizar o login em seu sapu utilizando o comando \ 
+{}, para ter acesso a todas as funcionalidades, você deverá realizar o login em seu sapu utilizando o comando \
 /login [usuário] [senha].""".format(first_name)
 
 
@@ -205,3 +206,13 @@ def no(first_name):
     return """
 {}, suas funcionalidades não estão habilitadas. Você não poderá utilizar o bot enquanto não aceitar os Termos de Uso. \
 Caso você mude de ideia, utilize o comando /acordo e siga as instruções.""".format(first_name)
+
+
+def formata_notas_resumo(materia, primeira_av, segunda_av, av_complementar, media_final, condicao):
+    return """
+<b>{}</b>
+<b>{}</b> na primeira avaliação
+<b>{}</b> na segunda avaliação
+<b>{}</b> de avaliação complementar
+<b>{}</b> de média final
+Até o momento, você está <b>{}</b>.""".format(materia, primeira_av, segunda_av, av_complementar, media_final, condicao)

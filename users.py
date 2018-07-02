@@ -7,8 +7,10 @@ from telegram import ParseMode, ChatAction, InlineKeyboardButton, InlineKeyboard
 from telegram.ext import run_async
 
 import crawlers
+import dao
 import db
 import messages
+import util
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -114,7 +116,7 @@ def button(bot, update):
             bot.edit_message_text(text=messages.yes(query['message']['chat']['first_name']).format(query.data),
                                   chat_id=query['message']['chat']['id'],
                                   message_id=query['message']['message_id'])
-            bot.send_message(chat_id=telegram_id, text=messages.login_requirement(), parse_mode=ParseMode.HTML)
+            bot.send_message(chat_id=telegram_id, text=messages.login_requirement(query['message']['chat']['first_name']), parse_mode=ParseMode.HTML)
         else:
             termos = False
             bot.edit_message_text(text=messages.no(query['message']['chat']['first_name']).format(query.data),
@@ -145,7 +147,7 @@ def login(bot, update, args):
     session = Session()
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
 
-    s, logado, erro = crawlers.get_session(sapu_username, sapu_password)
+    _, logado, erro = crawlers.get_session(sapu_username, sapu_password)
     if logado:
         user.username = username
         user.first_name = first_name
@@ -153,6 +155,8 @@ def login(bot, update, args):
         user.sapu_password = sapu_password
 
         session.commit()
+        notas_resumo, notas_detalhe = crawlers.get_notas(session.query(db.User).filter_by(telegram_id=telegram_id).first())
+        dao.set_notas(user, notas_resumo, notas_detalhe)
         session.close()
 
         bot.send_message(chat_id=telegram_id, text=messages.valid_login(first_name), parse_mode=ParseMode.HTML)
@@ -191,6 +195,18 @@ def deletar(bot, update):
 
     bot.send_message(chat_id=telegram_id, text=messages.user_deleted(first_name), parse_mode=ParseMode.HTML)
     return
+
+
+@restricted
+def notas(bot, update):
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    session = Session()
+    notas_resumo = session.query(db.NotasResumo).filter_by(user_id=telegram_id)
+
+    for resumo in notas_resumo:
+        bot.send_message(chat_id=telegram_id, text=util.formata_notas_resumo(resumo), parse_mode=ParseMode.HTML)
+    session.close()
 
 
 @restricted
