@@ -2,8 +2,8 @@ def comandos():
     return """
 <b>Lista de comandos</b>
 
-/login [usuário] [senha] - faz o login no sapu 
-/deletar - deleta suas informações de login do sapu 
+/login [usuário] [senha] - faz o login no SAPU 
+/deletar - deleta suas informações de login do SAPU 
 /sugerir [mensagem] - envia uma sugestão aos desenvolvedores 
 
 /notas - retorna suas notas do semestre atual 
@@ -48,7 +48,7 @@ leitura e aceitação dos Termos de Uso.
 Nós desenvolvedores, juntamente com o serviço prestado, não compactuamos, incentivamos ou promovemos o uso ilegal dos \
 seus dados. Nosso objetivo por meio deste é facilitar a sua vida automatizando tarefas do dia a dia. 
 Não assumimos qualquer responsabilidade por aqueles que utilizam estes aplicativos para qualquer outra finalidade que \
-não o monitoramento próprio do sistema de apoio universitário (SAPU) da Universidade Católica de Pelotas.
+não o monitoramento próprio do Sistema de Apoio Universitário (SAPU) da Universidade Católica de Pelotas.
 
 Caso você queira ler os Termos de Uso detalhados, selecione a opção /termos.""".format(first_name)
 
@@ -138,8 +138,8 @@ def suggest_without_parameters(first_name):
 
 def not_registered(first_name):
     return """
-{}, para ter acesso a esta funcionalidade você deverá realizar o cadastro conosco \
-utilizando o comando /login [usuário] [senha].""".format(first_name)
+{}, para ter acesso a esta funcionalidades você deverá realizar o login em seu SAPU utilizando o \ 
+comando /login [usuário] [senha].""".format(first_name)
 
 
 def push_grades(first_name, materia, nota, msg):
@@ -196,8 +196,7 @@ def yes(first_name):
 
 def login_requirement(first_name):
     return """
-{}, para ter acesso a todas as funcionalidades, você deverá realizar o login em seu sapu utilizando o comando \
-/login [usuário] [senha].
+{}, para ter acesso a todas as funcionalidades você deverá realizar o login em seu SAPU utilizando o comando /login [usuário] [senha].
 
 Caso necessite de auxilio, digite ajuda a qualquer momento.""".format(first_name)
 
