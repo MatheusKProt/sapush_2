@@ -54,3 +54,9 @@ def statement(bot, update, args):
     for u in users:                                                                          # Varre os usuários
         bot.send_message(chat_id=u[0], text=messages.alert(msg), parse_mode=ParseMode.HTML)  # Envia a msg
     session.close()                                                                          # Fecha a conexão com o banco de dados
+
+
+@restricted
+def commands(bot, update):
+    bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
+    bot.send_message(chat_id=update['message']['chat']['id'], text=messages.comandos_admin(), parse_mode=ParseMode.HTML)

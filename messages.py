@@ -14,20 +14,21 @@ def comandos():
 /curriculo - retorna todas as disciplinas do curso
 /boleto - retorna o link com seu boleto em aberto 
 
-/termos - retorna os termos de uso"""
+/termos - exibe os termos de uso
+/ajuda - exibe instruções de uso"""
 
 
 def comandos_admin():
     return """
 <b>Lista de comandos administrativos</b>
 
-/users - retorna todos os usuários cadastrados
+/users - exibe todos os usuários cadastrados
 /alert [id] [mensagem] - envia um aviso para uma pessoa específica 
 /statement [mensagem] - envia um comunicado a todos os usuários 
-/sugestions - retorna todas as sugestões recebidas 
+/sugestions - exibe todas as sugestões recebidas 
 
-/statistics - mostra as estatísticas atuais de uso de hardware
-/log - mostra o log de atualizações
+/statistics - exibe as estatísticas atuais de uso de hardware
+/log - exibe o log de atualizações
 /reboot - reinicia o servidor 
 /update - atualiza o bot"""
 
@@ -141,14 +142,11 @@ def not_registered(first_name):
 utilizando o comando /login [usuário] [senha].""".format(first_name)
 
 
-def push_grades(first_name, materia, nota, avaliacao, peso_x_nota, peso):
+def push_grades(first_name, materia, nota, msg):
     return """
-{}, sua nota acabou de ser publicada no sistema!
-
-<b>{}</b>
-<b>{}</b>
-<b>{}</b> com peso <b>10</b>
-<b>{}</b> com peso <b>{}</b>""".format(first_name, materia, avaliacao, nota, peso_x_nota, peso)
+{}, sua nota de <b>{}</b>acabou de ser publicada no sistema!
+Você tirou <b>{}</b> de 10.0.
+<b>{}</b>""".format(first_name, materia, nota, msg)
 
 
 def not_allowed(first_name):
@@ -163,7 +161,7 @@ def not_agreed(first_name):
 
 def agreed(first_name):
     return """
-{}, você já confirmou que aceita os termos. Utilize o comando /comandos para usar o bot.""".format(first_name)
+{}, você já aceitou os Termos de Uso. Digite /comandos para ver o que eu posso fazer.""".format(first_name)
 
 
 def refresh_success(first_name):
@@ -199,7 +197,9 @@ def yes(first_name):
 def login_requirement(first_name):
     return """
 {}, para ter acesso a todas as funcionalidades, você deverá realizar o login em seu sapu utilizando o comando \
-/login [usuário] [senha].""".format(first_name)
+/login [usuário] [senha].
+
+Caso necessite de auxilio, digite ajuda a qualquer momento.""".format(first_name)
 
 
 def no(first_name):
@@ -216,3 +216,26 @@ def formata_notas_resumo(materia, primeira_av, segunda_av, av_complementar, medi
 <b>{}</b> de avaliação complementar
 <b>{}</b> de média final
 Até o momento, você está <b>{}</b>.""".format(materia, primeira_av, segunda_av, av_complementar, media_final, condicao)
+
+
+def help_user():
+    return """
+<b>Ajuda</b>
+
+A sintaxe usada pelo telegram na execução de comandos é representada pelo uso da / seguida do comando, como mostra o exemplo a seguir:
+/notas 
+
+Comandos onde são enviados parâmetros são executados da seguinte maneira:
+/login parametro1 parametro2 
+
+Fique atento para a sintaxe bibliográfica utilizada nos comandos onde são enviados parâmetros: 
+/login [usuário] [senha]
+Neste caso, o uso dos [ ] não são necessários. 
+
+Caso você queira ver a lista completa de comandos disponíveis, digite /comandos."""
+
+
+def answer_error(first_name):
+    return """
+{}, ainda não consigo conversar com você naturalmente. Você pode digitar ajuda a qualquer momento caso necessite \
+de auxílio.""".format(first_name)

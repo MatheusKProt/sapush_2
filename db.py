@@ -91,6 +91,20 @@ class NotasDetalhe(base):
         self.peso_x_nota = peso_x_nota
 
 
+class PushNotas(base):
+    __tablename__ = 'push_notas'
+
+    id = Column('id', Integer, primary_key=True)
+    users = Column('users', Integer)
+    initial = Column('initial', String)
+    final = Column('final', String)
+
+    def __init__(self, users, initial, final):
+        self.users = users
+        self.initial = initial
+        self.final = final
+
+
 def gen_engine(url):
     engine = create_engine(url)
 

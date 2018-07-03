@@ -25,10 +25,28 @@ def restricted(func):
     def wrapped(bot, update, *args, **kwargs):
         telegram_id = update.effective_user.id
         session = Session()
-        admin = session.query(db.User).filter_by(telegram_id=telegram_id, termos=True).first()
-        if not admin:
+        user = session.query(db.User).filter_by(telegram_id=telegram_id, termos=True).first()
+        if not user:
             bot.send_message(chat_id=update['message']['chat']['id'],
                              text=messages.not_agreed(update['message']['chat']['first_name']),
+                             parse_mode=ParseMode.HTML)
+            session.close()
+            return
+        session.close()
+        return func(bot, update, *args, **kwargs)
+
+    return wrapped
+
+
+def logged(func):
+    @wraps(func)
+    def wrapped(bot, update, *args, **kwargs):
+        telegram_id = update.effective_user.id
+        session = Session()
+        user = session.query(db.User).filter_by(telegram_id=telegram_id, termos=True).first()
+        if user.sapu_username == " ":
+            bot.send_message(chat_id=update['message']['chat']['id'],
+                             text=messages.not_registered(update['message']['chat']['first_name']),
                              parse_mode=ParseMode.HTML)
             session.close()
             return
@@ -76,7 +94,7 @@ def start(bot, update):
                 do_you_agree(bot, update)
             session.close()
             return
-        user = db.User(telegram_id, username, first_name, last_name, "", "", False, True, True, data_criacao)
+        user = db.User(telegram_id, username, first_name, last_name, " ", " ", False, True, True, data_criacao)
         session.add(user)
 
         session.commit()
@@ -198,6 +216,7 @@ def deletar(bot, update):
 
 
 @restricted
+@logged
 def notas(bot, update):
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
@@ -213,3 +232,21 @@ def notas(bot, update):
 def comandos(bot, update):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
     bot.send_message(chat_id=update['message']['chat']['id'], text=messages.comandos(), parse_mode=ParseMode.HTML)
+
+
+@restricted
+def ajuda(bot, update):
+    bot.send_message(chat_id=update['message']['chat']['id'],
+                     text=messages.help_user(),
+                     parse_mode=ParseMode.HTML)
+
+
+@restricted
+def callback(bot, update):
+    bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
+    if "ajud" in str(update['message']['text']).lower() or "help" in str(update['message']['text']).lower():
+        ajuda(bot, update)
+    else:
+        bot.send_message(chat_id=update['message']['chat']['id'],
+                         text=messages.answer_error(format(update['message']['chat']['first_name'])),
+                         parse_mode=ParseMode.HTML)

@@ -1,5 +1,4 @@
-import telegram
-from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
+from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, Filters
 
 import admins
 import config
@@ -10,8 +9,10 @@ import users
 def main():
     updater = Updater(config.token())
     dp = updater.dispatcher
+    job = updater.job_queue
 
-    updater.dispatcher.add_handler(CallbackQueryHandler(users.button))
+    dp.add_handler(CallbackQueryHandler(users.button))
+    dp.add_handler(MessageHandler(Filters.text, users.callback))
 
     # funções dos usuários
     dp.add_handler(CommandHandler("start", users.start))
@@ -26,6 +27,7 @@ def main():
     # dp.add_handler(CommandHandler("curriculo", users.curriculo))
     # dp.add_handler(CommandHandler("boleto", users.boleto))
     dp.add_handler(CommandHandler("comandos", users.comandos))
+    dp.add_handler(CommandHandler("ajuda", users.ajuda))
     # dp.add_handler(CommandHandler("termos", users.termos))
 
     # funções dos administradores
@@ -37,10 +39,10 @@ def main():
     # dp.add_handler(CommandHandler("log", admins.log))
     # dp.add_handler(CommandHandler("reboot", admins.reboot))
     # dp.add_handler(CommandHandler("update", admins.update))
-    # dp.add_handler(CommandHandler("commands", admins.commands))
+    dp.add_handler(CommandHandler("commands", admins.commands))
 
     # inicia notificação push
-    updater.job_queue.run_repeating(push.notas, 60)
+    job.run_repeating(push.notas, 60)
 
     updater.start_polling()
     updater.idle()

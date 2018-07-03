@@ -1,4 +1,5 @@
 import logging
+import time
 
 from sqlalchemy.orm import sessionmaker
 from telegram import ParseMode
@@ -19,6 +20,8 @@ Session = sessionmaker(bind=engine)
 
 def notas(bot, update):
     session = Session()
+    users_count = 0
+    initial = time.strftime("%d/%m/%Y %H:%M:%S", time.localtime())
     for user in session.query(db.User):
         if user.push_notas and user.sapu_username != " ":
             notas_resumo, notas_detalhe = crawlers.get_notas(user)
@@ -33,12 +36,12 @@ def notas(bot, update):
                 if not detalhe_sapu:
                     bot.send_message(chat_id=user.telegram_id,
                                      text=messages.push_grades(user.first_name, util.formata_nome_materia(resumo.materia),
-                                                               float(util.verifica_vazio(detalhe[3])), str(detalhe[0]),
-                                                               float(util.verifica_vazio(detalhe[5])),
-                                                               float(util.verifica_vazio(detalhe[2]))),
+                                                               float(util.verifica_vazio(detalhe[3])),
+                                                               util.formata_notas_msg(detalhe[3])),
                                      parse_mode=ParseMode.HTML)
             dao.set_notas(user, notas_resumo, notas_detalhe)
-
+            users_count += 1
+    dao.set_push_notas(users_count, initial, time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     session.close()
 
 

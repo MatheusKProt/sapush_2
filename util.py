@@ -8,6 +8,15 @@ def verifica_vazio(v):
         return 0.0
 
 
+def formata_notas_msg(nota):
+    if float(verifica_vazio(nota)) < 3:
+        return "Não desanime, na próxima você consegue!"
+    elif float(verifica_vazio(nota)) >= 7:
+        return "Parabéns!"
+    else:
+        return "Força, você consegue!"
+
+
 def formata_notas_resumo(notas_resumo):
     if float(notas_resumo.media_final) < 4:
         condicao = "reprovado"

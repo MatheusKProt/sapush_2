@@ -68,3 +68,12 @@ def set_notas(user, notas_resumo, notas_detalhe):
             session.commit()
             session.close()
     return
+
+
+def set_push_notas(users, initial, final):
+    session = Session()
+    push_notas = db.PushNotas(users, initial, final)
+
+    session.add(push_notas)
+    session.commit()
+    session.close()
