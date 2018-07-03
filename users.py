@@ -1,9 +1,11 @@
 import logging
 import time
 from functools import wraps
+from uuid import uuid4
 
 from sqlalchemy.orm import sessionmaker
-from telegram import ParseMode, ChatAction, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import ParseMode, ChatAction, InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, \
+    InputTextMessageContent
 from telegram.ext import run_async
 
 import crawlers
@@ -226,6 +228,29 @@ def notas(bot, update):
     for resumo in notas_resumo:
         bot.send_message(chat_id=telegram_id, text=util.formata_notas_resumo(resumo), parse_mode=ParseMode.HTML)
     session.close()
+
+
+def inlinequery(bot, update):
+    results = list()
+    results.append(InlineQueryResultArticle(id=uuid4(), title="Notas", description="Retorna suas notas do semestre atual ",
+                                            input_message_content=InputTextMessageContent(
+                                            notas_inline(update), parse_mode=ParseMode.HTML)))
+
+    update.inline_query.answer(results, is_personal=True, cache_time=0)
+
+
+def notas_inline(update):
+    session = Session()
+    users = session.query(db.User)
+    for user in users:
+        if str(user.telegram_id) in str(update):
+            telegram_id = user.telegram_id
+    notas_resumo = session.query(db.NotasResumo).filter_by(user_id=telegram_id)
+    notas = "<b>Notas</b>\n"
+    for resumo in notas_resumo:
+        notas += util.formata_notas_resumo(resumo) + "\n"
+    session.close()
+    return notas
 
 
 @restricted

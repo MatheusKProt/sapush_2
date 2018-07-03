@@ -1,9 +1,15 @@
-from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, Filters
+import logging
+
+from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, Filters, InlineQueryHandler
 
 import admins
 import config
 import push
 import users
+
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 def main():
@@ -13,6 +19,7 @@ def main():
 
     dp.add_handler(CallbackQueryHandler(users.button))
     dp.add_handler(MessageHandler(Filters.text, users.callback))
+    dp.add_handler(InlineQueryHandler(users.inlinequery))
 
     # funções dos usuários
     dp.add_handler(CommandHandler("start", users.start))
