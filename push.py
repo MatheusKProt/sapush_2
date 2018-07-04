@@ -3,10 +3,12 @@ import time
 
 from sqlalchemy.orm import sessionmaker
 from telegram import ParseMode
+from telegram.error import Unauthorized
 
 import crawlers
 import dao
 import db
+import main
 import messages
 import util
 
@@ -34,11 +36,14 @@ def notas(bot, update):
                                                                         nota=float(util.verifica_vazio(detalhe[3])),
                                                                         peso_x_nota=float(util.verifica_vazio(detalhe[5]))).first()
                 if not detalhe_sapu:
-                    bot.send_message(chat_id=user.telegram_id,
-                                     text=messages.push_grades(user.first_name, util.formata_nome_materia(resumo.materia),
-                                                               float(util.verifica_vazio(detalhe[3])),
-                                                               util.formata_notas_msg(detalhe[3])),
-                                     parse_mode=ParseMode.HTML)
+                    try:
+                        bot.send_message(chat_id=user.telegram_id,
+                                         text=messages.push_grades(user.first_name, util.formata_nome_materia(resumo.materia),
+                                                                   float(util.verifica_vazio(detalhe[3])),
+                                                                   util.formata_notas_msg(detalhe[3])),
+                                         parse_mode=ParseMode.HTML)
+                    except Exception as error:
+                        main.error_callback(bot, update, error)
             dao.set_notas(user, notas_resumo, notas_detalhe)
             users_count += 1
     dao.set_push_notas(users_count, initial, time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))

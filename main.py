@@ -1,5 +1,6 @@
 import logging
 
+from telegram.error import TelegramError, Unauthorized, BadRequest, TimedOut, ChatMigrated, NetworkError
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, Filters, InlineQueryHandler
 
 import admins
@@ -12,6 +13,23 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
+def error_callback(bot, update, error):
+    try:
+        raise error
+    except Unauthorized:
+        print("Unauthorized")
+    except BadRequest:
+        print("BadRequest")
+    except TimedOut:
+        print("TimedOut")
+    except NetworkError:
+        print("NetworkError")
+    except ChatMigrated as e:
+        print("ChatMigrated ", e)
+    except TelegramError:
+        print("TelegramError")
+
+
 def main():
     updater = Updater(config.token())
     dp = updater.dispatcher
@@ -20,6 +38,8 @@ def main():
     dp.add_handler(CallbackQueryHandler(users.button))
     dp.add_handler(MessageHandler(Filters.text, users.callback))
     dp.add_handler(InlineQueryHandler(users.inlinequery))
+
+    dp.add_error_handler(error_callback)
 
     # funções dos usuários
     dp.add_handler(CommandHandler("start", users.start))
@@ -49,7 +69,9 @@ def main():
     dp.add_handler(CommandHandler("commands", admins.commands))
 
     # inicia notificação push
-    job.run_repeating(push.notas, 60)
+    job.run_repeating(push.notas, 1800)
+
+    print("SAPUsh iniciado!")
 
     updater.start_polling()
     updater.idle()
