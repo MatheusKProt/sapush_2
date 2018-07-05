@@ -10,8 +10,8 @@ def comandos():
 /frequencia - retorna sua frequência do semestre atual 
 /horarios - retorna seus horários do semestre atual 
 /disciplinas - retorna suas disciplinas do semestre atual
-/historico - retorna o link com seu histórico 
-/curriculo - retorna todas as disciplinas do curso
+/historico - retorna seu histórico 
+/curriculo - retorna o currículo do curso
 /boleto - retorna o link com seu boleto
 
 /termos - exibe os termos de uso
@@ -33,7 +33,7 @@ def comandos_admin():
 /update - atualiza o bot
 
 *Opcional
-**Só números"""
+**Somente números são aceitos"""
 
 
 def start(first_name):
@@ -103,7 +103,7 @@ Nós valorizamos as suas opiniões. Caso haja alguma dúvida ou sugestão, entre
 
 def not_logged_in(first_name):
     return """
-{}, para ter acesso a esta funcionalidade você deverá realizar o cadastro conosco utilizando o comando \
+{}, para ter acesso a esta funcionalidade você deverá realizar o login em seu SAPU utilizando o comando \
 /login [usuário] [senha].""".format(first_name)
 
 
@@ -119,9 +119,7 @@ def invalid_login(first_name):
 
 def valid_login(first_name):
     return """
-{}, seu login foi efetuado com sucesso!
-
-Isso é tudo o que eu posso fazer:""".format(first_name)
+{}, seu login foi efetuado com sucesso!""".format(first_name)
 
 
 def wrong_password(first_name):
@@ -155,14 +153,13 @@ Você tirou <b>{}</b> de 10.0.
 def push_grades_null(first_name, materia, data):
     return """
 {}, sua avaliação de {} acabou de ser cadastrada no sistema e está marcada para o dia {}.
-
 Bons estudos!""".format(first_name, materia, data)
 
 
 def push_frequencia(first_name, frequencia, materia):
     return """
 {}, você está com <b>{}%</b> de frequência em <b>{}</b>. 
-Tome cuidado para não reprovar por frequência.""".format(first_name, frequencia, materia)
+Tome cuidado para não reprovar!""".format(first_name, frequencia, materia)
 
 
 def not_allowed(first_name):
@@ -182,17 +179,17 @@ def agreed(first_name):
 
 def refresh_success(first_name):
     return """
-{}, seu usuário foi atualizado.""".format(first_name)
+{}, suas informações de login foram atualizadas com sucesso!""".format(first_name)
 
 
 def user_doesnt_exist(first_name):
     return """
-{}, você não possui cadastro para deletar.""".format(first_name)
+{}, você não possui nada para deletar.""".format(first_name)
 
 
 def user_deleted(first_name):
     return """
-{}, seu cadastro foi deletado com sucesso!""".format(first_name)
+{}, suas informações de login fotam deletadas com sucesso!""".format(first_name)
 
 
 def not_finished(first_name):
@@ -250,7 +247,7 @@ A sintaxe usada pelo telegram na execução de comandos é representada pelo uso
 Comandos onde são enviados parâmetros são executados da seguinte maneira:
 /login parametro1 parametro2 
 
-Fique atento para a sintaxe bibliográfica utilizada nos comandos onde são enviados parâmetros: 
+Preste atenção na sintaxe bibliográfica que é utilizada nos comandos onde são enviados parâmetros: 
 /login [usuário] [senha]
 Neste caso, o uso dos [ ] não são necessários. 
 
@@ -259,7 +256,7 @@ Caso você queira ver a lista completa de comandos disponíveis, digite /comando
 
 def answer_error(first_name):
     return """
-{}, ainda não consigo conversar com você naturalmente. Você pode digitar ajuda a qualquer momento caso necessite \
+{}, ainda não consigo conversar com você de forma natural. Você pode digitar ajuda a qualquer momento caso necessite \
 de auxílio.""".format(first_name)
 
 
@@ -285,19 +282,20 @@ def formata_sugestoes(first_name, last_name, sugestao):
 
 def usuario_nao_encontrado(first_name):
     return """
-{}, não encontrei usuários com esses parametros.""".format(first_name)
+{}, não encontrei nenhum usuário com esses parâmetros.""".format(first_name)
 
 
 def sugestao(first_name):
     return """
-{}, obrigado pela sua sugestão, faremos o possível para implementá-la.""".format(first_name)
+{}, agradecemos sua sugestão! 
+Faremos o possível para implementá-la nas próximas atualizações.""".format(first_name)
 
 
 def alert_error(first_name):
     return """
 {}, use /alert [id]** [mensagem]
 
-** Só números""".format(first_name)
+**Somente números são aceitos""".format(first_name)
 
 
 def statistics(ligado, uso_processador, uso_memoria, uso_disco, memoria_total, memoria_disponivel, disco_total,
@@ -316,7 +314,7 @@ Capacidade total de disco: {}GB
 Capacidade usada: {}GB
 Capacidade disponível: {}GB
 
-Os processos que mais estão consumindo memória são:{}""".format(round(ligado, 2), uso_processador, uso_memoria, uso_disco,
+Os processos com maior consumo de memória são:{}""".format(round(ligado, 2), uso_processador, uso_memoria, uso_disco,
                                                                 round(memoria_total, 2), round(memoria_disponivel, 2),
                                                                 round(disco_total, 2), round(disco_usado, 2),
                                                                 round(disco_disponivel, 2), processos_consumindo)
