@@ -46,7 +46,7 @@ A utilização dos serviços deste bot requer obrigatória e cumulativamente (i)
 leitura e aceitação dos Termos de Uso.
 
 Nós desenvolvedores, juntamente com o serviço prestado, não compactuamos, incentivamos ou promovemos o uso ilegal dos \
-seus dados. Nosso objetivo por meio deste é facilitar a sua vida automatizando tarefas do dia a dia. 
+seus dados. Nosso objetivo por meio deste é facilitar a sua vida automatizando tarefas do dia a dia. \
 Não assumimos qualquer responsabilidade por aqueles que utilizam estes aplicativos para qualquer outra finalidade que \
 não o monitoramento próprio do Sistema de Apoio Universitário (SAPU) da Universidade Católica de Pelotas.
 
@@ -149,6 +149,19 @@ Você tirou <b>{}</b> de 10.0.
 <b>{}</b>""".format(first_name, materia, nota, msg)
 
 
+def push_grades_null(first_name, materia, data):
+    return """
+{}, sua avaliação de {} acabou de ser cadastrada no sistema e está marcada para o dia {}.
+
+Bons estudos!""".format(first_name, materia, data)
+
+
+def push_frequencia(first_name, frequencia, materia):
+    return """
+{}, você está com <b>{}%</b> de frequência em <b>{}</b>. 
+Tome cuidado para não reprovar por frequência.""".format(first_name, frequencia, materia)
+
+
 def not_allowed(first_name):
     return """
 {}, esta função não está habilitada para você.""".format(first_name)
@@ -215,6 +228,13 @@ def formata_notas_resumo(materia, primeira_av, segunda_av, av_complementar, medi
 <b>{}</b> de avaliação complementar
 <b>{}</b> de média final
 Até o momento, você está <b>{}</b>.""".format(materia, primeira_av, segunda_av, av_complementar, media_final, condicao)
+
+
+def formata_frequencia(materia, frequencia, faltas, falta_msg):
+    return """
+<b>{}</b>
+<b>{}%</b> de frequência
+<b>{}</b> {}""".format(materia, frequencia, faltas, falta_msg)
 
 
 def help_user():

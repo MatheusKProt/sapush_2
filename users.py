@@ -96,7 +96,7 @@ def start(bot, update):
                 do_you_agree(bot, update)
             session.close()
             return
-        user = db.User(telegram_id, username, first_name, last_name, " ", " ", False, True, True, data_criacao)
+        user = db.User(telegram_id, username, first_name, last_name, " ", " ", False, True, True, data_criacao, " ", " ")
         session.add(user)
 
         session.commit()
@@ -167,28 +167,35 @@ def login(bot, update, args):
     session = Session()
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
 
-    _, logado, erro = crawlers.get_session(sapu_username, sapu_password)
+    _, logado, error, chave, curso = crawlers.get_session(sapu_username, sapu_password)
     if logado:
         user.username = username
         user.first_name = first_name
         user.sapu_username = sapu_username
         user.sapu_password = sapu_password
+        user.chave = chave
+        user.curso = curso
 
         session.commit()
-        notas_resumo, notas_detalhe = crawlers.get_notas(session.query(db.User).filter_by(telegram_id=telegram_id).first())
+
+        user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
+        notas_resumo, notas_detalhe = crawlers.get_notas(user)
+        frequencia = crawlers.get_frequencia(user)
+
         dao.set_notas(user, notas_resumo, notas_detalhe)
+        dao.set_frequencia(user, frequencia)
         session.close()
 
         bot.send_message(chat_id=telegram_id, text=messages.valid_login(first_name), parse_mode=ParseMode.HTML)
         bot.send_message(chat_id=telegram_id, text=messages.comandos(), parse_mode=ParseMode.HTML)
         return
     else:
-        if erro == "senha":
+        if error == "senha":
             bot.send_message(chat_id=telegram_id, text=messages.wrong_password(first_name), parse_mode=ParseMode.HTML)
-        elif erro == "usuario":
+        elif error == "usuario":
             bot.send_message(chat_id=telegram_id, text=messages.wrong_user(first_name), parse_mode=ParseMode.HTML)
         else:
-            bot.send_message(chat_id=telegram_id, text=erro + ".", parse_mode=ParseMode.HTML)
+            bot.send_message(chat_id=telegram_id, text=error + ".", parse_mode=ParseMode.HTML)
         session.close()
         return
 
@@ -230,11 +237,25 @@ def notas(bot, update):
     session.close()
 
 
+@restricted
+@logged
+def frequencia(bot, update):
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    session = Session()
+    frequencia = session.query(db.Frequencia).filter_by(user_id=telegram_id)
+
+    for freq in frequencia:
+        bot.send_message(chat_id=telegram_id, text=util.formata_frequencia(freq), parse_mode=ParseMode.HTML)
+    session.close()
+
+
 def inlinequery(bot, update):
     results = list()
-    results.append(InlineQueryResultArticle(id=uuid4(), title="Notas", description="Retorna suas notas do semestre atual ",
-                                            input_message_content=InputTextMessageContent(
-                                            notas_inline(update), parse_mode=ParseMode.HTML)))
+    results.append(InlineQueryResultArticle(id=uuid4(), title="Notas", description="Retorna suas notas do semestre atual.",
+                                            input_message_content=InputTextMessageContent(notas_inline(update), parse_mode=ParseMode.HTML)))
+    results.append(InlineQueryResultArticle(id=uuid4(), title="Frequência", description="Retorna sua frequência do semestre atual.",
+                                            input_message_content=InputTextMessageContent(frequencia_inline(update),  parse_mode=ParseMode.HTML)))
 
     update.inline_query.answer(results, is_personal=True, cache_time=0)
 
@@ -251,6 +272,20 @@ def notas_inline(update):
         notas += util.formata_notas_resumo(resumo) + "\n"
     session.close()
     return notas
+
+
+def frequencia_inline(update):
+    session = Session()
+    users = session.query(db.User)
+    for user in users:
+        if str(user.telegram_id) in str(update):
+            telegram_id = user.telegram_id
+    frequencia_db = session.query(db.Frequencia).filter_by(user_id=telegram_id)
+    frequencia = "<b>Frequência</b>\n"
+    for freq in frequencia_db:
+        frequencia += util.formata_frequencia(freq) + "\n"
+    session.close()
+    return frequencia
 
 
 @restricted

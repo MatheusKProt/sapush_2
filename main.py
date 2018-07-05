@@ -48,7 +48,7 @@ def main():
     dp.add_handler(CommandHandler("deletar", users.deletar))
     # dp.add_handler(CommandHandler("sugerir", users.sugerir, pass_args=True))
     dp.add_handler(CommandHandler("notas", users.notas))
-    # dp.add_handler(CommandHandler("frequencia", users.frequencia))
+    dp.add_handler(CommandHandler("frequencia", users.frequencia))
     # dp.add_handler(CommandHandler("horarios", users.horarios))
     # dp.add_handler(CommandHandler("historico", users.historico))
     # dp.add_handler(CommandHandler("curriculo", users.curriculo))
@@ -69,7 +69,8 @@ def main():
     dp.add_handler(CommandHandler("commands", admins.commands))
 
     # inicia notificação push
-    job.run_repeating(push.notas, 1800)
+    job.run_repeating(push.notas, 60)
+    job.run_repeating(push.frequencia, 60)
 
     print("SAPUsh iniciado!")
 

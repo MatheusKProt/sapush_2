@@ -20,6 +20,7 @@ def set_notas(user, notas_resumo, notas_detalhe):
         media = float(util.verifica_vazio(resumo[3]))
         av_complementar = float(util.verifica_vazio(resumo[4]))
         media_final = float(util.verifica_vazio(resumo[5]))
+
         if not materias:
             materias = db.NotasResumo(user_id, materia, primeira_av, segunda_av, media, av_complementar, media_final)
 
@@ -70,10 +71,46 @@ def set_notas(user, notas_resumo, notas_detalhe):
     return
 
 
+def set_frequencia(user, frequencias):
+    for freq in frequencias:
+        session = Session()
+        frequencia_db = session.query(db.Frequencia).filter_by(user_id=user.telegram_id, materia=str(freq[0])).first()
+
+        user_id = user.telegram_id
+        materia = str(freq[0])
+        frequencia = float(freq[2].split("%")[0])
+        faltas = int(freq[3])
+
+        if not frequencia_db:
+            frequencia_db = db.Frequencia(user_id, materia, frequencia, faltas)
+
+            session.add(frequencia_db)
+            session.commit()
+            session.close()
+        else:
+            frequencia_db.user_id = user_id
+            frequencia_db.materia = materia
+            frequencia_db.frequencia = frequencia
+            frequencia_db.faltas = faltas
+
+            session.commit()
+            session.close()
+    return
+
+
 def set_push_notas(users, initial, final):
     session = Session()
     push_notas = db.PushNotas(users, initial, final)
 
     session.add(push_notas)
+    session.commit()
+    session.close()
+
+
+def set_push_frequencia(users, initial, final):
+    session = Session()
+    push_frequencia = db.PushFrequencia(users, initial, final)
+
+    session.add(push_frequencia)
     session.commit()
     session.close()

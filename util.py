@@ -35,16 +35,51 @@ def formata_notas_resumo(notas_resumo):
                                          notas_resumo.av_complementar, notas_resumo.media_final, condicao)
 
 
+def formata_frequencia(frequencia):
+    if frequencia.faltas == 1:
+        return messages.formata_frequencia(formata_nome_materia_frequencia(frequencia.materia), frequencia.frequencia, frequencia.faltas, "falta")
+    else:
+        return messages.formata_frequencia(formata_nome_materia_frequencia(frequencia.materia), frequencia.frequencia, frequencia.faltas, "faltas")
+
+
 def formata_nome_materia(nome):
     materia = ""
     materias = str(nome).split(" ")
     materias.pop(0)
     materias.pop(0)
     for o in materias:
-        if o == "I" or o == "II" or o == "III":
-            materia += o + " "
-        elif o == "A" or o == "DE" or o == "E":
-            materia += o.lower() + " "
-        else:
-            materia += o.capitalize() + " "
+        materia += formata(o)
     return materia
+
+
+def formata_nome_materia_frequencia(nome):
+    materia = ""
+    materias = str(nome).split(" ")
+    materias.pop(0)
+    materias.pop(0)
+    materias.pop(0)
+    materias.pop(0)
+    for o in materias:
+        materia += formata(o)
+    return materia
+
+
+def formata(o):
+    if o == "I" or o == "II" or o == "III" or o == "ACG" or o == "AC":
+        return o + " "
+    elif o == "A" or o == "DE" or o == "E" or o == "DA":
+        return o.lower() + " "
+    elif "ACG-" in o:
+        return "ACG " + o.split("-")[1].capitalize() + " "
+    elif "-A" in o or "-B" in o or "-C" in o or "-D" in o or "-E" in o:
+        return o + " "
+    else:
+        return o.capitalize() + " "
+
+
+def formata_curso(nome):
+    curso = ""
+    cursos = str(nome).split(" ")
+    for o in cursos:
+        curso += formata(o)
+    return curso

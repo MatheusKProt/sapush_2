@@ -23,11 +23,14 @@ class User(base):
     push_notas = Column('push_notas', Boolean)
     push_frequencia = Column('push_frequencia', Boolean)
     data_criacao = Column('data_criacao', String)
+    chave = Column('chave', String)
+    curso = Column('curso', String)
 
     notas_resumo = relationship("NotasResumo", cascade="all,delete", backref="user")
+    frequencia = relationship("Frequencia", cascade="all,delete", backref="user")
     admins = relationship("Admins", cascade="all,delete", backref="user")
 
-    def __init__(self, telegram_id, username, first_name, last_name, sapu_username, sapu_password, termos, push_notas, push_frequencia, data_criacao):
+    def __init__(self, telegram_id, username, first_name, last_name, sapu_username, sapu_password, termos, push_notas, push_frequencia, data_criacao, chave, curso):
         self.telegram_id = telegram_id
         self.username = username
         self.first_name = first_name
@@ -38,6 +41,8 @@ class User(base):
         self.push_notas = push_notas
         self.push_frequencia = push_frequencia
         self.data_criacao = data_criacao
+        self.chave = chave
+        self.curso = curso
 
 
 class Admins(base):
@@ -103,6 +108,36 @@ class PushNotas(base):
         self.users = users
         self.initial = initial
         self.final = final
+
+
+class PushFrequencia(base):
+    __tablename__ = 'push_frequencia'
+
+    id = Column('id', Integer, primary_key=True)
+    users = Column('users', Integer)
+    initial = Column('initial', String)
+    final = Column('final', String)
+
+    def __init__(self, users, initial, final):
+        self.users = users
+        self.initial = initial
+        self.final = final
+
+
+class Frequencia(base):
+    __tablename__ = 'frequencia'
+
+    id = Column('id', Integer, primary_key=True)
+    user_id = Column('user_id', Integer, ForeignKey('user.telegram_id'))
+    materia = Column('materia', String)
+    frequencia = Column('frequencia', Float)
+    faltas = Column('faltas', Integer)
+
+    def __init__(self, user_id, materia, frequencia, faltas):
+        self.user_id = user_id
+        self.materia = materia
+        self.frequencia = frequencia
+        self.faltas = faltas
 
 
 def gen_engine(url):

@@ -2,7 +2,7 @@ import lxml.html
 import requests
 from bs4 import BeautifulSoup
 
-import dao
+import util
 
 
 def get_session(email, password):
@@ -19,22 +19,25 @@ def get_session(email, password):
 
     sapu = session.post('http://sapu.ucpel.edu.br/portal/engine.php?class=LoginForm&method=onLogin', data=form)
     soup = BeautifulSoup(sapu.content, 'html.parser')
-    session.get("http://sapu.ucpel.edu.br/portal/index.php?class=Dashboard&message=1")
+    home = session.get("http://sapu.ucpel.edu.br/portal/index.php?class=Dashboard&message=1")
+    home_soup = BeautifulSoup(home.content, 'html.parser')
 
     for index in soup.find_all('script'):
         if str(index.get_text().lstrip()).split("'")[1] == "Erro":
             if "Usuário" in str(index.get_text().lstrip()).split("'")[3]:
-                return session, False, "usuario"
+                return session, False, "usuario", "", ""
             elif "Senha" in str(index.get_text().lstrip()).split("'")[3]:
-                return session, False, "senha"
+                return session, False, "senha", "", ""
             else:
-                return session, False, str(index.get_text().lstrip()).split("'")[3]
+                return session, False, str(index.get_text().lstrip()).split("'")[3], "", ""
         else:
-            return session, True, "True"
+            chave = str(home_soup.find(class_='div_matricula').get_text().lstrip()).split(" ")[1]
+            curso = util.formata_curso(str(home_soup.find(class_='div_curso').get_text().lstrip()).split(": ")[1])
+            return session, True, "True", chave, curso
 
 
 def get_notas(user):
-    session, _, _ = get_session(user.sapu_username, user.sapu_password)
+    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
     notas = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=AvaliacaoFormList")
     soup = BeautifulSoup(notas.content, 'html.parser')
     tdatagrid = soup.find_all(class_='tdatagrid_body')
@@ -71,3 +74,21 @@ def get_notas(user):
             count = 0
 
     return notas_resumo, notas_detalhe
+
+
+def get_frequencia(user):
+    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    frequencia = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=FrequenciaFormList")
+    soup = BeautifulSoup(frequencia.content, 'html.parser')
+
+    count = 0
+    table = []
+    td = []
+    for index in soup.find(class_='tdatagrid_body').find_all('td'):
+        td.append(index.get_text().lstrip())
+        count += 1
+        if count == 4:
+            table.append(td)
+            td = []
+            count = 0
+    return table
