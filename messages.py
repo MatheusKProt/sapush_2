@@ -12,7 +12,7 @@ def comandos():
 /disciplinas - retorna suas disciplinas do semestre atual
 /historico - retorna o link com seu histórico 
 /curriculo - retorna todas as disciplinas do curso
-/boleto - retorna o link com seu boleto em aberto 
+/boleto - retorna o link com seu boleto
 
 /termos - exibe os termos de uso
 /ajuda - exibe instruções de uso"""
@@ -22,15 +22,18 @@ def comandos_admin():
     return """
 <b>Lista de comandos administrativos</b>
 
-/users - exibe todos os usuários cadastrados
-/alert [id] [mensagem] - envia um aviso para uma pessoa específica 
+/users [nome]* [sobrenome]* - exibe todos os usuários cadastrados
+/alert [id]** [mensagem] - envia um aviso para uma pessoa específica 
 /statement [mensagem] - envia um comunicado a todos os usuários 
-/sugestions - exibe todas as sugestões recebidas 
+/sugestions [número de sugestões]* ** - exibe as as sugestões recebidas 
 
 /statistics - exibe as estatísticas atuais de uso de hardware
 /log - exibe o log de atualizações
 /reboot - reinicia o servidor 
-/update - atualiza o bot"""
+/update - atualiza o bot
+
+*Opcional
+**Só números"""
 
 
 def start(first_name):
@@ -258,3 +261,62 @@ def answer_error(first_name):
     return """
 {}, ainda não consigo conversar com você naturalmente. Você pode digitar ajuda a qualquer momento caso necessite \
 de auxílio.""".format(first_name)
+
+
+def historico(first_name):
+    return """
+{}, aqui está o seu histórico:""".format(first_name)
+
+
+def boleto(first_name, boleto):
+    return """
+{}, seu boleto está disponível <a href=\"{}\">aqui</a>.""".format(first_name, boleto)
+
+
+def formata_users(telegram_id, first_name, last_name):
+    return """
+{} - {} {}""".format(telegram_id, first_name, last_name)
+
+
+def formata_sugestoes(first_name, last_name, sugestao):
+    return """
+{} {}: {}""".format(first_name, last_name, sugestao)
+
+
+def usuario_nao_encontrado(first_name):
+    return """
+{}, não encontrei usuários com esses parametros.""".format(first_name)
+
+
+def sugestao(first_name):
+    return """
+{}, obrigado pela sua sugestão, faremos o possível para implementá-la.""".format(first_name)
+
+
+def alert_error(first_name):
+    return """
+{}, use /alert [id]** [mensagem]
+
+** Só números""".format(first_name)
+
+
+def statistics(ligado, uso_processador, uso_memoria, uso_disco, memoria_total, memoria_disponivel, disco_total,
+               disco_usado, disco_disponivel, processos_consumindo):
+    return """
+<b>Estatísticas de uso do servidor</b>
+Estou ligado há {} horas
+Processador: {}%
+Memória: {}%
+Disco  utilizado: {}%
+
+Memória total: {}GB
+Memória disponível: {}GB
+
+Capacidade total de disco: {}GB
+Capacidade usada: {}GB
+Capacidade disponível: {}GB
+
+Os processos que mais estão consumindo memória são:{}""".format(round(ligado, 2), uso_processador, uso_memoria, uso_disco,
+                                                                round(memoria_total, 2), round(memoria_disponivel, 2),
+                                                                round(disco_total, 2), round(disco_usado, 2),
+                                                                round(disco_disponivel, 2), processos_consumindo)

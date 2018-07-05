@@ -1,5 +1,6 @@
 import logging
 
+from telegram import Bot
 from telegram.error import TelegramError, Unauthorized, BadRequest, TimedOut, ChatMigrated, NetworkError
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, Filters, InlineQueryHandler
 
@@ -18,20 +19,27 @@ def error_callback(bot, update, error):
         raise error
     except Unauthorized:
         print("Unauthorized")
+        bot.send_message(chat_id=update['message']['chat']['id'], text="Unauthorized")
     except BadRequest:
         print("BadRequest")
+        bot.send_message(chat_id=update['message']['chat']['id'], text="BadRequest")
     except TimedOut:
         print("TimedOut")
+        bot.send_message(chat_id=update['message']['chat']['id'], text="TimedOut")
     except NetworkError:
         print("NetworkError")
+        bot.send_message(chat_id=update['message']['chat']['id'], text="NetworkError")
     except ChatMigrated as e:
         print("ChatMigrated ", e)
+        bot.send_message(chat_id=update['message']['chat']['id'], text="ChatMigrated")
     except TelegramError:
         print("TelegramError")
+        bot.send_message(chat_id=update['message']['chat']['id'], text="TelegramError")
 
 
 def main():
     updater = Updater(config.token())
+    bot = Bot(config.token())
     dp = updater.dispatcher
     job = updater.job_queue
 
@@ -46,25 +54,25 @@ def main():
     dp.add_handler(CommandHandler("acordo", users.do_you_agree))
     dp.add_handler(CommandHandler("login", users.login, pass_args=True))
     dp.add_handler(CommandHandler("deletar", users.deletar))
-    # dp.add_handler(CommandHandler("sugerir", users.sugerir, pass_args=True))
+    dp.add_handler(CommandHandler("sugerir", users.sugerir, pass_args=True))
     dp.add_handler(CommandHandler("notas", users.notas))
     dp.add_handler(CommandHandler("frequencia", users.frequencia))
     # dp.add_handler(CommandHandler("horarios", users.horarios))
-    # dp.add_handler(CommandHandler("historico", users.historico))
+    dp.add_handler(CommandHandler("historico", users.historico))
     # dp.add_handler(CommandHandler("curriculo", users.curriculo))
-    # dp.add_handler(CommandHandler("boleto", users.boleto))
+    dp.add_handler(CommandHandler("boleto", users.boleto))
     dp.add_handler(CommandHandler("comandos", users.comandos))
     dp.add_handler(CommandHandler("ajuda", users.ajuda))
-    # dp.add_handler(CommandHandler("termos", users.termos))
+    dp.add_handler(CommandHandler("termos", users.termos))
 
     # funções dos administradores
-    # dp.add_handler(CommandHandler("users", admins.users))
+    dp.add_handler(CommandHandler("users", admins.users, pass_args=True))
     dp.add_handler(CommandHandler("alert", admins.alert, pass_args=True))
     dp.add_handler(CommandHandler("statement", admins.statement, pass_args=True))
-    # dp.add_handler(CommandHandler("suggestions", admins.suggestions))
-    # dp.add_handler(CommandHandler("statistics", admins.statistics))
+    dp.add_handler(CommandHandler("suggestions", admins.suggestions, pass_args=True))
+    dp.add_handler(CommandHandler("statistics", admins.statistics))
     # dp.add_handler(CommandHandler("log", admins.log))
-    # dp.add_handler(CommandHandler("reboot", admins.reboot))
+    dp.add_handler(CommandHandler("reboot", admins.reboot))
     # dp.add_handler(CommandHandler("update", admins.update))
     dp.add_handler(CommandHandler("commands", admins.commands))
 
@@ -72,7 +80,7 @@ def main():
     job.run_repeating(push.notas, 60)
     job.run_repeating(push.frequencia, 60)
 
-    print("SAPUsh iniciado!")
+    admins.start(bot)
 
     updater.start_polling()
     updater.idle()

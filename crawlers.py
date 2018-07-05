@@ -92,3 +92,19 @@ def get_frequencia(user):
             td = []
             count = 0
     return table
+
+
+def get_historico(user):
+    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    historico = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=HistoricoFormList&method=imprimir")
+    soup = BeautifulSoup(historico.content, 'html.parser')
+    index = soup.find('script')
+    return str(index.get_text().lstrip()).split("'")[1]
+
+
+def get_boleto(user):
+    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    boleto = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=SolicitacaoBoletoFormList&method=emitirBoleto")
+    soup = BeautifulSoup(boleto.content, 'html.parser')
+    index = soup.find('script')
+    return str(index.get_text().lstrip()).split("'")[1]

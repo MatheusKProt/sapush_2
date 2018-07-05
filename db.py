@@ -29,6 +29,8 @@ class User(base):
     notas_resumo = relationship("NotasResumo", cascade="all,delete", backref="user")
     frequencia = relationship("Frequencia", cascade="all,delete", backref="user")
     admins = relationship("Admins", cascade="all,delete", backref="user")
+    sugestoes = relationship("Sugestoes", cascade="all,delete", backref="user")
+    alert = relationship("Alert", cascade="all,delete", backref="user")
 
     def __init__(self, telegram_id, username, first_name, last_name, sapu_username, sapu_password, termos, push_notas, push_frequencia, data_criacao, chave, curso):
         self.telegram_id = telegram_id
@@ -50,6 +52,9 @@ class Admins(base):
 
     id = Column('id', Integer, primary_key=True)
     user_id = Column('user_id', Integer, ForeignKey('user.telegram_id'))
+
+    alert = relationship("Alert", cascade="all,delete", backref="admins")
+    statement = relationship("Statement", cascade="all,delete", backref="admins")
 
 
 class NotasResumo(base):
@@ -138,6 +143,46 @@ class Frequencia(base):
         self.materia = materia
         self.frequencia = frequencia
         self.faltas = faltas
+
+
+class Sugestoes(base):
+    __tablename__ = 'sugestoes'
+
+    id = Column('id', Integer, primary_key=True)
+    user_id = Column('user_id', Integer, ForeignKey('user.telegram_id'))
+    sugestao = Column('sugestao', String)
+    data = Column('data', String)
+
+    def __init__(self, user_id, sugestao, data):
+        self.user_id = user_id
+        self.sugestao = sugestao
+        self.data = data
+
+
+class Alert(base):
+    __tablename__ = 'alert'
+
+    id = Column('id', Integer, primary_key=True)
+    admin = Column('admin', Integer, ForeignKey('admins.id'))
+    user_id = Column('user_id', Integer, ForeignKey('user.telegram_id'))
+    msg = Column('msg', String)
+
+    def __init__(self, admin, user_id, msg):
+        self.admin = admin
+        self.user_id = user_id
+        self.msg = msg
+
+
+class Statement(base):
+    __tablename__ = 'statement'
+
+    id = Column('id', Integer, primary_key=True)
+    admin = Column('admin', Integer, ForeignKey('admins.id'))
+    msg = Column('msg', String)
+
+    def __init__(self, admin, msg):
+        self.admin = admin
+        self.msg = msg
 
 
 def gen_engine(url):

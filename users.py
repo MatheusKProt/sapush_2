@@ -250,6 +250,46 @@ def frequencia(bot, update):
     session.close()
 
 
+@restricted
+@logged
+def historico(bot, update):
+    telegram_id = update['message']['chat']['id']
+    session = Session()
+    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
+    historico = crawlers.get_historico(user)
+    bot.send_message(chat_id=telegram_id, text=messages.historico(user.first_name), parse_mode=ParseMode.HTML)
+    bot.send_document(chat_id=telegram_id, document="http://sapu.ucpel.edu.br/portal/{}".format(historico))
+    session.close()
+
+
+@restricted
+@logged
+def boleto(bot, update):
+    telegram_id = update['message']['chat']['id']
+    session = Session()
+    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
+    boleto = crawlers.get_boleto(user)
+    bot.send_message(chat_id=telegram_id, text=messages.boleto(user.first_name, boleto), parse_mode=ParseMode.HTML)
+    session.close()
+
+
+@restricted
+@logged
+def sugerir(bot, update, args):
+    if len(args) == 0:
+        bot.send_message(chat_id=update['message']['chat']['id'],
+                         text=messages.suggest_without_parameters(update['message']['chat']['first_name']),
+                         parse_mode=ParseMode.HTML)
+    else:
+        session = Session()
+        sugestao = db.Sugestoes(update['message']['chat']['id'], " ".join(args), time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+        session.add(sugestao)
+        bot.send_message(chat_id=update['message']['chat']['id'], text=messages.sugestao(update['message']['chat']['first_name']), parse_mode=ParseMode.HTML)
+
+        session.commit()
+        session.close()
+
+
 def inlinequery(bot, update):
     results = list()
     results.append(InlineQueryResultArticle(id=uuid4(), title="Notas", description="Retorna suas notas do semestre atual.",

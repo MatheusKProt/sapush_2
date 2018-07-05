@@ -65,9 +65,10 @@ def formata_nome_materia_frequencia(nome):
 
 
 def formata(o):
-    if o == "I" or o == "II" or o == "III" or o == "ACG" or o == "AC":
+    if o == "I" or o == "II" or o == "III" or o == "IV" or o == "V" or o == "VI" or o == "VII" or o == "VIII" \
+            or o == "IX" or o == "X" or o == "ACG" or o == "AC" or o == "TCC":
         return o + " "
-    elif o == "A" or o == "DE" or o == "E" or o == "DA":
+    elif o == "A" or o == "DE" or o == "E" or o == "DA" or o == "À":
         return o.lower() + " "
     elif "ACG-" in o:
         return "ACG " + o.split("-")[1].capitalize() + " "
