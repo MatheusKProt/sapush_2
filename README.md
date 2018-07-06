@@ -8,7 +8,7 @@ Toda a informação é adquirida, escaneada, armazenada e sincronizada usando di
 
 ## Uso
 
-Você pode começare a usar agora mesmo. Basta você baixar o aplicativo em qualquer uma das plataformas disponíveis e procurar por [@sapu_bot](https://telegram.me/sapu_bot).
+Você pode começar a usar agora mesmo! Basta você baixar o aplicativo em qualquer uma das plataformas disponíveis e procurar por [@sapu_bot](https://telegram.me/sapu_bot).
 
 ## Como ele funciona?
 
