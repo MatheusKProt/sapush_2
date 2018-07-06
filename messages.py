@@ -109,7 +109,9 @@ def not_logged_in(first_name):
 
 def alert(msg):
     return """
-<b>Comunicado</b>\n\n{}""".format(msg)
+<b>Comunicado</b>
+
+{}""".format(msg)
 
 
 def invalid_login(first_name):
@@ -305,7 +307,7 @@ def statistics(ligado, uso_processador, uso_memoria, uso_disco, memoria_total, m
 Estou ligado há {} horas
 Processador: {}%
 Memória: {}%
-Disco  utilizado: {}%
+Disco utilizado: {}%
 
 Memória total: {}GB
 Memória disponível: {}GB

@@ -9,6 +9,7 @@ from telegram import ParseMode, ChatAction
 from telegram.ext import run_async
 
 import db
+import main
 import messages
 
 url = db.get_database_url()
@@ -133,6 +134,8 @@ def alert(bot, update, args):
             session.close()
     except ValueError:
         bot.send_message(chat_id=update['message']['chat']['id'], text=messages.alert_error(update['message']['chat']['first_name']), parse_mode=ParseMode.HTML)
+    except Exception as error:
+        main.error_callback(bot, update, error)
 
 
 @restricted
