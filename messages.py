@@ -29,8 +29,7 @@ def comandos_admin():
 
 /statistics - exibe as estatísticas atuais de uso de hardware
 /log - exibe o log de atualizações
-/reboot - reinicia o servidor 
-/update - atualiza o bot
+/reboot - reinicia o servidor
 
 *Opcional
 **Somente números são aceitos"""
