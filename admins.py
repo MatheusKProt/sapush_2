@@ -121,10 +121,11 @@ def alert(bot, update, args):
     try:
         if int(args[0]):
             bot.send_message(chat_id=args[0], text=messages.alert(msg), parse_mode=ParseMode.HTML)
-            bot.send_message(chat_id=update['message']['chat']['id'], text=messages.alert(msg), parse_mode=ParseMode.HTML)
             session = Session()
             admin = session.query(db.Admins).filter_by(user_id=update['message']['chat']['id']).first()
             session.add(db.Alert(admin.id, int(args[0]), str(msg)))
+            user = session.query(db.User).filter_by(telegram_id=admin.user_id).first()
+            bot.send_message(chat_id=update['message']['chat']['id'], text=messages.alert_success(user.first_name), parse_mode=ParseMode.HTML)
 
             session.commit()
             session.close()

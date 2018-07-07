@@ -300,6 +300,11 @@ def alert_error(first_name):
 **Somente números são aceitos""".format(first_name)
 
 
+def alert_success(first_name):
+    return """
+{}, seu alerta foi enviado com sucesso!""".format(first_name)
+
+
 def statistics(ligado, uso_processador, uso_memoria, uso_disco, memoria_total, memoria_disponivel, disco_total,
                disco_usado, disco_disponivel, processos_consumindo):
     return """
