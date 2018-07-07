@@ -127,23 +127,23 @@ def formata_horarios(index):
 
 
 def formata_curriculo(index, session):
-    link = "http://sapu.ucpel.edu.br/portal/" + find_between(str(index), 'href="', '">')
-    link = link.split("?")
-    link = "http://sapu.ucpel.edu.br/portal/engine.php?" + link[1]
-    link = link.split("amp;")
-    novo_link = ""
-    for i in link:
-        novo_link += i
-    pdf = session.get(novo_link)
-    soup = BeautifulSoup(pdf.content, 'html.parser')
+    # link = "http://sapu.ucpel.edu.br/portal/" + find_between(str(index), 'href="', '">')
+    # link = link.split("?")
+    # link = "http://sapu.ucpel.edu.br/portal/engine.php?" + link[1]
+    # link = link.split("amp;")
+    # novo_link = ""
+    # for i in link:
+    #     novo_link += i
+    # pdf = session.get(novo_link)
+    # soup = BeautifulSoup(pdf.content, 'html.parser')
     link = ""
 
-    for i in soup.find_all('script'):
-        try:
-            if "pdf" in str(i.get_text().lstrip()).split("'")[1]:
-                link = "http://sapu.ucpel.edu.br/portal/" + str(i.get_text().lstrip()).split("'")[1]
-        except:
-            pass
+    # for i in soup.find_all('script'):
+    #     try:
+    #         if "pdf" in str(i.get_text().lstrip()).split("'")[1]:
+    #             link = "http://sapu.ucpel.edu.br/portal/" + str(i.get_text().lstrip()).split("'")[1]
+    #     except:
+    #         pass
 
     curriculo = str(index.get_text().lstrip()).split("\n")
     materia = ""

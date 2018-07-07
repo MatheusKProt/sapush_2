@@ -126,9 +126,6 @@ def alert(bot, update, args):
             admin = session.query(db.Admins).filter_by(user_id=update['message']['chat']['id']).first()
             session.add(db.Alert(admin.id, int(args[0]), str(msg)))
 
-            bot.send_message(chat_id=update['message']['chat']['id'],
-                             text=messages.sugestao(update['message']['chat']['first_name']), parse_mode=ParseMode.HTML)
-
             session.commit()
             session.close()
     except ValueError:

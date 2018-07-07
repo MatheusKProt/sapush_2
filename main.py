@@ -76,10 +76,10 @@ def main():
     dp.add_handler(CommandHandler("commands", admins.commands))
 
     # inicia notificação push
-    job.run_repeating(push.notas, 60)
-    job.run_repeating(push.frequencia, 60)
+    job.run_repeating(push.notas, 1800)
+    job.run_repeating(push.frequencia, 7200)
 
-    # admins.start(bot)
+    admins.start(bot)
 
     updater.start_polling()
     updater.idle()

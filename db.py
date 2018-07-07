@@ -7,7 +7,7 @@ base = declarative_base()
 
 
 def get_database_url():
-    return "postgresql://pi:tqbtj92651@localhost:5432/sapush"
+    return "postgresql://pi:tqbtj92651@localhost:5432/sapu"
 
 
 class User(base):
