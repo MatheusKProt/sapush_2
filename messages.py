@@ -314,7 +314,7 @@ def statistics(ligado, uso_processador, uso_memoria, uso_disco, memoria_total, m
                disco_usado, disco_disponivel, processos_consumindo):
     return """
 <b>Estatísticas de uso do servidor</b>
-Estou ligado há {} horas
+{}
 Processador: {}%
 Memória: {}%
 Disco utilizado: {}%
