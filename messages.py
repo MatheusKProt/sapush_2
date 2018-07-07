@@ -28,7 +28,6 @@ def comandos_admin():
 /suggestions [número de sugestões]* ** - exibe as as sugestões recebidas 
 
 /statistics - exibe as estatísticas atuais de uso de hardware
-/log - exibe o log de atualizações
 /reboot - reinicia o servidor
 
 *Opcional
