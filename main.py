@@ -57,9 +57,9 @@ def main():
     dp.add_handler(CommandHandler("sugerir", users.sugerir, pass_args=True))
     dp.add_handler(CommandHandler("notas", users.notas))
     dp.add_handler(CommandHandler("frequencia", users.frequencia))
-    # dp.add_handler(CommandHandler("horarios", users.horarios))
+    dp.add_handler(CommandHandler("horarios", users.horarios))
     dp.add_handler(CommandHandler("historico", users.historico))
-    # dp.add_handler(CommandHandler("curriculo", users.curriculo))
+    dp.add_handler(CommandHandler("curriculo", users.curriculo))
     dp.add_handler(CommandHandler("boleto", users.boleto))
     dp.add_handler(CommandHandler("comandos", users.comandos))
     dp.add_handler(CommandHandler("ajuda", users.ajuda))
@@ -73,14 +73,13 @@ def main():
     dp.add_handler(CommandHandler("statistics", admins.statistics))
     # dp.add_handler(CommandHandler("log", admins.log))
     dp.add_handler(CommandHandler("reboot", admins.reboot))
-    # dp.add_handler(CommandHandler("update", admins.update))
     dp.add_handler(CommandHandler("commands", admins.commands))
 
     # inicia notificação push
     job.run_repeating(push.notas, 60)
     job.run_repeating(push.frequencia, 60)
 
-    admins.start(bot)
+    # admins.start(bot)
 
     updater.start_polling()
     updater.idle()

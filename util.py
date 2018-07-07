@@ -1,3 +1,5 @@
+from bs4 import BeautifulSoup
+
 import messages
 
 
@@ -6,6 +8,13 @@ def verifica_vazio(v):
         return v
     else:
         return 0.0
+
+
+def verifica_vazio_menos_um(v):
+    if v:
+        return v
+    else:
+        return -1
 
 
 def formata_notas_msg(nota):
@@ -66,14 +75,14 @@ def formata_nome_materia_frequencia(nome):
 
 def formata(o):
     if o == "I" or o == "II" or o == "III" or o == "IV" or o == "V" or o == "VI" or o == "VII" or o == "VIII" \
-            or o == "IX" or o == "X" or o == "ACG" or o == "AC" or o == "TCC":
+            or o == "IX" or o == "X" or o == "ACG" or o == "AC" or o == "TCC" or o == "VLSI" or "-A" in o \
+            or "-B" in o or "-C" in o or "-D" in o or "-E" in o or "- A" in o or "- B" in o or "- C" in o or "- D" in o \
+            or "- E" in o:
         return o + " "
-    elif o == "A" or o == "DE" or o == "E" or o == "DA" or o == "À":
+    elif o == "A" or o == "DE" or o == "E" or o == "DA" or o == "À" or o == "EM" or o == "PARA":
         return o.lower() + " "
     elif "ACG-" in o:
         return "ACG " + o.split("-")[1].capitalize() + " "
-    elif "-A" in o or "-B" in o or "-C" in o or "-D" in o or "-E" in o:
-        return o + " "
     else:
         return o.capitalize() + " "
 
@@ -84,3 +93,71 @@ def formata_curso(nome):
     for o in cursos:
         curso += formata(o)
     return curso
+
+
+def find_between(s, first, last):
+    try:
+        start = s.index(first) + len(first)
+        end = s.index(last, start)
+        return s[start:end]
+    except ValueError:
+        return ""
+
+
+def formata_horarios(index):
+    horario = str(index.get_text().lstrip()).split("\n")
+    hora = horario[1].split(" - ")
+    inicio = hora[0].split(":")
+    fim = hora[1].split(":")
+    predios = horario[2].split(" ")
+    predio = ""
+    count = 0
+    for p in predios:
+        if count == 0:
+            predio += p.lower() + " "
+        else:
+            predio += p.capitalize() + " "
+        count += 1
+    predio = predio[:-1]
+    if " " in horario[3]:
+        sala = horario[3].lower()
+    else:
+        sala = "sala " + horario[3]
+    return formata_nome_materia_frequencia(horario[0]), inicio[0] + ":" + inicio[1], fim[0] + ":" + fim[1], predio, sala
+
+
+def formata_curriculo(index, session):
+    link = "http://sapu.ucpel.edu.br/portal/" + find_between(str(index), 'href="', '">')
+    link = link.split("?")
+    link = "http://sapu.ucpel.edu.br/portal/engine.php?" + link[1]
+    link = link.split("amp;")
+    novo_link = ""
+    for i in link:
+        novo_link += i
+    pdf = session.get(novo_link)
+    soup = BeautifulSoup(pdf.content, 'html.parser')
+    link = ""
+
+    for i in soup.find_all('script'):
+        try:
+            if "pdf" in str(i.get_text().lstrip()).split("'")[1]:
+                link = "http://sapu.ucpel.edu.br/portal/" + str(i.get_text().lstrip()).split("'")[1]
+        except:
+            pass
+
+    curriculo = str(index.get_text().lstrip()).split("\n")
+    materia = ""
+    materias = str(curriculo[0]).split(" ")
+    materias.pop(0)
+    materias.pop(0)
+    for o in materias:
+        materia += o + " "
+    ms = materia.split(" - ")
+    materia = ""
+    for o in ms:
+        materia += o + "-"
+    mats = materia[:-1].split(" ")
+    materia = ""
+    for o in mats:
+        materia += formata(o)
+    return materia[:-1], curriculo[1], link

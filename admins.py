@@ -40,9 +40,8 @@ def start(bot):
     admins = session.query(db.Admins)
     for admin in admins:
         bot.send_message(chat_id=admin.user_id,
-                         text="SAPUsh foi iniciado!",
+                         text="SAPU foi iniciado!",
                          parse_mode=ParseMode.HTML)
-
 
 
 @restricted

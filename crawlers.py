@@ -2,6 +2,7 @@ import lxml.html
 import requests
 from bs4 import BeautifulSoup
 
+import messages
 import util
 
 
@@ -92,6 +93,40 @@ def get_frequencia(user):
             td = []
             count = 0
     return table
+
+
+def get_horarios(user):
+    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    horarios = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=HorarioFormList")
+    soup = BeautifulSoup(horarios.content, 'html.parser')
+    tdatagrid_body = soup.find(class_='tdatagrid_body')
+    dias = []
+    msg = "<b>Horários</b>"
+    for index in tdatagrid_body.find_all(class_='tdatagrid_group'):
+        dias.append([index.get_text().lstrip()[:-1], util.find_between(str(index), 'level="', '">')])
+    for dia, i in dias:
+        msg += "\n\n<b>{}</b>".format(str(dia).capitalize())
+        for index in tdatagrid_body.find_all(childof=i):
+            materia, inicio, fim, predio, sala = util.formata_horarios(index)
+            msg += messages.formata_horario(materia, inicio, fim, predio, sala)
+    return msg
+
+
+def get_curriculo(user):
+    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    curriculo = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=MatrizCurricularFormList")
+    soup = BeautifulSoup(curriculo.content, 'html.parser')
+    tdatagrid_body = soup.find(class_='tdatagrid_body')
+    semestres = []
+    msg = "<b>Matriz Curricular</b>"
+    for index in tdatagrid_body.find_all(class_='tdatagrid_group'):
+        semestres.append([index.get_text().lstrip()[:-1], util.find_between(str(index), 'level="', '">')])
+    for semestre, i in semestres:
+        msg += "\n\n<b>{}</b>".format(str(semestre).capitalize())
+        for index in tdatagrid_body.find_all(childof=i):
+            materia, ch, link = util.formata_curriculo(index, session)
+            msg += messages.formata_curriculo(materia, ch, link)
+    return msg
 
 
 def get_historico(user):

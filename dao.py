@@ -42,16 +42,16 @@ def set_notas(user, notas_resumo, notas_detalhe):
     for detalhe in notas_detalhe:
         session = Session()
         resumo = session.query(db.NotasResumo).filter_by(user_id=user.telegram_id, materia=str(detalhe[8])).first()
-        session.close
+        session.close()
         session = Session()
         notas = session.query(db.NotasDetalhe).filter_by(materia=resumo.id, descricao=detalhe[0]).first()
 
         descricao = detalhe[0]
         materia = resumo.id
         data = detalhe[1]
-        peso = float(util.verifica_vazio(detalhe[2]))
-        nota = float(util.verifica_vazio(detalhe[3]))
-        peso_x_nota = float(util.verifica_vazio(detalhe[5]))
+        peso = float(util.verifica_vazio_menos_um(detalhe[2]))
+        nota = float(util.verifica_vazio_menos_um(detalhe[3]))
+        peso_x_nota = float(util.verifica_vazio_menos_um(detalhe[5]))
         if not notas:
             notas = db.NotasDetalhe(materia, descricao, data, peso, nota, peso_x_nota)
 

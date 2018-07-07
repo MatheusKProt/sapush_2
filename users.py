@@ -232,8 +232,10 @@ def notas(bot, update):
     session = Session()
     notas_resumo = session.query(db.NotasResumo).filter_by(user_id=telegram_id)
 
+    msg = "<b>Notas</b>"
     for resumo in notas_resumo:
-        bot.send_message(chat_id=telegram_id, text=util.formata_notas_resumo(resumo), parse_mode=ParseMode.HTML)
+        msg += "\n" + util.formata_notas_resumo(resumo)
+    bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
     session.close()
 
 
@@ -245,8 +247,21 @@ def frequencia(bot, update):
     session = Session()
     frequencia = session.query(db.Frequencia).filter_by(user_id=telegram_id)
 
+    msg = "<b>Frequência</b>"
     for freq in frequencia:
-        bot.send_message(chat_id=telegram_id, text=util.formata_frequencia(freq), parse_mode=ParseMode.HTML)
+        msg += "\n" + util.formata_frequencia(freq)
+    bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
+    session.close()
+
+
+@restricted
+@logged
+def horarios(bot, update):
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    session = Session()
+    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
+    bot.send_message(chat_id=telegram_id, text=crawlers.get_horarios(user), parse_mode=ParseMode.HTML)
     session.close()
 
 
@@ -259,6 +274,18 @@ def historico(bot, update):
     historico = crawlers.get_historico(user)
     bot.send_message(chat_id=telegram_id, text=messages.historico(user.first_name), parse_mode=ParseMode.HTML)
     bot.send_document(chat_id=telegram_id, document="http://sapu.ucpel.edu.br/portal/{}".format(historico))
+    session.close()
+
+
+@run_async
+@restricted
+@logged
+def curriculo(bot, update):
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    session = Session()
+    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
+    bot.send_message(chat_id=telegram_id, text=crawlers.get_curriculo(user), parse_mode=ParseMode.HTML)
     session.close()
 
 
@@ -346,6 +373,10 @@ def callback(bot, update):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
     if "ajud" in str(update['message']['text']).lower() or "help" in str(update['message']['text']).lower():
         ajuda(bot, update)
+    elif "notas" in str(update['message']['text']).lower():
+        bot.send_message(chat_id=update['message']['chat']['id'],
+                         text="exemplo de msg\nuse /notas seu animal",
+                         parse_mode=ParseMode.HTML)
     else:
         bot.send_message(chat_id=update['message']['chat']['id'],
                          text=messages.answer_error(format(update['message']['chat']['first_name'])),

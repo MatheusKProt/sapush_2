@@ -144,11 +144,12 @@ def not_registered(first_name):
 comando /login [usuário] [senha].""".format(first_name)
 
 
-def push_grades(first_name, materia, nota, msg):
+def push_grades(first_name, materia, nota, media, msg):
     return """
 {}, sua nota de <b>{}</b>acabou de ser publicada no sistema!
 Você tirou <b>{}</b> de 10.0.
-<b>{}</b>""".format(first_name, materia, nota, msg)
+Sua média atual é <b>{}</b>.
+<b>{}</b>""".format(first_name, materia, nota, media, msg)
 
 
 def push_grades_null(first_name, materia, data):
@@ -316,6 +317,17 @@ Capacidade usada: {}GB
 Capacidade disponível: {}GB
 
 Os processos com maior consumo de memória são:{}""".format(round(ligado, 2), uso_processador, uso_memoria, uso_disco,
-                                                                round(memoria_total, 2), round(memoria_disponivel, 2),
-                                                                round(disco_total, 2), round(disco_usado, 2),
-                                                                round(disco_disponivel, 2), processos_consumindo)
+                                                           round(memoria_total, 2), round(memoria_disponivel, 2),
+                                                           round(disco_total, 2), round(disco_usado, 2),
+                                                           round(disco_disponivel, 2), processos_consumindo)
+
+
+def formata_horario(materia, inicio, fim, predio, sala):
+    return """
+<b>{}</b>
+Das {} até as {} no {}, {}.""".format(materia, inicio, fim, predio, sala)
+
+
+def formata_curriculo(materia, ch, link):
+    return """
+<a href=\"{}\">{}</a> | {}""".format(link, ch, materia)
