@@ -186,7 +186,7 @@ def statistics(bot, update):
         processos_consumindo += """
 {}, usando {}% de memória""".format(proc[0], round(proc[1]), 2)
 
-    ligado = "Estou ligado há %d dias, %d horas, %d minutos e %d segundos." % (dias_ligado, horas_ligado, minutos_ligado, segundos_ligado)
+    ligado = "Estou ligado há %d dias, %d horas, %d minutos e %d segundos" % (dias_ligado, horas_ligado, minutos_ligado, segundos_ligado)
     memoria_total = memoria.total / 1000000000
     memoria_disponivel = memoria.available / 1000000000
     disco_total = disco.total / 1073741824
