@@ -1,5 +1,4 @@
 import subprocess
-from datetime import datetime
 import operator
 from functools import wraps
 
@@ -157,8 +156,11 @@ def statement(bot, update, args):
 @run_async
 def statistics(bot, update):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
-    tempo_boot = datetime.fromtimestamp(psutil.boot_time())
-    hora_atual = datetime.now()
+    tempo_ligado = time.time() - psutil.boot_time()
+    dias_ligado = int(tempo_ligado / 24 / 60 / 60)
+    horas_ligado = int(tempo_ligado / 60 / 60 % 24)
+    minutos_ligado = int(tempo_ligado / 60 % 60)
+    segundos_ligado = int(tempo_ligado % 60)
     processador = psutil.cpu_percent()
     memoria = psutil.virtual_memory()
     disco = psutil.disk_usage('/')
@@ -183,7 +185,7 @@ def statistics(bot, update):
         processos_consumindo += """
 {}, usando {}% de memória""".format(proc[0], round(proc[1]), 2)
 
-    ligado = ((hora_atual - tempo_boot).total_seconds()) / 3600
+    ligado = "Estou ligado há %d dias, %d horas, %d minutos e %d segundos." % (dias_ligado, horas_ligado, minutos_ligado, segundos_ligado)
     memoria_total = memoria.total / 1000000000
     memoria_disponivel = memoria.available / 1000000000
     disco_total = disco.total / 1073741824
