@@ -326,7 +326,7 @@ Capacidade total de disco: {}GB
 Capacidade usada: {}GB
 Capacidade disponível: {}GB
 
-Os processos com maior consumo de memória são:{}""".format(round(ligado, 2), uso_processador, uso_memoria, uso_disco,
+Os processos com maior consumo de memória são:{}""".format(ligado, uso_processador, uso_memoria, uso_disco,
                                                            round(memoria_total, 2), round(memoria_disponivel, 2),
                                                            round(disco_total, 2), round(disco_usado, 2),
                                                            round(disco_disponivel, 2), processos_consumindo)
