@@ -12,17 +12,17 @@ Você pode começar a usar agora mesmo! Basta você baixar o aplicativo em qualq
 
 ## Como ele funciona?
 
-O bot do telegram fornece aos alunos informações atualizadas sobre notas, horários e todas as demais informações contidas no sistema da universidade, sem precisar visitar o site repetidamente. Em suma, o bot faz todo o trabalho pesado e você economiza tempo!
+O bot do telegram fornece aos alunos informações atualizadas sobre notas, horários e todas as demais informações contidas no sistema da universidade, sem precisar visitar o site repetidamente. Em suma, o bot faz todo o trabalho pesado e você economiza tempo.
 
 ## Funcionalidades
 
-Como em qualquer bot do telegram, você pode perguntar o que ele pode fazer digitando /comandos para ter acesso a todas as funcionalidades disponíveis ou /ajuda caso você esteja perdido e não saiba por onde começar.
+Como em qualquer bot do telegram, você pode perguntar o que ele pode fazer digitando `/comandos` para ter acesso a todas as funcionalidades disponíveis ou `/ajuda` caso você esteja perdido e não saiba por onde começar.
 
-**A lista de comandos está sempre sofrendo mudanças.** Se você tiver alguma sugestão para nós, por favor, envie abrindo uma `issue` ou digite o comando /sugerir e envie sua sugestão para nós direto pelo bot. 
+**A lista de comandos está sempre sofrendo mudanças.** Se você tiver alguma sugestão para nós, por favor, envie abrindo uma `issue` ou digite o comando `/sugerir` e envie sua sugestão para nós direto pelo bot. 
 
 ## Notificações
 
-O bot do sapu também fornece **notificações push!** Sempre que novas notas ou frequencia são registradas pelo professor, você recebe em instantes uma mensagem com o conteúdo publicado (você pode ativar/desativar esta opção a qualquer momento utilizando os comandos do bot).
+O bot do sapu também fornece **notificações push!** Sempre que novas notas ou frequencia forem registradas pelo professor, você recebe em instantes um alerta (você pode ativar/desativar esta opção a qualquer momento utilizando os comandos do bot).
 
 ## DISCLAIMER
 
