@@ -36,9 +36,15 @@ def comandos_admin():
 
 def start(first_name):
     return """
-Hey {}, tudo bem?
+Olá {}!
 
-Estou aqui para lhe ajudar. Antes de mais nada, leia com atenção os Termos de Uso:
+Se você chegou até aqui, é por que você já sabe qual é a minha utilidade. Mas caso você não saiba, minha utilidade \
+é fornecer a você uma forma de fonte única e simples de acompanhar todas as informações armazenadas no SAPU, como avaliações, \
+horários e muito mais. 
+
+Vamos começar? 
+
+Leia com atenção os Termos de Uso e siga as instruções a seguir para ver tudo o que eu posso fazer por você.
 
 <b>Termos de Uso</b>
 Pelo acesso e uso deste bot, você aceita e concorda em cumprir os termos legais de uso. Ao utilizar este bot, \
