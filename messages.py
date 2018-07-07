@@ -25,7 +25,7 @@ def comandos_admin():
 /users [nome]* [sobrenome]* - exibe todos os usuários cadastrados
 /alert [id]** [mensagem] - envia um aviso para uma pessoa específica 
 /statement [mensagem] - envia um comunicado a todos os usuários 
-/sugestions [número de sugestões]* ** - exibe as as sugestões recebidas 
+/suggestions [número de sugestões]* ** - exibe as as sugestões recebidas 
 
 /statistics - exibe as estatísticas atuais de uso de hardware
 /log - exibe o log de atualizações
