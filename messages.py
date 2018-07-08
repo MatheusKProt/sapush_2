@@ -103,7 +103,7 @@ de Pelotas, suas subsidiárias, afiliadas e licenciantes.
 Este projeto não é oficialmente afiliado com a instituição de ensino Universidade Católica de Pelotas (UCPEL). Este é apenas \
 um experimento de código aberto construido para fins didáticos. 
 
-Por favor, ajude-nos a melhorar. Caso haja alguma dúvida ou sugestão, entre em contato digitando o comando \ 
+Por favor, ajude-nos a melhorar. Caso haja alguma dúvida ou sugestão, entre em contato digitando o comando \
 /sugerir [sua sugestão]."""
 
 
