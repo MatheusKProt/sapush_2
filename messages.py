@@ -100,9 +100,11 @@ Todos os direitos reservados. Todos os textos, imagens, gráficos, animações, 
 são protegidos por direitos autorais e outros direitos de propriedade intelectual pertencentes à Universidade Católica \
 de Pelotas, suas subsidiárias, afiliadas e licenciantes.
 
-Somos independentes. Não possuímos vinculo empregatício algum com a Universidade Católica de Pelotas (UCPel).
+Este projeto não é oficialmente afiliado com a instituição de ensino Universidade Católica de Pelotas (UCPEL). Este é apenas \
+um experimento de código aberto construido para fins didáticos. 
 
-Nós valorizamos as suas opiniões. Caso haja alguma dúvida ou sugestão, entre em contato digitando o comando /sugerir [sua sugestão]."""
+Por favor, ajude-nos a melhorar. Caso haja alguma dúvida ou sugestão, entre em contato digitando o comando \ 
+/sugerir [sua sugestão]."""
 
 
 def not_logged_in(first_name):
