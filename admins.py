@@ -215,7 +215,7 @@ def reboot(bot, update):
 @restricted
 def update(bot, update):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
-    subprocess.call(['./update.sh'])
+    subprocess.call(['./update.sh'], shell=True)
     bot.send_message(chat_id=update['message']['chat']['id'], text="O bot foi atualizado para a versão mais recente.\nO servidor está reiniciando...",
                      parse_mode=ParseMode.HTML)
     subprocess.call(["sudo", "reboot", "now"])
