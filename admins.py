@@ -40,7 +40,7 @@ def start(bot):
     admins = session.query(db.Admins)
     for admin in admins:
         bot.send_message(chat_id=admin.user_id,
-                         text="O bot foi iniciado com sucesso. o/",
+                         text="O bot foi iniciado com sucesso.",
                          parse_mode=ParseMode.HTML)
 
 
@@ -217,7 +217,7 @@ def update(bot, update):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
     subprocess.call(["cd", "Documents/SAPU/"], shell=True)
     subprocess.call(["git", "pull"])
-    bot.send_message(chat_id=update['message']['chat']['id'], text="O bot foi atualizado para a versão mais recente.",
+    bot.send_message(chat_id=update['message']['chat']['id'], text="O bot foi atualizado para a versão mais recente.\nO servidor está reiniciando...",
                      parse_mode=ParseMode.HTML)
     subprocess.call(["sudo", "reboot", "now"])
 
