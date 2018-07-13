@@ -112,6 +112,24 @@ def get_horarios(user):
     return msg
 
 
+def get_disciplinas(user):
+    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    disciplinas = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=MatriculaFormList")
+    soup = BeautifulSoup(disciplinas.content, 'html.parser')
+    tdatagrid_body = soup.find(class_='tdatagrid_body')
+    table = []
+    td = []
+    count = 0
+    for index in tdatagrid_body.find_all('td'):
+        td.append(index.get_text().lstrip())
+        count += 1
+        if count == 5:
+            table.append(td)
+            td = []
+            count = 0
+    return util.formata_disciplinas(table)
+
+
 def get_curriculo(user):
     session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
     curriculo = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=MatrizCurricularFormList")
@@ -142,4 +160,8 @@ def get_boleto(user):
     boleto = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=SolicitacaoBoletoFormList&method=emitirBoleto")
     soup = BeautifulSoup(boleto.content, 'html.parser')
     index = soup.find('script')
-    return str(index.get_text().lstrip()).split("'")[1]
+    if str(index.get_text().lstrip()).split("'")[1] == "Erro":
+        if "títulos em aberto" in str(index.get_text().lstrip()).split("'")[3]:
+            return "Você não possui boletos em aberto", False
+    else:
+        return str(index.get_text().lstrip()).split("'")[1], True

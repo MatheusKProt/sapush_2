@@ -313,6 +313,18 @@ def historico(bot, update):
 
 
 @registered
+@restricted
+@logged
+def disciplinas(bot, update):
+    telegram_id = update['message']['chat']['id']
+    session = Session()
+    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
+    disciplinas = crawlers.get_disciplinas(user)
+    bot.send_message(chat_id=telegram_id, text=disciplinas, parse_mode=ParseMode.HTML)
+    session.close()
+
+
+@registered
 @run_async
 @restricted
 @logged
@@ -332,8 +344,22 @@ def boleto(bot, update):
     telegram_id = update['message']['chat']['id']
     session = Session()
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
-    boleto = crawlers.get_boleto(user)
-    bot.send_message(chat_id=telegram_id, text=messages.boleto(user.first_name, boleto), parse_mode=ParseMode.HTML)
+    boleto, status = crawlers.get_boleto(user)
+    if status:
+        bot.send_message(chat_id=telegram_id, text=messages.boleto(user.first_name, boleto, 1), parse_mode=ParseMode.HTML)
+    else:
+        bot.send_message(chat_id=telegram_id, text=messages.boleto(user.first_name, boleto, 2), parse_mode=ParseMode.HTML)
+    session.close()
+
+
+@registered
+@restricted
+@logged
+def chave(bot, update):
+    telegram_id = update['message']['chat']['id']
+    session = Session()
+    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
+    bot.send_message(chat_id=telegram_id, text=messages.chave(user.chave[:-1]), parse_mode=ParseMode.HTML)
     session.close()
 
 
@@ -427,9 +453,21 @@ def callback(bot, update):
     if "ajud" in str(update['message']['text']).lower() or "help" in str(update['message']['text']).lower():
         ajuda(bot, update)
     elif "notas" in str(update['message']['text']).lower():
-        bot.send_message(chat_id=update['message']['chat']['id'],
-                         text="exemplo de msg\nuse /notas seu animal",
-                         parse_mode=ParseMode.HTML)
+        notas(bot, update)
+    elif "frequencia" in str(update['message']['text']).lower():
+        frequencia(bot, update)
+    elif "horarios" in str(update['message']['text']).lower():
+        horarios(bot, update)
+    elif "disciplinas" in str(update['message']['text']).lower():
+        disciplinas(bot, update)
+    elif "historico" in str(update['message']['text']).lower():
+        historico(bot, update)
+    elif "curriculo" in str(update['message']['text']).lower():
+        curriculo(bot, update)
+    elif "boleto" in str(update['message']['text']).lower():
+        boleto(bot, update)
+    elif "chave" in str(update['message']['text']).lower():
+        chave(bot, update)
     else:
         bot.send_message(chat_id=update['message']['chat']['id'],
                          text=messages.answer_error(format(update['message']['chat']['first_name'])),

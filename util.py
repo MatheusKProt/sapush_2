@@ -178,3 +178,28 @@ def formata_curriculo(index, session):
     for o in mats:
         materia += formata(o)
     return materia[:-1], curriculo[1], link
+
+
+def formata_disciplinas(disciplinas):
+    disc = []
+    discs = []
+    for disciplina in disciplinas:
+        td = []
+        if not disciplina[3] in discs:
+            discs.append(disciplina[3])
+            td.append(disciplina[3])
+            if int(disciplina[3]) == 123:
+                td.append("\n<b>Regulares</b>")
+            elif int(disciplina[3]) == 200:
+                td.append("\n<b>Dependências</b>")
+            else:
+                td.append("\n<b>Outras</b>")
+            disc.append(td)
+    msg = "<b>Disciplinas</b>\n"
+    for d in disc:
+        msg += d[1]
+        for disciplina in disciplinas:
+            if d[0] == disciplina[3]:
+                msg += str(messages.formata_disciplinas(formata_nome_materia(disciplina[1])))
+        msg += "\n"
+    return msg

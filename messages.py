@@ -271,12 +271,20 @@ de auxílio.""".format(first_name)
 
 def historico(first_name):
     return """
-{}, aqui está o seu histórico:""".format(first_name)
+<b>Histórico</b>
+
+Seu histórico está sendo gerado...""".format(first_name)
 
 
-def boleto(first_name, boleto):
-    return """
-{}, seu boleto está disponível <a href=\"{}\">aqui</a>.""".format(first_name, boleto)
+def boleto(first_name, boleto, option):
+    if option == 1:
+        return """
+<b>Boleto</b>
+
+Seu boleto está disponível <a href=\"{}\">aqui</a>.""".format(boleto)
+    else:
+        return """
+{}, você não possui boletos em aberto.""".format(first_name)
 
 
 def formata_users(telegram_id, first_name, last_name):
@@ -358,3 +366,15 @@ def count_users(first_name, num):
 def not_registered(first_name):
     return """
 {}, para ter acesso a esta funcionalidade utilize o comando /start.""".format(first_name)
+
+
+def formata_disciplinas(disciplina):
+    return """
+{}""".format(disciplina)
+
+
+def chave(chave):
+    return """
+<b>Chave</b>
+
+Sua chave de matricula é {}.""".format(chave)
