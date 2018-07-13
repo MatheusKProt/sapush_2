@@ -343,3 +343,13 @@ Das {} até as {} no {}, {}.""".format(materia, inicio, fim, predio, sala)
 def formata_curriculo(materia, ch, link):
     return """
 <a href=\"{}\">{}</a> | {}""".format(link, ch, materia)
+
+
+def notas_empty(first_name):
+    return """
+{}, ainda não há notas cadastradas no SAPU.""".format(first_name)
+
+
+def count_users(first_name, num):
+    return """
+{}, o número total de usuários é {}.""".format(first_name, num)

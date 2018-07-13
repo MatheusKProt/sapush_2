@@ -40,15 +40,18 @@ def formata_notas_resumo(notas_resumo):
             else:
                 condicao = "reprovado"
 
-    return messages.formata_notas_resumo(formata_nome_materia(notas_resumo.materia), notas_resumo.primeira_av, notas_resumo.segunda_av,
+    return messages.formata_notas_resumo(formata_nome_materia(notas_resumo.materia), notas_resumo.primeira_av,
+                                         notas_resumo.segunda_av,
                                          notas_resumo.av_complementar, notas_resumo.media_final, condicao)
 
 
 def formata_frequencia(frequencia):
     if frequencia.faltas == 1:
-        return messages.formata_frequencia(formata_nome_materia_frequencia(frequencia.materia), frequencia.frequencia, frequencia.faltas, "falta")
+        return messages.formata_frequencia(formata_nome_materia_frequencia(frequencia.materia), frequencia.frequencia,
+                                           frequencia.faltas, "falta")
     else:
-        return messages.formata_frequencia(formata_nome_materia_frequencia(frequencia.materia), frequencia.frequencia, frequencia.faltas, "faltas")
+        return messages.formata_frequencia(formata_nome_materia_frequencia(frequencia.materia), frequencia.frequencia,
+                                           frequencia.faltas, "faltas")
 
 
 def formata_nome_materia(nome):
@@ -107,23 +110,37 @@ def find_between(s, first, last):
 def formata_horarios(index):
     horario = str(index.get_text().lstrip()).split("\n")
     hora = horario[1].split(" - ")
-    inicio = hora[0].split(":")
-    fim = hora[1].split(":")
+    try:
+        inicio = hora[0].split(":")
+        inicial = inicio[0] + ":" + inicio[1]
+    except:
+        inicial = "(horário não cadastrado)"
+    try:
+        fim = hora[1].split(":")
+        final = fim[0] + ":" + fim[1]
+    except:
+        final = "(horário não cadastrado)"
     predios = horario[2].split(" ")
     predio = ""
     count = 0
-    for p in predios:
-        if count == 0:
-            predio += p.lower() + " "
-        else:
-            predio += p.capitalize() + " "
-        count += 1
-    predio = predio[:-1]
-    if " " in horario[3]:
-        sala = horario[3].lower()
+    if predios == [' ']:
+        for p in predios:
+            if count == 0:
+                predio += p.lower() + " "
+            else:
+                predio += p.capitalize() + " "
+            count += 1
+        predio = predio[:-1]
     else:
-        sala = "sala " + horario[3]
-    return formata_nome_materia_frequencia(horario[0]), inicio[0] + ":" + inicio[1], fim[0] + ":" + fim[1], predio, sala
+        predio = "(prédio não cadastrado)"
+    if horario[3]:
+        if " " in horario[3]:
+            sala = horario[3].lower()
+        else:
+            sala = "sala " + horario[3]
+    else:
+        sala = "(sala não cadastrada)"
+    return formata_nome_materia_frequencia(horario[0]), inicial, final, predio, sala
 
 
 def formata_curriculo(index, session):

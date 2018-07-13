@@ -28,7 +28,6 @@ def error_callback(bot, update, error):
         bot.send_message(chat_id=update['message']['chat']['id'], text="TimedOut")
     except NetworkError:
         print("NetworkError")
-        bot.send_message(chat_id=update['message']['chat']['id'], text="NetworkError")
     except ChatMigrated as e:
         print("ChatMigrated ", e)
         bot.send_message(chat_id=update['message']['chat']['id'], text="ChatMigrated")
@@ -71,7 +70,6 @@ def main():
     dp.add_handler(CommandHandler("statement", admins.statement, pass_args=True))
     dp.add_handler(CommandHandler("suggestions", admins.suggestions, pass_args=True))
     dp.add_handler(CommandHandler("statistics", admins.statistics))
-    # dp.add_handler(CommandHandler("log", admins.log))
     dp.add_handler(CommandHandler("reboot", admins.reboot))
     dp.add_handler(CommandHandler("commands", admins.commands))
 

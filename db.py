@@ -68,10 +68,11 @@ class NotasResumo(base):
     media = Column('media', Float)
     av_complementar = Column('av_complementar', Float)
     media_final = Column('media_final', Float)
+    semestre = Column('semestre', String)
 
     notas_detalhe = relationship("NotasDetalhe", cascade="all,delete", backref="notas_resumo")
 
-    def __init__(self, user_id, materia, primeira_av, segunda_av, media, av_complementar, media_final):
+    def __init__(self, user_id, materia, primeira_av, segunda_av, media, av_complementar, media_final, semestre):
         self.user_id = user_id
         self.materia = materia
         self.primeira_av = primeira_av
@@ -79,6 +80,7 @@ class NotasResumo(base):
         self.media = media
         self.av_complementar = av_complementar
         self.media_final = media_final
+        self.semestre = semestre
 
 
 class NotasDetalhe(base):
@@ -91,14 +93,16 @@ class NotasDetalhe(base):
     peso = Column('peso', Float)
     nota = Column('nota', Float)
     peso_x_nota = Column('peso_x_nota', Float)
+    semestre = Column('semestre', String)
 
-    def __init__(self, materia, descricao, data, peso, nota, peso_x_nota):
+    def __init__(self, materia, descricao, data, peso, nota, peso_x_nota, semestre):
         self.materia = materia
         self.descricao = descricao
         self.data = data
         self.peso = peso
         self.nota = nota
         self.peso_x_nota = peso_x_nota
+        self.semestre = semestre
 
 
 class PushNotas(base):
@@ -137,12 +141,14 @@ class Frequencia(base):
     materia = Column('materia', String)
     frequencia = Column('frequencia', Float)
     faltas = Column('faltas', Integer)
+    semestre = Column('semestre', String)
 
-    def __init__(self, user_id, materia, frequencia, faltas):
+    def __init__(self, user_id, materia, frequencia, faltas, semestre):
         self.user_id = user_id
         self.materia = materia
         self.frequencia = frequencia
         self.faltas = faltas
+        self.semestre = semestre
 
 
 class Sugestoes(base):

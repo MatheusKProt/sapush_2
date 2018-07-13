@@ -1,3 +1,5 @@
+import time
+
 from sqlalchemy.orm import sessionmaker
 
 import db
@@ -9,9 +11,13 @@ Session = sessionmaker(bind=engine)
 
 
 def set_notas(user, notas_resumo, notas_detalhe):
+    if int(time.strftime("%m", time.localtime())) >= 7:
+        semestre = str(time.strftime("%Y/2", time.localtime()))
+    else:
+        semestre = str(time.strftime("%Y/1", time.localtime()))
     for resumo in notas_resumo:
         session = Session()
-        materias = session.query(db.NotasResumo).filter_by(user_id=user.telegram_id, materia=str(resumo[0])).first()
+        materias = session.query(db.NotasResumo).filter_by(user_id=user.telegram_id, materia=str(resumo[0]), semestre=semestre).first()
 
         user_id = user.telegram_id
         materia = str(resumo[0])
@@ -22,7 +28,7 @@ def set_notas(user, notas_resumo, notas_detalhe):
         media_final = float(util.verifica_vazio(resumo[5]))
 
         if not materias:
-            materias = db.NotasResumo(user_id, materia, primeira_av, segunda_av, media, av_complementar, media_final)
+            materias = db.NotasResumo(user_id, materia, primeira_av, segunda_av, media, av_complementar, media_final, semestre)
 
             session.add(materias)
             session.commit()
@@ -35,16 +41,17 @@ def set_notas(user, notas_resumo, notas_detalhe):
             materias.media = media
             materias.av_complementar = av_complementar
             materias.media_final = media_final
+            materias.semestre = semestre
 
             session.commit()
             session.close()
 
     for detalhe in notas_detalhe:
         session = Session()
-        resumo = session.query(db.NotasResumo).filter_by(user_id=user.telegram_id, materia=str(detalhe[8])).first()
+        resumo = session.query(db.NotasResumo).filter_by(user_id=user.telegram_id, materia=str(detalhe[8]), semestre=semestre).first()
         session.close()
         session = Session()
-        notas = session.query(db.NotasDetalhe).filter_by(materia=resumo.id, descricao=detalhe[0]).first()
+        notas = session.query(db.NotasDetalhe).filter_by(materia=resumo.id, descricao=detalhe[0], semestre=semestre).first()
 
         descricao = detalhe[0]
         materia = resumo.id
@@ -53,7 +60,7 @@ def set_notas(user, notas_resumo, notas_detalhe):
         nota = float(util.verifica_vazio_menos_um(detalhe[3]))
         peso_x_nota = float(util.verifica_vazio_menos_um(detalhe[5]))
         if not notas:
-            notas = db.NotasDetalhe(materia, descricao, data, peso, nota, peso_x_nota)
+            notas = db.NotasDetalhe(materia, descricao, data, peso, nota, peso_x_nota, semestre)
 
             session.add(notas)
             session.commit()
@@ -65,6 +72,7 @@ def set_notas(user, notas_resumo, notas_detalhe):
             notas.peso = peso
             notas.nota = nota
             notas.peso_x_nota = peso_x_nota
+            notas.semestre = semestre
 
             session.commit()
             session.close()
@@ -72,9 +80,13 @@ def set_notas(user, notas_resumo, notas_detalhe):
 
 
 def set_frequencia(user, frequencias):
+    if int(time.strftime("%m", time.localtime())) >= 7:
+        semestre = str(time.strftime("%Y/2", time.localtime()))
+    else:
+        semestre = str(time.strftime("%Y/1", time.localtime()))
     for freq in frequencias:
         session = Session()
-        frequencia_db = session.query(db.Frequencia).filter_by(user_id=user.telegram_id, materia=str(freq[0])).first()
+        frequencia_db = session.query(db.Frequencia).filter_by(user_id=user.telegram_id, materia=str(freq[0]), semestre=semestre).first()
 
         user_id = user.telegram_id
         materia = str(freq[0])
@@ -82,7 +94,7 @@ def set_frequencia(user, frequencias):
         faltas = int(freq[3])
 
         if not frequencia_db:
-            frequencia_db = db.Frequencia(user_id, materia, frequencia, faltas)
+            frequencia_db = db.Frequencia(user_id, materia, frequencia, faltas, semestre)
 
             session.add(frequencia_db)
             session.commit()
@@ -92,6 +104,7 @@ def set_frequencia(user, frequencias):
             frequencia_db.materia = materia
             frequencia_db.frequencia = frequencia
             frequencia_db.faltas = faltas
+            frequencia_db.semestre = semestre
 
             session.commit()
             session.close()

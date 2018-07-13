@@ -77,7 +77,7 @@ def get_frequencia(bot, update, user):
     for freq in frequencias:
         frequencia_db = session.query(db.Frequencia).filter_by(user_id=user.telegram_id, materia=str(freq[0]),
                                                                frequencia=float(freq[2].split("%")[0]), faltas=int(freq[3])).first()
-        if not frequencia_db:
+        if not frequencia_db and float(freq[2].split("%")[0]) != 100:
             try:
                 bot.send_message(chat_id=user.telegram_id,
                                  text=messages.push_frequencia(user.first_name, float(freq[2].split("%")[0]),

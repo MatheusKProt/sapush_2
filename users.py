@@ -227,14 +227,21 @@ def deletar(bot, update):
 @restricted
 @logged
 def notas(bot, update):
+    if int(time.strftime("%m", time.localtime())) >= 7:
+        semestre = str(time.strftime("%Y/2", time.localtime()))
+    else:
+        semestre = str(time.strftime("%Y/1", time.localtime()))
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
     session = Session()
-    notas_resumo = session.query(db.NotasResumo).filter_by(user_id=telegram_id)
+    notas_resumo = session.query(db.NotasResumo).filter_by(user_id=telegram_id, semestre=semestre)
 
-    msg = "<b>Notas</b>"
-    for resumo in notas_resumo:
-        msg += "\n" + util.formata_notas_resumo(resumo)
+    if notas_resumo.first():
+        msg = "<b>Notas</b>"
+        for resumo in notas_resumo:
+            msg += "\n" + util.formata_notas_resumo(resumo)
+    else:
+        msg = messages.notas_empty(update['message']['chat']['first_name'])
     bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
     session.close()
 
@@ -242,10 +249,14 @@ def notas(bot, update):
 @restricted
 @logged
 def frequencia(bot, update):
+    if int(time.strftime("%m", time.localtime())) >= 7:
+        semestre = str(time.strftime("%Y/2", time.localtime()))
+    else:
+        semestre = str(time.strftime("%Y/1", time.localtime()))
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
     session = Session()
-    frequencia = session.query(db.Frequencia).filter_by(user_id=telegram_id)
+    frequencia = session.query(db.Frequencia).filter_by(user_id=telegram_id, semestre=semestre)
 
     msg = "<b>Frequência</b>"
     for freq in frequencia:
@@ -318,36 +329,48 @@ def sugerir(bot, update, args):
 
 
 def inlinequery(bot, update):
+    if int(time.strftime("%m", time.localtime())) >= 7:
+        semestre = str(time.strftime("%Y/2", time.localtime()))
+    else:
+        semestre = str(time.strftime("%Y/1", time.localtime()))
     results = list()
-    results.append(InlineQueryResultArticle(id=uuid4(), title="Notas", description="Retorna suas notas do semestre atual.",
-                                            input_message_content=InputTextMessageContent(notas_inline(update), parse_mode=ParseMode.HTML)))
-    results.append(InlineQueryResultArticle(id=uuid4(), title="Frequência", description="Retorna sua frequência do semestre atual.",
-                                            input_message_content=InputTextMessageContent(frequencia_inline(update),  parse_mode=ParseMode.HTML)))
-
+    session = Session()
+    users = session.query(db.User)
+    session.close()
+    results.append(InlineQueryResultArticle(id=uuid4(), title="Erro",
+                                            description="Você não efetuou o login.",
+                                            input_message_content=InputTextMessageContent("Você não efetuou o login.",
+                                                                                          parse_mode=ParseMode.HTML)))
+    for user in users:
+        if str(user.telegram_id) in str(update) and user.sapu_username != " ":
+            results.pop(0)
+            results.append(InlineQueryResultArticle(id=uuid4(), title="Notas",
+                                                    description="Retorna suas notas do semestre atual.",
+                                                    input_message_content=InputTextMessageContent(notas_inline(user, semestre),
+                                                                                                  parse_mode=ParseMode.HTML)))
+            results.append(InlineQueryResultArticle(id=uuid4(), title="Frequência",
+                                                    description="Retorna sua frequência do semestre atual.",
+                                                    input_message_content=InputTextMessageContent(frequencia_inline(user, semestre),
+                                                                                                  parse_mode=ParseMode.HTML)))
     update.inline_query.answer(results, is_personal=True, cache_time=0)
 
 
-def notas_inline(update):
+def notas_inline(user, semestre):
     session = Session()
-    users = session.query(db.User)
-    for user in users:
-        if str(user.telegram_id) in str(update):
-            telegram_id = user.telegram_id
-    notas_resumo = session.query(db.NotasResumo).filter_by(user_id=telegram_id)
-    notas = "<b>Notas</b>\n"
-    for resumo in notas_resumo:
-        notas += util.formata_notas_resumo(resumo) + "\n"
+    notas_resumo = session.query(db.NotasResumo).filter_by(user_id=user.telegram_id, semestre=semestre)
     session.close()
+    if notas_resumo.first():
+        notas = "<b>Notas</b>"
+        for resumo in notas_resumo:
+            notas += "\n" + util.formata_notas_resumo(resumo)
+    else:
+        notas = messages.notas_empty(user.first_name)
     return notas
 
 
-def frequencia_inline(update):
+def frequencia_inline(user, semestre):
     session = Session()
-    users = session.query(db.User)
-    for user in users:
-        if str(user.telegram_id) in str(update):
-            telegram_id = user.telegram_id
-    frequencia_db = session.query(db.Frequencia).filter_by(user_id=telegram_id)
+    frequencia_db = session.query(db.Frequencia).filter_by(user_id=user.telegram_id, semestre=semestre)
     frequencia = "<b>Frequência</b>\n"
     for freq in frequencia_db:
         frequencia += util.formata_frequencia(freq) + "\n"
