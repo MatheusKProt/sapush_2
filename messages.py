@@ -211,16 +211,16 @@ def do_you_agree():
 Você leu e concorda com os Termos de Uso?"""
 
 
-def yes(first_name):
+def yes():
     return """
-{}, você concordou com os Termos de Uso.""".format(first_name)
+Você concordou com os Termos de Uso."""
 
 
-def login_requirement(first_name):
+def login_requirement():
     return """
-{}, para ter acesso a todas as funcionalidades você deverá realizar o login em seu SAPU utilizando o comando /login [usuário] [senha].
+Para ter acesso a todas as funcionalidades você deverá realizar o login em seu SAPU utilizando o comando /login [usuário] [senha].
 
-Caso necessite de auxilio, digite ajuda a qualquer momento.""".format(first_name)
+Caso necessite de auxilio, digite ajuda a qualquer momento."""
 
 
 def no(first_name):
@@ -353,3 +353,8 @@ def notas_empty(first_name):
 def count_users(first_name, num):
     return """
 {}, o número total de usuários é {}.""".format(first_name, num)
+
+
+def not_registered(first_name):
+    return """
+{}, para ter acesso a esta funcionalidade utilize o comando /start.""".format(first_name)

@@ -48,6 +48,24 @@ def logged(func):
         user = session.query(db.User).filter_by(telegram_id=telegram_id, termos=True).first()
         if user.sapu_username == " ":
             bot.send_message(chat_id=update['message']['chat']['id'],
+                             text=messages.not_logged_in(update['message']['chat']['first_name']),
+                             parse_mode=ParseMode.HTML)
+            session.close()
+            return
+        session.close()
+        return func(bot, update, *args, **kwargs)
+
+    return wrapped
+
+
+def registered(func):
+    @wraps(func)
+    def wrapped(bot, update, *args, **kwargs):
+        telegram_id = update.effective_user.id
+        session = Session()
+        user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
+        if not user:
+            bot.send_message(chat_id=update['message']['chat']['id'],
                              text=messages.not_registered(update['message']['chat']['first_name']),
                              parse_mode=ParseMode.HTML)
             session.close()
@@ -133,10 +151,10 @@ def button(bot, update):
         user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
         if query.data == '1':
             termos = True
-            bot.edit_message_text(text=messages.yes(query['message']['chat']['first_name']).format(query.data),
+            bot.edit_message_text(text=messages.yes().format(query.data),
                                   chat_id=query['message']['chat']['id'],
                                   message_id=query['message']['message_id'])
-            bot.send_message(chat_id=telegram_id, text=messages.login_requirement(query['message']['chat']['first_name']), parse_mode=ParseMode.HTML)
+            bot.send_message(chat_id=telegram_id, text=messages.login_requirement(), parse_mode=ParseMode.HTML)
         else:
             termos = False
             bot.edit_message_text(text=messages.no(query['message']['chat']['first_name']).format(query.data),
@@ -149,6 +167,7 @@ def button(bot, update):
         session.close()
 
 
+@registered
 @restricted
 def login(bot, update, args):
     telegram_id = update['message']['chat']['id']
@@ -200,6 +219,7 @@ def login(bot, update, args):
         return
 
 
+@registered
 @restricted
 def deletar(bot, update):
     telegram_id = update['message']['chat']['id']
@@ -224,6 +244,7 @@ def deletar(bot, update):
     return
 
 
+@registered
 @restricted
 @logged
 def notas(bot, update):
@@ -246,6 +267,7 @@ def notas(bot, update):
     session.close()
 
 
+@registered
 @restricted
 @logged
 def frequencia(bot, update):
@@ -265,6 +287,7 @@ def frequencia(bot, update):
     session.close()
 
 
+@registered
 @restricted
 @logged
 def horarios(bot, update):
@@ -276,6 +299,7 @@ def horarios(bot, update):
     session.close()
 
 
+@registered
 @restricted
 @logged
 def historico(bot, update):
@@ -288,6 +312,7 @@ def historico(bot, update):
     session.close()
 
 
+@registered
 @run_async
 @restricted
 @logged
@@ -300,6 +325,7 @@ def curriculo(bot, update):
     session.close()
 
 
+@registered
 @restricted
 @logged
 def boleto(bot, update):
@@ -311,6 +337,7 @@ def boleto(bot, update):
     session.close()
 
 
+@registered
 @restricted
 @logged
 def sugerir(bot, update, args):
@@ -378,12 +405,14 @@ def frequencia_inline(user, semestre):
     return frequencia
 
 
+@registered
 @restricted
 def comandos(bot, update):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
     bot.send_message(chat_id=update['message']['chat']['id'], text=messages.comandos(), parse_mode=ParseMode.HTML)
 
 
+@registered
 @restricted
 def ajuda(bot, update):
     bot.send_message(chat_id=update['message']['chat']['id'],
@@ -391,6 +420,7 @@ def ajuda(bot, update):
                      parse_mode=ParseMode.HTML)
 
 
+@registered
 @restricted
 def callback(bot, update):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
