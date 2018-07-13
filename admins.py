@@ -40,11 +40,7 @@ def start(bot):
     admins = session.query(db.Admins)
     for admin in admins:
         bot.send_message(chat_id=admin.user_id,
-                         text="O bot foi iniciado com sucesso.",
-                         parse_mode=ParseMode.HTML)
-    for i in range(0, 20):
-        bot.send_message(chat_id=179425628,
-                         text="FUNCIONOU!!!",
+                         text="O bot foi iniciado com sucesso. o/",
                          parse_mode=ParseMode.HTML)
 
 
