@@ -65,12 +65,17 @@ def main():
     dp.add_handler(CommandHandler("comandos", users.comandos))
     dp.add_handler(CommandHandler("ajuda", users.ajuda))
     dp.add_handler(CommandHandler("termos", users.termos))
+    dp.add_handler(CommandHandler("desenvolvedores", users.desenvolvedores))
+    dp.add_handler(CommandHandler("editais", users.editais, pass_args=True))
+    dp.add_handler(CommandHandler("configurar", users.configurar))
+    # dp.add_handler(CommandHandler("menu", users.menu))
 
     # funções dos administradores
     dp.add_handler(CommandHandler("users", admins.users, pass_args=True))
     dp.add_handler(CommandHandler("alert", admins.alert, pass_args=True))
     dp.add_handler(CommandHandler("statement", admins.statement, pass_args=True))
     dp.add_handler(CommandHandler("suggestions", admins.suggestions, pass_args=True))
+    dp.add_handler(CommandHandler("push", admins.push, pass_args=True))
     dp.add_handler(CommandHandler("statistics", admins.statistics))
     dp.add_handler(CommandHandler("reboot", admins.reboot))
     dp.add_handler(CommandHandler("commands", admins.commands))

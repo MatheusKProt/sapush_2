@@ -2,7 +2,7 @@ def comandos():
     return """
 <b>Lista de comandos</b>
 
-/login [usuário] [senha] - faz o login no SAPU 
+/login [usuário] [senha] - faz o login no SAPU ou alterar login existente
 /deletar - deleta suas informações de login do SAPU 
 /sugerir [mensagem] - envia uma sugestão aos desenvolvedores 
 
@@ -13,7 +13,9 @@ def comandos():
 /historico - retorna seu histórico 
 /curriculo - retorna o currículo do curso
 /boleto - retorna o link com seu boleto
+/editais - retorna os ultimos editais publicados
 
+/desenvolvedores - ALGO AQUI
 /termos - exibe os termos de uso
 /ajuda - exibe instruções de uso"""
 
@@ -25,7 +27,8 @@ def comandos_admin():
 /users [nome]* [sobrenome]* - exibe todos os usuários cadastrados
 /alert [id]** [mensagem] - envia um aviso para uma pessoa específica 
 /statement [mensagem] - envia um comunicado a todos os usuários 
-/suggestions [número de sugestões]* ** - exibe as as sugestões recebidas 
+/suggestions [número de sugestões]* ** - exibe as as sugestões recebidas
+/push [notas/frequencia]* [número de atualizações]* ** - exibe o status de atualização das notificações push
 
 /statistics - exibe as estatísticas atuais de uso de hardware
 /reboot - reinicia o servidor
@@ -269,11 +272,11 @@ def answer_error(first_name):
 de auxílio.""".format(first_name)
 
 
-def historico(first_name):
+def historico(historico):
     return """
 <b>Histórico</b>
 
-Seu histórico está sendo gerado...""".format(first_name)
+Seu histórico está disponível <a href=\"http://sapu.ucpel.edu.br/portal/{}\">aqui</a>.""".format(historico)
 
 
 def boleto(first_name, boleto, option):
@@ -313,6 +316,11 @@ def alert_error(first_name):
 {}, use /alert [id]** [mensagem]
 
 **Somente números são aceitos""".format(first_name)
+
+
+def statement_error(first_name):
+    return """
+{}, use /statement [mensagem]""".format(first_name)
 
 
 def alert_success(first_name):
@@ -378,3 +386,58 @@ def chave(chave):
 <b>Chave</b>
 
 Sua chave de matricula é {}.""".format(chave)
+
+
+def push(initial, users):
+    return """
+{} | {}""".format(initial, users)
+
+
+def developers():
+    return """
+Texto com detalhes de quem desenvolveu e tals."""
+
+
+def editais(nome, link):
+    return """
+{} - <a href=\"{}\">acesse aqui</a>.""".format(nome, link)
+
+
+def no_suggestions(first_name):
+    return """
+{}, ainda não tem sugestões.""".format(first_name)
+
+
+def configurar():
+    return """
+O que você deseja configurar?"""
+
+
+def configurar_notas():
+    return """
+O que você deseja fazer com a notificação push das notas?"""
+
+
+def configurar_frequencia():
+    return """
+O que você deseja fazer com a notificação push da frequência?"""
+
+
+def configurar_notas_ativado(first_name):
+    return """
+{}, push notas ativado""".format(first_name)
+
+
+def configurar_notas_desativado(first_name):
+    return """
+{}, push notas desativado""".format(first_name)
+
+
+def configurar_frequencia_ativado(first_name):
+    return """
+{}, push frequencia ativado""".format(first_name)
+
+
+def configurar_frequencia_desativado(first_name):
+    return """
+{}, push frequencia desativado""".format(first_name)

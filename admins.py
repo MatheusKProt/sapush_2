@@ -11,6 +11,7 @@ from telegram.ext import run_async
 import db
 import main
 import messages
+import util
 
 url = db.get_database_url()
 engine = db.gen_engine(url)
@@ -38,10 +39,10 @@ def restricted(func):
 def start(bot):
     session = Session()
     admins = session.query(db.Admins)
-    #for admin in admins:
-    #    bot.send_message(chat_id=admin.user_id,
-    #                     text="O bot foi iniciado com sucesso.",
-    #                     parse_mode=ParseMode.HTML)
+    for admin in admins:
+       bot.send_message(chat_id=admin.user_id,
+                        text="O bot foi iniciado com sucesso.",
+                        parse_mode=ParseMode.HTML)
 
 
 @restricted
@@ -94,6 +95,8 @@ def suggestions(bot, update, args):
         for sugestao in sugestoes:
             user = session.query(db.User).filter_by(telegram_id=sugestao.user_id).first()
             text += messages.formata_sugestoes(user.first_name, user.last_name, sugestao.sugestao)
+        if not text:
+            text = messages.no_suggestions(update['message']['chat']['first_name'])
         bot.send_message(chat_id=update['message']['chat']['id'], text=text, parse_mode=ParseMode.HTML)
     elif len(args) == 1:
         session = Session()
@@ -113,10 +116,54 @@ def suggestions(bot, update, args):
 
 @restricted
 @run_async
+def push(bot, update, args):
+    quantidade = 5
+    if len(args) == 2:
+        try:
+            quantidade = int(args[1])
+        except ValueError:
+            pass
+    elif len(args) == 1:
+        try:
+            quantidade = int(args[0])
+        except ValueError:
+            pass
+    session = Session()
+    notas = session.query(db.PushNotas).order_by(db.PushNotas.id.desc()).limit(quantidade)
+    frequencia = session.query(db.PushFrequencia).order_by(db.PushFrequencia.id.desc()).limit(quantidade)
+    msg = "<b>Push</b>\n"
+    if len(args) == 0:
+        msg += "\n<b>Notas</b>"
+        msg += util.push(notas)
+        msg += "\n\n<b>Frequência</b>"
+        msg += util.push(frequencia)
+        bot.send_message(chat_id=update['message']['chat']['id'], text=msg, parse_mode=ParseMode.HTML)
+    elif "nota" in str(args[0]).lower():
+        msg += "\n<b>Notas</b>"
+        msg += util.push(notas)
+        bot.send_message(chat_id=update['message']['chat']['id'], text=msg, parse_mode=ParseMode.HTML)
+    elif "frequencia" in str(args[0]).lower():
+        msg += "\n<b>Frequência</b>"
+        msg += util.push(frequencia)
+        bot.send_message(chat_id=update['message']['chat']['id'], text=msg, parse_mode=ParseMode.HTML)
+    else:
+        msg += "\n<b>Notas</b>"
+        msg += util.push(notas)
+        msg += "\n\n<b>Frequência</b>"
+        msg += util.push(frequencia)
+        bot.send_message(chat_id=update['message']['chat']['id'], text=msg, parse_mode=ParseMode.HTML)
+
+
+@restricted
+@run_async
 def alert(bot, update, args):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
     msg = ""
     count = 0
+    if len(args) == 0:
+        bot.send_message(chat_id=update['message']['chat']['id'],
+                         text=messages.alert_error(update['message']['chat']['first_name']), parse_mode=ParseMode.HTML)
+        return
     for i in args:
         if count != 0:
             i = str(i).replace("\\n", '\n')
@@ -144,6 +191,10 @@ def alert(bot, update, args):
 def statement(bot, update, args):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
     msg = ""
+    if len(args) == 0:
+        bot.send_message(chat_id=update['message']['chat']['id'],
+                         text=messages.statement_error(update['message']['chat']['first_name']), parse_mode=ParseMode.HTML)
+        return
     for i in args:
         i = str(i).replace("\\n", '\n')
         msg += i + " "

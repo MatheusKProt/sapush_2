@@ -203,3 +203,10 @@ def formata_disciplinas(disciplinas):
                 msg += str(messages.formata_disciplinas(formata_nome_materia(disciplina[1])))
         msg += "\n"
     return msg
+
+
+def push(pushs):
+    msg = ""
+    for push in pushs:
+        msg += messages.push(push.initial, push.users)
+    return msg

@@ -135,8 +135,7 @@ def termos(bot, update):
 
 @agreed
 def do_you_agree(bot, update):
-    keyboard = [[InlineKeyboardButton('Aceitar', callback_data='1')],
-                [InlineKeyboardButton('Recusar', callback_data='2')]]
+    keyboard = [[InlineKeyboardButton('Aceitar', callback_data='termos_aceitar'), InlineKeyboardButton('Recusar', callback_data='termos_recusar')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     bot.send_message(chat_id=update.message.chat_id,
                      text=messages.do_you_agree(),
@@ -147,24 +146,51 @@ def button(bot, update):
     query = update.callback_query
     telegram_id = query['message']['chat']['id']
     session = Session()
-    try:
-        user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
-        if query.data == '1':
-            termos = True
-            bot.edit_message_text(text=messages.yes().format(query.data),
-                                  chat_id=query['message']['chat']['id'],
-                                  message_id=query['message']['message_id'])
-            bot.send_message(chat_id=telegram_id, text=messages.login_requirement(), parse_mode=ParseMode.HTML)
-        else:
-            termos = False
-            bot.edit_message_text(text=messages.no(query['message']['chat']['first_name']).format(query.data),
-                                  chat_id=query['message']['chat']['id'],
-                                  message_id=query['message']['message_id'])
-        user.termos = termos
-        session.commit()
-        session.close()
-    except():
-        session.close()
+    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
+    if query.data == 'termos_aceitar':
+        user.termos = True
+        bot.edit_message_text(text=messages.yes().format(query.data),
+                              chat_id=query['message']['chat']['id'],
+                              message_id=query['message']['message_id'])
+        bot.send_message(chat_id=telegram_id, text=messages.login_requirement(), parse_mode=ParseMode.HTML)
+    elif query.data == 'termos_recusar':
+        user.termos = False
+        bot.edit_message_text(text=messages.no(query['message']['chat']['first_name']).format(query.data),
+                              chat_id=query['message']['chat']['id'],
+                              message_id=query['message']['message_id'])
+    elif query.data == 'configurar_notas':
+        configurar_notas(bot, update, query)
+    elif query.data == 'notas_ativar':
+        user.push_notas = True
+        bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
+                              message_id=query['message']['message_id'],
+                              text=messages.configurar_notas_ativado(query['message']['chat']['first_name']))
+    elif query.data == 'notas_desativar':
+        user.push_notas = False
+        bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
+                              message_id=query['message']['message_id'],
+                              text=messages.configurar_notas_desativado(query['message']['chat']['first_name']))
+    elif query.data == 'configurar_frequencia':
+        configurar_frequencia(bot, update, query)
+    elif query.data == 'frequencia_ativar':
+        user.push_frequencia = True
+        bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
+                              message_id=query['message']['message_id'],
+                              text=messages.configurar_frequencia_ativado(query['message']['chat']['first_name']))
+    elif query.data == 'frequencia_desativar':
+        user.push_frequencia = False
+        bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
+                              message_id=query['message']['message_id'],
+                              text=messages.configurar_frequencia_desativado(query['message']['chat']['first_name']))
+    elif query.data == 'sair':
+        bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'],
+                           message_id=query['message']['message_id'])
+    else:
+        bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
+                              message_id=query['message']['message_id'],
+                              text="No futuro vai abrir a função!")
+    session.commit()
+    session.close()
 
 
 @registered
@@ -306,9 +332,8 @@ def historico(bot, update):
     telegram_id = update['message']['chat']['id']
     session = Session()
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
-    historico = crawlers.get_historico(user)
-    bot.send_message(chat_id=telegram_id, text=messages.historico(user.first_name), parse_mode=ParseMode.HTML)
-    bot.send_document(chat_id=telegram_id, document="http://sapu.ucpel.edu.br/portal/{}".format(historico))
+    bot.send_message(chat_id=telegram_id, text=messages.historico(crawlers.get_historico(user)),
+                     parse_mode=ParseMode.HTML, disable_web_page_preview=True)
     session.close()
 
 
@@ -346,9 +371,11 @@ def boleto(bot, update):
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     boleto, status = crawlers.get_boleto(user)
     if status:
-        bot.send_message(chat_id=telegram_id, text=messages.boleto(user.first_name, boleto, 1), parse_mode=ParseMode.HTML)
+        bot.send_message(chat_id=telegram_id, text=messages.boleto(user.first_name, boleto, 1),
+                         parse_mode=ParseMode.HTML, disable_web_page_preview=True)
     else:
-        bot.send_message(chat_id=telegram_id, text=messages.boleto(user.first_name, boleto, 2), parse_mode=ParseMode.HTML)
+        bot.send_message(chat_id=telegram_id, text=messages.boleto(user.first_name, boleto, 2),
+                         parse_mode=ParseMode.HTML, disable_web_page_preview=True)
     session.close()
 
 
@@ -405,6 +432,10 @@ def inlinequery(bot, update):
                                                     description="Retorna sua frequência do semestre atual.",
                                                     input_message_content=InputTextMessageContent(frequencia_inline(user, semestre),
                                                                                                   parse_mode=ParseMode.HTML)))
+            results.append(InlineQueryResultArticle(id=uuid4(), title="Horarios",
+                                                    description="Retorna seus horários do semestre atual.",
+                                                    input_message_content=InputTextMessageContent(horarios_inline(user),
+                                                                                                  parse_mode=ParseMode.HTML)))
     update.inline_query.answer(results, is_personal=True, cache_time=0)
 
 
@@ -429,6 +460,10 @@ def frequencia_inline(user, semestre):
         frequencia += util.formata_frequencia(freq) + "\n"
     session.close()
     return frequencia
+
+
+def horarios_inline(user):
+    return crawlers.get_horarios(user)
 
 
 @registered
@@ -472,3 +507,62 @@ def callback(bot, update):
         bot.send_message(chat_id=update['message']['chat']['id'],
                          text=messages.answer_error(format(update['message']['chat']['first_name'])),
                          parse_mode=ParseMode.HTML)
+
+
+@registered
+@restricted
+def desenvolvedores(bot, update):
+    bot.send_message(chat_id=update['message']['chat']['id'],
+                     text=messages.developers(),
+                     parse_mode=ParseMode.HTML)
+
+
+@registered
+@restricted
+def editais(bot, update, args):
+    try:
+        bot.send_message(chat_id=update['message']['chat']['id'], text=crawlers.get_editais(int(args[0])),
+                         parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+    except:
+        bot.send_message(chat_id=update['message']['chat']['id'], text=crawlers.get_editais(5),
+                         parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+
+
+@registered
+@restricted
+def configurar(bot, update):
+    keyboard = [[InlineKeyboardButton('Notas', callback_data='configurar_notas'), InlineKeyboardButton('Frequência', callback_data='configurar_frequencia')],
+                [InlineKeyboardButton('Sair', callback_data='sair')]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    bot.send_message(chat_id=update['message']['chat']['id'],
+                     text=messages.configurar(),
+                     reply_markup=reply_markup)
+
+
+def configurar_notas(bot, update, query):
+    keyboard = [[InlineKeyboardButton('Ativar', callback_data='notas_ativar'), InlineKeyboardButton('Desativar', callback_data='notas_desativar')],
+                [InlineKeyboardButton('Sair', callback_data='sair')]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
+                          message_id=query['message']['message_id'],
+                          text=messages.configurar_notas(), reply_markup=reply_markup)
+
+
+def configurar_frequencia(bot, update, query):
+    keyboard = [[InlineKeyboardButton('Ativar', callback_data='frequencia_ativar'), InlineKeyboardButton('Desativar', callback_data='frequencia_desativar')],
+                [InlineKeyboardButton('Sair', callback_data='sair')]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
+                          message_id=query['message']['message_id'],
+                          text=messages.configurar_frequencia(), reply_markup=reply_markup)
+
+
+@registered
+@restricted
+def menu(bot, update):
+    bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
+    keyboard = [[InlineKeyboardButton('Conta', callback_data='conta'), InlineKeyboardButton('Funções', callback_data='funcoes')],
+                [InlineKeyboardButton('Sair', callback_data='sair')]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    bot.send_message(chat_id=update['message']['chat']['id'], text="<b>Menu</b>",
+                     reply_markup=reply_markup, parse_mode=ParseMode.HTML)

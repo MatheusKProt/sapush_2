@@ -165,3 +165,17 @@ def get_boleto(user):
             return "Você não possui boletos em aberto", False
     else:
         return str(index.get_text().lstrip()).split("'")[1], True
+
+
+def get_editais(quantidade):
+    session = requests.session()
+    editais = session.get("http://www.ucpel.tche.br/portal/?secao=com_editais")
+    soup = BeautifulSoup(editais.content, 'html.parser')
+    count = 0
+    msg = "<b>Editais</b>\n"
+    for index in soup.find(id='table').find_all(class_='line link'):
+        count += 1
+        msg += messages.editais(index.get_text().lstrip()[:-1], str(index).split("'")[1])
+        if count >= quantidade:
+            break
+    return msg
