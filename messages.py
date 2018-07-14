@@ -1,7 +1,7 @@
 def comandos():
     return """
 <b>Lista de comandos</b>
-////////////
+
 /login [usuário] [senha] - faz o login no SAPU 
 /deletar - deleta suas informações de login do SAPU 
 /sugerir [mensagem] - envia uma sugestão aos desenvolvedores 
