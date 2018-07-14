@@ -21,7 +21,7 @@ def comandos():
 def comandos_admin():
     return """
 <b>Lista de comandos administrativos</b>
-
+*
 /users [nome]* [sobrenome]* - exibe todos os usuários cadastrados
 /alert [id]** [mensagem] - envia um aviso para uma pessoa específica 
 /statement [mensagem] - envia um comunicado a todos os usuários 
