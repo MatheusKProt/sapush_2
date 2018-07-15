@@ -314,14 +314,14 @@ Faremos o possível para implementá-la nas próximas atualizações.""".format(
 
 def alert_error(first_name):
     return """
-{}, use /alert [id]** [mensagem]
+{}, use o comando /alert [id]** [mensagem]
 
 **Somente números são aceitos""".format(first_name)
 
 
 def statement_error(first_name):
     return """
-{}, use /statement [mensagem]""".format(first_name)
+{}, use o comando /statement [mensagem]""".format(first_name)
 
 
 def alert_success(first_name):
