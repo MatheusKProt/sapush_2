@@ -1,7 +1,6 @@
 import time
 import subprocess
 import operator
-import git
 import os
 from functools import wraps
 
