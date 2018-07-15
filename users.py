@@ -514,7 +514,7 @@ def callback(bot, update):
 def desenvolvedores(bot, update):
     bot.send_message(chat_id=update['message']['chat']['id'],
                      text=messages.developers(),
-                     parse_mode=ParseMode.HTML)
+                     parse_mode=ParseMode.HTML, disable_web_page_preview=True)
 
 
 @registered
