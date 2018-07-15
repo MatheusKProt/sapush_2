@@ -258,10 +258,8 @@ def statistics(bot, update):
 
 @restricted
 def update(bot, update):
-    os.system("cd home/pi/SAPU/")
-    time.sleep(2)
+    os.chdir("/home/pi/SAPU")
     os.system("git pull")
-    time.sleep(2)
     os.system("sudo systemctl restart sapu.service")
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
     bot.send_message(chat_id=update['message']['chat']['id'], text="{}, o bot foi atualizado para a versão mais recente.",
