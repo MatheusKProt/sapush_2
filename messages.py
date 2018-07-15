@@ -102,7 +102,7 @@ seu computador e/ou celular. Você é o único responsável pela proteção e ba
 e por tomar precauções razoáveis e apropriadas para verificar se há vírus de computador ou outras propriedades destrutivas.
 
 <b>Copyright Universidade Católica de Pelotas (UCPel)</b>
-Todos os direitos reservados. Todos os textos, imagens, gráficos, animações, vídeos, músicas, sons e outros materiais \
+Todos os textos, imagens, gráficos, animações, vídeos, músicas, sons e outros materiais \
 são protegidos por direitos autorais e outros direitos de propriedade intelectual pertencentes à Universidade Católica \
 de Pelotas, suas subsidiárias, afiliadas e licenciantes.
 
