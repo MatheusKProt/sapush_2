@@ -258,6 +258,7 @@ def statistics(bot, update):
 
 @restricted
 def update(bot, update):
+    os.system("pwd")
     os.system("git pull")
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
     bot.send_message(chat_id=update['message']['chat']['id'], text="{}, o bot foi atualizado para a versão mais recente.",
