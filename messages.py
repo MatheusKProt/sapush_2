@@ -256,7 +256,7 @@ def help_user():
 <b>Ajuda</b>
 
 A sintaxe usada pelo telegram na execução de comandos é representada pelo uso da / seguida do comando, como mostra o exemplo a seguir:
-<code>/notas</code>
+/notas
 
 Comandos onde são enviados parâmetros são executados da seguinte maneira:
 /login parametro1 parametro2 
