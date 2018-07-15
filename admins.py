@@ -1,6 +1,7 @@
 import time
 import subprocess
 import operator
+import git
 from functools import wraps
 
 import psutil
@@ -255,6 +256,22 @@ def statistics(bot, update):
                      parse_mode=ParseMode.HTML)
 
 
+@restricted
+def update(bot, update):
+    g = git.cmd.Git(dir())
+    g.fetch()
+    output = g.pull()
+
+    if 'Already up-to-date' in output:
+        bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
+        bot.send_message(chat_id=update['message']['chat']['id'], text="Tá atualizado arrombado",
+                         parse_mode=ParseMode.HTML)
+    else:
+        bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
+        bot.send_message(chat_id=update['message']['chat']['id'], text="{}, o bot foi atualizado para a versão mais recente.",
+                         parse_mode=ParseMode.HTML)
+    
+    
 @restricted
 def reboot(bot, update):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
