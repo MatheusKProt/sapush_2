@@ -259,15 +259,9 @@ def statistics(bot, update):
 
 @restricted
 def update(bot, update):
-    output = git.pull()
-
-    if 'Already up-to-date' in output:
-        bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
-        bot.send_message(chat_id=update['message']['chat']['id'], text="Tá atualizado arrombado",
-                         parse_mode=ParseMode.HTML)
-    else:
-        bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
-        bot.send_message(chat_id=update['message']['chat']['id'], text="{}, o bot foi atualizado para a versão mais recente.",
+    subprocess.call(["./update.sh", "/home/pi/"])
+    bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
+    bot.send_message(chat_id=update['message']['chat']['id'], text="{}, o bot foi atualizado para a versão mais recente.",
                          parse_mode=ParseMode.HTML)
     
     
