@@ -77,6 +77,7 @@ def main():
     dp.add_handler(CommandHandler("suggestions", admins.suggestions, pass_args=True))
     dp.add_handler(CommandHandler("push", admins.push, pass_args=True))
     dp.add_handler(CommandHandler("statistics", admins.statistics))
+    dp.add_handler(CommandHandler("update", admins.update))
     dp.add_handler(CommandHandler("reboot", admins.reboot))
     dp.add_handler(CommandHandler("commands", admins.commands))
 
