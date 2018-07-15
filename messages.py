@@ -32,6 +32,7 @@ def comandos_admin():
 /push [notas/frequencia]* [número de atualizações]* ** - exibe o status de atualização das notificações push
 
 /statistics - exibe as estatísticas atuais de uso de hardware
+/update - atualiza o servidor para a versão mais recente
 /reboot - reinicia o servidor
 
 *Opcional
