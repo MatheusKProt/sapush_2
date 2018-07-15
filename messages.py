@@ -66,6 +66,8 @@ Caso você queira ler os Termos de Uso detalhados, selecione a opção /termos."
 
 def termos():
     return """
+<b>Termos de Uso</b>    
+    
 <b>Geral</b>
 Todas as funcionalidades deste bot estão sujeitos aos termos e condições dos contratos aplicáveis que \
 regem seu uso, que podem mudar de tempos em tempos. No caso de qualquer conflito, os termos fornecidos aqui \
