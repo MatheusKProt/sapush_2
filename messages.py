@@ -61,7 +61,7 @@ seus dados. Nosso objetivo por meio deste é facilitar a sua vida automatizando 
 Não assumimos qualquer responsabilidade por aqueles que utilizam estes aplicativos para qualquer outra finalidade que \
 não o monitoramento próprio do Sistema de Apoio Universitário (SAPU) da Universidade Católica de Pelotas.
 
-Caso você queira ler os Termos de Uso detalhados, selecione a opção /termos.""".format(first_name)
+Caso você queira ler os Termos de Uso detalhados, utilize o comando /termos.""".format(first_name)
 
 
 def termos():
@@ -109,8 +109,8 @@ de Pelotas, suas subsidiárias, afiliadas e licenciantes.
 Este projeto não é oficialmente afiliado com a instituição de ensino Universidade Católica de Pelotas (UCPEL). Este é apenas \
 um experimento de código aberto construido para fins didáticos. 
 
-Por favor, ajude-nos a melhorar. Caso haja alguma dúvida ou sugestão, entre em contato digitando o comando \
-/sugerir [sua sugestão]."""
+Por favor, ajude-nos a melhorar. Caso haja alguma dúvida ou sugestão, entre em contato utilizando o comando \
+/desenvolvedores."""
 
 
 def not_logged_in(first_name):
@@ -128,7 +128,7 @@ def alert(msg):
 
 def invalid_login(first_name):
     return """
-{}, use o comando /login [usuário] [senha].""".format(first_name)
+{}, utilize o comando /login [usuário] [senha].""".format(first_name)
 
 
 def valid_login(first_name):
@@ -138,22 +138,22 @@ def valid_login(first_name):
 
 def wrong_password(first_name):
     return """
-{}, sua senha está errada.""".format(first_name)
+{}, sua senha está incorreta.""".format(first_name)
 
 
 def wrong_user(first_name):
     return """
-{}, seu usuário está errado.""".format(first_name)
+{}, seu usuário está incorreto.""".format(first_name)
 
 
 def suggest_without_parameters(first_name):
     return """
-{}, use o comando /sugerir [mensagem].""".format(first_name)
+{}, utilize o comando /sugerir [mensagem].""".format(first_name)
 
 
 def not_registered(first_name):
     return """
-{}, para ter acesso a esta funcionalidades você deverá realizar o login em seu SAPU utilizando o \ 
+{}, para ter acesso a esta funcionalidade você deverá realizar o login em seu SAPU utilizando o \ 
 comando /login [usuário] [senha].""".format(first_name)
 
 
@@ -184,7 +184,7 @@ def not_allowed(first_name):
 
 def not_agreed(first_name):
     return """
-{}, esta função não está habilitada para você. Utilize o comando /acordo e siga as instruções.""".format(first_name)
+{}, esta função não está habilitada para você. Utilize o comando /start e siga as instruções.""".format(first_name)
 
 
 def agreed(first_name):
@@ -192,9 +192,9 @@ def agreed(first_name):
 {}, você já aceitou os Termos de Uso. Digite /comandos para ver o que eu posso fazer.""".format(first_name)
 
 
-def refresh_success(first_name):
-    return """
-{}, suas informações de login foram atualizadas com sucesso!""".format(first_name)
+#def refresh_success(first_name):
+#    return """
+#{}, suas informações de login foram atualizadas com sucesso!""".format(first_name)
 
 
 def user_doesnt_exist(first_name):
@@ -225,7 +225,6 @@ Você concordou com os Termos de Uso."""
 def login_requirement():
     return """
 Para ter acesso a todas as funcionalidades você deverá realizar o login em seu SAPU utilizando o comando /login [usuário] [senha].
-
 Caso necessite de auxilio, digite ajuda a qualquer momento."""
 
 
@@ -257,7 +256,7 @@ def help_user():
 <b>Ajuda</b>
 
 A sintaxe usada pelo telegram na execução de comandos é representada pelo uso da / seguida do comando, como mostra o exemplo a seguir:
-/notas 
+<code>/notas</code>
 
 Comandos onde são enviados parâmetros são executados da seguinte maneira:
 /login parametro1 parametro2 
@@ -266,7 +265,7 @@ Preste atenção na sintaxe bibliográfica que é utilizada nos comandos onde s�
 /login [usuário] [senha]
 Neste caso, o uso dos [ ] não são necessários. 
 
-Caso você queira ver a lista completa de comandos disponíveis, digite /comandos."""
+Caso você queira ver a lista completa de comandos disponíveis, utilize /comandos."""
 
 
 def answer_error(first_name):
@@ -316,14 +315,14 @@ Faremos o possível para implementá-la nas próximas atualizações.""".format(
 
 def alert_error(first_name):
     return """
-{}, use o comando /alert [id]** [mensagem].
+{}, utilize o comando /alert [id]** [mensagem].
 
 **Somente números são aceitos""".format(first_name)
 
 
 def statement_error(first_name):
     return """
-{}, use o comando /statement [mensagem].""".format(first_name)
+{}, utilize o comando /statement [mensagem].""".format(first_name)
 
 
 def alert_success(first_name):
