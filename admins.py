@@ -2,6 +2,7 @@ import time
 import subprocess
 import operator
 import git
+import os
 from functools import wraps
 
 import psutil
@@ -258,7 +259,7 @@ def statistics(bot, update):
 
 @restricted
 def update(bot, update):
-    g = git.cmd.Git(dir())
+    g = git.cmd.Git(os.getcwd())
     output = g.pull()
 
     if 'Already up-to-date' in output:
