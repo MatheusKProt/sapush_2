@@ -396,6 +396,8 @@ def push(initial, users):
 
 def developers():
     return """
+<b>Desenvolvedores</b>
+
 Este bot foi desenvolvido com muito código e café por <a href="https://t.me/lucaspeferreira">Lucas Ferreira</a> e \
 <a href="https://t.me/matheuskprot">Matheus Protzen</a>.
 
