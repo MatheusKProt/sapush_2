@@ -2,6 +2,7 @@ import time
 import subprocess
 import operator
 import os
+import git
 from functools import wraps
 
 import psutil
