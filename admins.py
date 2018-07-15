@@ -259,7 +259,7 @@ def statistics(bot, update):
 
 @restricted
 def update(bot, update):
-    output = g.pull()
+    output = git.pull()
 
     if 'Already up-to-date' in output:
         bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
