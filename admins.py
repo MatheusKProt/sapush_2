@@ -258,11 +258,17 @@ def statistics(bot, update):
 
 @restricted
 def update(bot, update):
-    os.chdir("/home/pi/SAPU")
-    os.system("git pull")
-    os.system("sudo systemctl restart sapu.service")
-    bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
-    bot.send_message(chat_id=update['message']['chat']['id'], text="{}, o bot foi atualizado para a versão mais recente.",
+    g = git.cmd.Git(os.chdir("/home/pi/SAPU"))
+    g.fetch()
+    output = g.pull()
+
+    if 'Already up-to-date' in output:
+        bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
+        bot.send_message(chat_id=update['message']['chat']['id'], text="Tá atualizado arrombado",
+                         parse_mode=ParseMode.HTML)
+    else:
+        bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
+        bot.send_message(chat_id=update['message']['chat']['id'], text="{}, o bot foi atualizado para a versão mais recente.",
                          parse_mode=ParseMode.HTML)
     
     
