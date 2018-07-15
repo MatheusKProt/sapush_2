@@ -5,6 +5,7 @@ def comandos():
 /login [usuário] [senha] - faz o login no SAPU ou alterar login existente
 /deletar - deleta suas informações de login do SAPU 
 /sugerir [mensagem] - envia uma sugestão aos desenvolvedores 
+/configurar - configura o estado das atualizações push
 
 /notas - retorna suas notas do semestre atual 
 /frequencia - retorna sua frequência do semestre atual 
@@ -15,7 +16,7 @@ def comandos():
 /boleto - retorna o link com seu boleto
 /editais - retorna os ultimos editais publicados
 
-/desenvolvedores - ALGO AQUI
+/desenvolvedores - exibe os desenvolvedores do bot
 /termos - exibe os termos de uso
 /ajuda - exibe instruções de uso"""
 
@@ -395,7 +396,12 @@ def push(initial, users):
 
 def developers():
     return """
-Texto com detalhes de quem desenvolveu e tals."""
+Este bot foi desenvolvido com muito código e café por <a href="https://t.me/lucaspeferreira">Lucas Ferreira</a> e \
+<a href="https://t.me/matheuskprot">Matheus Protzen</a>.
+
+O projeto tem código aberto e está atualmente disponível no <a href="https://github.com">Github</a>.
+
+Em caso de dúvidas, entre em contato."""
 
 
 def editais(nome, link):
@@ -405,7 +411,7 @@ def editais(nome, link):
 
 def no_suggestions(first_name):
     return """
-{}, ainda não tem sugestões.""".format(first_name)
+{}, ainda não há sugestões cadastradas.""".format(first_name)
 
 
 def configurar():
@@ -425,19 +431,19 @@ O que você deseja fazer com a notificação push da frequência?"""
 
 def configurar_notas_ativado(first_name):
     return """
-{}, push notas ativado""".format(first_name)
+{}, as notificações push das notas foram ativadas.""".format(first_name)
 
 
 def configurar_notas_desativado(first_name):
     return """
-{}, push notas desativado""".format(first_name)
+{}, as notificações push das notas foram desativadas.""".format(first_name)
 
 
 def configurar_frequencia_ativado(first_name):
     return """
-{}, push frequencia ativado""".format(first_name)
+{}, as notificações push relacionadas a frequencia foram ativadas.""".format(first_name)
 
 
 def configurar_frequencia_desativado(first_name):
     return """
-{}, push frequencia desativado""".format(first_name)
+{}, as notificações push relacionadas a frequencia foram desativadas.""".format(first_name)
