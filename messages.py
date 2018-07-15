@@ -421,29 +421,29 @@ O que você deseja configurar?"""
 
 def configurar_notas():
     return """
-O que você deseja fazer com a notificação push das notas?"""
+O que você deseja fazer com as notificações relacionadas as notas?"""
 
 
 def configurar_frequencia():
     return """
-O que você deseja fazer com a notificação push da frequência?"""
+O que você deseja fazer com as notificações relacionadas a frequência?"""
 
 
 def configurar_notas_ativado(first_name):
     return """
-{}, as notificações push das notas foram ativadas.""".format(first_name)
+{}, as notificações relacionadas as notas foram ativadas.""".format(first_name)
 
 
 def configurar_notas_desativado(first_name):
     return """
-{}, as notificações push das notas foram desativadas.""".format(first_name)
+{}, as notificações relacionadas as notas foram desativadas.""".format(first_name)
 
 
 def configurar_frequencia_ativado(first_name):
     return """
-{}, as notificações push relacionadas a frequencia foram ativadas.""".format(first_name)
+{}, as notificações relacionadas a frequência foram ativadas.""".format(first_name)
 
 
 def configurar_frequencia_desativado(first_name):
     return """
-{}, as notificações push relacionadas a frequencia foram desativadas.""".format(first_name)
+{}, as notificações relacionadas a frequência foram desativadas.""".format(first_name)
