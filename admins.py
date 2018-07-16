@@ -254,16 +254,6 @@ def statistics(bot, update):
                                               memoria_disponivel, disco_total, disco_usado, disco_disponivel,
                                               processos_consumindo),
                      parse_mode=ParseMode.HTML)
-
-
-@restricted
-def update(bot, update):
-    os.system("cd /home/pi/SAPU")
-    os.system("ls")
-    os.system("git pull")
-    bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
-    bot.send_message(chat_id=update['message']['chat']['id'], text="{}, o bot foi atualizado para a versão mais recente.",
-                         parse_mode=ParseMode.HTML)
     
     
 @restricted
