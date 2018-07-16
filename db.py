@@ -191,6 +191,18 @@ class Statement(base):
         self.msg = msg
 
 
+class Error(base):
+    __tablename__ = 'error'
+
+    id = Column('id', Integer, primary_key=True)
+    erro = Column('erro', String)
+    data = Column('data', String)
+
+    def __init__(self, erro, data):
+        self.erro = erro
+        self.data = data
+
+
 def gen_engine(url):
     engine = create_engine(url)
 

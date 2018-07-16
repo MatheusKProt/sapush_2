@@ -8,6 +8,7 @@ import admins
 import config
 import push
 import users
+import dao
 
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -18,17 +19,17 @@ def error_callback(bot, update, error):
     try:
         raise error
     except Unauthorized:
-        print("Unauthorized")
+        dao.set_error("Unauthorized")
     except BadRequest:
-        print("BadRequest")
+        dao.set_error("BadRequest")
     except TimedOut:
-        print("TimedOut")
+        dao.set_error("TimedOut")
     except NetworkError:
-        print("NetworkError")
-    except ChatMigrated as e:
-        print("ChatMigrated ", e)
+        dao.set_error("NetworkError")
+    except ChatMigrated:
+        dao.set_error("ChatMigrated")
     except TelegramError:
-        print("TelegramError")
+        dao.set_error("TelegramError")
 
 
 def main():
@@ -74,6 +75,7 @@ def main():
     dp.add_handler(CommandHandler("statistics", admins.statistics))
     dp.add_handler(CommandHandler("reboot", admins.reboot))
     dp.add_handler(CommandHandler("commands", admins.commands))
+    dp.add_handler(CommandHandler("errors", admins.errors, pass_args=True))
 
     # inicia notificação push
     job.run_repeating(push.notas, 1800)

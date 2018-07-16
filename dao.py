@@ -127,3 +127,12 @@ def set_push_frequencia(users, initial, final):
     session.add(push_frequencia)
     session.commit()
     session.close()
+
+
+def set_error(erro):
+    session = Session()
+    error = db.Error(erro, str(time.strftime("%d/%m/%Y %H:%M:%S", time.localtime())))
+
+    session.add(error)
+    session.commit()
+    session.close()

@@ -89,18 +89,21 @@ def users(bot, update, args):
 @restricted
 @run_async
 def suggestions(bot, update, args):
+    text = "<b>Sugestões</b>\n"
     if len(args) == 0:
         session = Session()
         sugestoes = session.query(db.Sugestoes).order_by(db.Sugestoes.id.desc()).limit(10)
-        text = ""
+        sug = False
         for sugestao in sugestoes:
             user = session.query(db.User).filter_by(telegram_id=sugestao.user_id).first()
             text += messages.formata_sugestoes(user.first_name, user.last_name, sugestao.sugestao)
-        if not text:
-            text = messages.no_suggestions(update['message']['chat']['first_name'])
+            sug = True
+        if not sug:
+            text += messages.no_suggestions()
         bot.send_message(chat_id=update['message']['chat']['id'], text=text, parse_mode=ParseMode.HTML)
     elif len(args) == 1:
         session = Session()
+        sug = False
         try:
             if int(args[0]) == 0:
                 sugestoes = session.query(db.Sugestoes).order_by(db.Sugestoes.id.desc()).limit(10)
@@ -108,10 +111,12 @@ def suggestions(bot, update, args):
                 sugestoes = session.query(db.Sugestoes).order_by(db.Sugestoes.id.desc()).limit(int(args[0]))
         except ValueError:
             sugestoes = session.query(db.Sugestoes).order_by(db.Sugestoes.id.desc()).limit(10)
-        text = ""
         for sugestao in sugestoes:
             user = session.query(db.User).filter_by(telegram_id=sugestao.user_id).first()
             text += messages.formata_sugestoes(user.first_name, user.last_name, sugestao.sugestao)
+            sug = True
+        if not sug:
+            text += messages.no_suggestions()
         bot.send_message(chat_id=update['message']['chat']['id'], text=text, parse_mode=ParseMode.HTML)
 
 
@@ -269,3 +274,35 @@ def reboot(bot, update):
 def commands(bot, update):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
     bot.send_message(chat_id=update['message']['chat']['id'], text=messages.comandos_admin(), parse_mode=ParseMode.HTML)
+
+
+@restricted
+@run_async
+def errors(bot, update, args):
+    text = "<b>Erros</b>\n"
+    if len(args) == 0:
+        session = Session()
+        errors = session.query(db.Error).order_by(db.Error.id.desc()).limit(10)
+        sug = False
+        for error in errors:
+            text += messages.formata_error(error.erro, time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+            sug = True
+        if not sug:
+            text += messages.no_error()
+        bot.send_message(chat_id=update['message']['chat']['id'], text=text, parse_mode=ParseMode.HTML)
+    elif len(args) == 1:
+        session = Session()
+        sug = False
+        try:
+            if int(args[0]) == 0:
+                errors = session.query(db.Error).order_by(db.Error.id.desc()).limit(10)
+            else:
+                errors = session.query(db.Error).order_by(db.Error.id.desc()).limit(int(args[0]))
+        except ValueError:
+            errors = session.query(db.Error).order_by(db.Error.id.desc()).limit(10)
+        for error in errors:
+            text += messages.formata_error(error.erro, time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+            sug = True
+        if not sug:
+            text += messages.no_error()
+        bot.send_message(chat_id=update['message']['chat']['id'], text=text, parse_mode=ParseMode.HTML)

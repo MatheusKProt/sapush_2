@@ -32,6 +32,7 @@ def comandos_admin():
 /statement [mensagem] - envia um comunicado a todos os usuários 
 /suggestions [número de sugestões]* ** - exibe as as sugestões recebidas
 /push [notas/frequencia]* [número de atualizações]* ** - exibe o status de atualização das notificações push
+/errors [número de erros]* ** - exibe erros encontrados durante a execução
 
 /statistics - exibe as estatísticas atuais de uso de hardware
 /reboot - reinicia o servidor
@@ -309,6 +310,11 @@ def formata_sugestoes(first_name, last_name, sugestao):
 {} {}: {}""".format(first_name, last_name, sugestao)
 
 
+def formata_error(erro, data):
+    return """
+{} - {}""".format(data, erro)
+
+
 def usuario_nao_encontrado(first_name):
     return """
 {}, não encontrei nenhum usuário com esses parâmetros.""".format(first_name)
@@ -417,9 +423,14 @@ def editais(nome, link):
 {} - <a href=\"{}\">acesse aqui</a>.""".format(nome, link)
 
 
-def no_suggestions(first_name):
+def no_suggestions():
     return """
-{}, ainda não há sugestões cadastradas.""".format(first_name)
+Ainda não há sugestões cadastradas."""
+
+
+def no_error():
+    return """
+Ainda não há erros."""
 
 
 def configurar():
