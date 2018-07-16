@@ -406,8 +406,6 @@ def developers():
 Este bot foi desenvolvido com muito código e café por <a href="https://t.me/lucaspeferreira">Lucas Ferreira</a> e \
 <a href="https://t.me/matheuskprot">Matheus Protzen</a>.
 
-O projeto tem código aberto e está atualmente disponível no <a href="https://github.com">Github</a>.
-
 Em caso de dúvidas, entre em contato."""
 
 
