@@ -41,9 +41,9 @@ def start(bot):
     session = Session()
     admins = session.query(db.Admins)
     for admin in admins:
-       bot.send_message(chat_id=admin.user_id,
-                        text="Ei, estou funcionando!",
-                        parse_mode=ParseMode.HTML)
+        bot.send_message(chat_id=admin.user_id,
+                         text="Hey, estou funcionando!",
+                         parse_mode=ParseMode.HTML)
 
 
 @restricted

@@ -674,7 +674,7 @@ def menu(bot, update, args):
     else:
         bot.edit_message_text(chat_id=telegram_id,
                               message_id=args[0],
-                              text="teste", reply_markup=reply_markup)
+                              text="<b>Menu</b>", reply_markup=reply_markup, parse_mode=ParseMode.HTML)
 
 
 def menu_perfil(bot, update, query):
@@ -683,7 +683,7 @@ def menu_perfil(bot, update, query):
     reply_markup = InlineKeyboardMarkup(keyboard)
     bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
                           message_id=query['message']['message_id'],
-                          text="teste", reply_markup=reply_markup)
+                          text="<b>Menu</b>", reply_markup=reply_markup, parse_mode=ParseMode.HTML)
 
 
 def menu_funcionalidades(bot, update, query):
@@ -695,7 +695,7 @@ def menu_funcionalidades(bot, update, query):
     reply_markup = InlineKeyboardMarkup(keyboard)
     bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
                           message_id=query['message']['message_id'],
-                          text="teste", reply_markup=reply_markup)
+                          text="<b>Menu</b>", reply_markup=reply_markup, parse_mode=ParseMode.HTML)
 
 
 def menu_outros(bot, update, query):
@@ -705,4 +705,4 @@ def menu_outros(bot, update, query):
     reply_markup = InlineKeyboardMarkup(keyboard)
     bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
                           message_id=query['message']['message_id'],
-                          text="teste", reply_markup=reply_markup)
+                          text="<b>Menu</b>", reply_markup=reply_markup, parse_mode=ParseMode.HTML)
