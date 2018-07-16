@@ -15,11 +15,12 @@ def comandos():
 /curriculo - retorna o currículo do curso
 /boleto - retorna o link com seu boleto
 /editais - retorna os ultimos editais publicados
-/chave
+/chave - retorna sua chave de matricula
 
 /desenvolvedores - exibe os desenvolvedores do bot
 /termos - exibe os termos de uso
-/ajuda - exibe instruções de uso"""
+/ajuda - exibe instruções de uso
+/menu - exibe o menu de comandos [BETA]"""
 
 
 def comandos_admin():
