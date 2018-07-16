@@ -84,7 +84,7 @@ def main():
     job.run_repeating(push.notas, 1800)
     job.run_repeating(push.frequencia, 7200)
 
-    admins.start(bot)
+    # admins.start(bot)
 
     updater.start_polling()
     updater.idle()

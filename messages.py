@@ -295,8 +295,12 @@ Seu boleto está disponível <a href=\"{}\">aqui</a>.""".format(boleto)
 {}, você não possui boletos em aberto.""".format(first_name)
 
 
-def formata_users(telegram_id, first_name, last_name):
-    return """
+def formata_users(telegram_id, first_name, last_name, admin):
+    if admin:
+        return """
+{} - <b>{} {}</b>""".format(telegram_id, first_name, last_name)
+    else:
+        return """
 {} - {} {}""".format(telegram_id, first_name, last_name)
 
 
