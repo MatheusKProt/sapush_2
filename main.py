@@ -19,21 +19,16 @@ def error_callback(bot, update, error):
         raise error
     except Unauthorized:
         print("Unauthorized")
-        bot.send_message(chat_id=update['message']['chat']['id'], text="Unauthorized")
     except BadRequest:
         print("BadRequest")
-        bot.send_message(chat_id=update['message']['chat']['id'], text="BadRequest")
     except TimedOut:
         print("TimedOut")
-        bot.send_message(chat_id=update['message']['chat']['id'], text="TimedOut")
     except NetworkError:
         print("NetworkError")
     except ChatMigrated as e:
         print("ChatMigrated ", e)
-        bot.send_message(chat_id=update['message']['chat']['id'], text="ChatMigrated")
     except TelegramError:
         print("TelegramError")
-        bot.send_message(chat_id=update['message']['chat']['id'], text="TelegramError")
 
 
 def main():
