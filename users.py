@@ -25,7 +25,7 @@ Session = sessionmaker(bind=engine)
 def restricted(func):
     @wraps(func)
     def wrapped(bot, update, *args, **kwargs):
-        telegram_id = update.effective_user.id
+        telegram_id = update['message']['chat']['id']
         session = Session()
         user = session.query(db.User).filter_by(telegram_id=telegram_id, termos=True).first()
         if not user:
@@ -43,7 +43,7 @@ def restricted(func):
 def logged(func):
     @wraps(func)
     def wrapped(bot, update, *args, **kwargs):
-        telegram_id = update.effective_user.id
+        telegram_id = update['message']['chat']['id']
         session = Session()
         user = session.query(db.User).filter_by(telegram_id=telegram_id, termos=True).first()
         if user.sapu_username == " ":
@@ -61,7 +61,7 @@ def logged(func):
 def registered(func):
     @wraps(func)
     def wrapped(bot, update, *args, **kwargs):
-        telegram_id = update.effective_user.id
+        telegram_id = update['message']['chat']['id']
         session = Session()
         user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
         if not user:
@@ -79,7 +79,7 @@ def registered(func):
 def agreed(func):
     @wraps(func)
     def wrapped(bot, update, *args, **kwargs):
-        telegram_id = update.effective_user.id
+        telegram_id = update['message']['chat']['id']
         session = Session()
         user = session.query(db.User).filter_by(telegram_id=telegram_id, termos=True).first()
         if user:
@@ -182,6 +182,24 @@ def button(bot, update):
         bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
                               message_id=query['message']['message_id'],
                               text=messages.configurar_frequencia_desativado(query['message']['chat']['first_name']))
+    elif query.data == 'deletar_conta':
+        deletar_conta(bot, update)
+        bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'],
+                           message_id=query['message']['message_id'])
+    elif query.data == 'menu_perfil':
+        menu_perfil(bot, update, query)
+    elif query.data == 'menu_funcionalidades':
+        menu_funcionalidades(bot, update, query)
+    elif query.data == 'menu_outros':
+        menu_outros(bot, update, query)
+    elif query.data == 'voltar_menu':
+        menu(bot, update['callback_query'], [query['message']['message_id']])
+    elif query.data == 'login':
+        login(bot, update['callback_query'], [])
+    elif query.data == 'deletar':
+        deletar(bot, update['callback_query'])
+    elif query.data == 'configurar':
+        configurar(bot, update['callback_query'])
     elif query.data == 'sair':
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'],
                            message_id=query['message']['message_id'])
@@ -248,8 +266,16 @@ def login(bot, update, args):
 @registered
 @restricted
 def deletar(bot, update):
-    telegram_id = update['message']['chat']['id']
-    first_name = update['message']['chat']['first_name']
+    bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
+    keyboard = [[InlineKeyboardButton('Sim', callback_data='deletar_conta'), InlineKeyboardButton('Não', callback_data='sair')]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    bot.send_message(chat_id=update['message']['chat']['id'], text=messages.delete_user(update['message']['chat']['first_name']),
+                     reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+
+
+def deletar_conta(bot, update):
+    telegram_id = update['callback_query']['message']['chat']['id']
+    first_name = update['callback_query']['message']['chat']['first_name']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
 
     session = Session()
@@ -487,13 +513,13 @@ def callback(bot, update):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
     if "ajud" in str(update['message']['text']).lower() or "help" in str(update['message']['text']).lower():
         ajuda(bot, update)
-    elif "notas" in str(update['message']['text']).lower():
+    elif "nota" in str(update['message']['text']).lower():
         notas(bot, update)
     elif "frequencia" in str(update['message']['text']).lower():
         frequencia(bot, update)
-    elif "horarios" in str(update['message']['text']).lower():
+    elif "horario" in str(update['message']['text']).lower():
         horarios(bot, update)
-    elif "disciplinas" in str(update['message']['text']).lower():
+    elif "disciplina" in str(update['message']['text']).lower():
         disciplinas(bot, update)
     elif "historico" in str(update['message']['text']).lower():
         historico(bot, update)
@@ -503,6 +529,24 @@ def callback(bot, update):
         boleto(bot, update)
     elif "chave" in str(update['message']['text']).lower():
         chave(bot, update)
+    elif "comandos" in str(update['message']['text']).lower():
+        comandos(bot, update)
+    elif "termos" in str(update['message']['text']).lower():
+        termos(bot, update)
+    elif "desenvolvedores" in str(update['message']['text']).lower():
+        desenvolvedores(bot, update)
+    elif "editais" in str(update['message']['text']).lower():
+        editais(bot, update, [])
+    elif "configurar" in str(update['message']['text']).lower():
+        configurar(bot, update)
+    elif "start" in str(update['message']['text']).lower():
+        start(bot, update)
+    elif "login" in str(update['message']['text']).lower():
+        login(bot, update)
+    elif "deletar" in str(update['message']['text']).lower():
+        deletar(bot, update)
+    elif "sugerir" in str(update['message']['text']).lower():
+        sugerir(bot, update)
     else:
         bot.send_message(chat_id=update['message']['chat']['id'],
                          text=messages.answer_error(format(update['message']['chat']['first_name'])),
@@ -559,10 +603,46 @@ def configurar_frequencia(bot, update, query):
 
 @registered
 @restricted
-def menu(bot, update):
-    bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
-    keyboard = [[InlineKeyboardButton('Conta', callback_data='conta'), InlineKeyboardButton('Funções', callback_data='funcoes')],
-                [InlineKeyboardButton('Sair', callback_data='sair')]]
+def menu(bot, update, args):
+    telegram_id = update['message']['chat']['id']
+    keyboard = [[InlineKeyboardButton('Perfil', callback_data='menu_perfil'), InlineKeyboardButton('Funcionalidades', callback_data='menu_funcionalidades')],
+                [InlineKeyboardButton('Outros', callback_data='menu_outros'), InlineKeyboardButton('Sair', callback_data='sair')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    bot.send_message(chat_id=update['message']['chat']['id'], text="<b>Menu</b>",
-                     reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+    if len(args) == 0:
+        bot.send_message(chat_id=telegram_id, text="<b>Menu</b>",
+                         reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+    else:
+        bot.edit_message_text(chat_id=telegram_id,
+                              message_id=args[0],
+                              text="teste", reply_markup=reply_markup)
+
+
+def menu_perfil(bot, update, query):
+    keyboard = [[InlineKeyboardButton('Login', callback_data='login'), InlineKeyboardButton('Deletar', callback_data='deletar')],
+                [InlineKeyboardButton('Configurar', callback_data='configurar'), InlineKeyboardButton('Voltar', callback_data='voltar_menu')]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
+                          message_id=query['message']['message_id'],
+                          text="teste", reply_markup=reply_markup)
+
+
+def menu_funcionalidades(bot, update, query):
+    keyboard = [[InlineKeyboardButton('Notas', callback_data='0'), InlineKeyboardButton('Frequência', callback_data='0')],
+                [InlineKeyboardButton('Horários', callback_data='0'), InlineKeyboardButton('Disciplinas', callback_data='0')],
+                [InlineKeyboardButton('Histórico', callback_data='0'), InlineKeyboardButton('Curriculo', callback_data='0')],
+                [InlineKeyboardButton('Boleto', callback_data='0'), InlineKeyboardButton('Editais', callback_data='0')],
+                [InlineKeyboardButton('Chave', callback_data='0'), InlineKeyboardButton('Voltar', callback_data='voltar_menu')]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
+                          message_id=query['message']['message_id'],
+                          text="teste", reply_markup=reply_markup)
+
+
+def menu_outros(bot, update, query):
+    keyboard = [[InlineKeyboardButton('Desenvolvedores', callback_data='0'), InlineKeyboardButton('Termos', callback_data='0')],
+                [InlineKeyboardButton('Ajuda', callback_data='0'), InlineKeyboardButton('Sugerir', callback_data='0')],
+                [InlineKeyboardButton('Comandos', callback_data='0'), InlineKeyboardButton('Voltar', callback_data='voltar_menu')]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
+                          message_id=query['message']['message_id'],
+                          text="teste", reply_markup=reply_markup)

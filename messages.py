@@ -15,6 +15,7 @@ def comandos():
 /curriculo - retorna o currículo do curso
 /boleto - retorna o link com seu boleto
 /editais - retorna os ultimos editais publicados
+/chave
 
 /desenvolvedores - exibe os desenvolvedores do bot
 /termos - exibe os termos de uso
@@ -193,19 +194,20 @@ def agreed(first_name):
 {}, você já aceitou os Termos de Uso. Digite /comandos para ver o que eu posso fazer.""".format(first_name)
 
 
-#def refresh_success(first_name):
-#    return """
-#{}, suas informações de login foram atualizadas com sucesso!""".format(first_name)
-
-
 def user_doesnt_exist(first_name):
     return """
 {}, você não possui nada para deletar.""".format(first_name)
 
 
+def delete_user(first_name):
+    return """
+{}, você tem certeza que deseja deletar suas informações? \
+Se você fizer isso, você não poderá acessar mais nenhuma funcionalidade que este bot oferece.""".format(first_name)
+
+
 def user_deleted(first_name):
     return """
-{}, suas informações de login fotam deletadas com sucesso!""".format(first_name)
+{}, suas informações de login foram deletadas com sucesso!""".format(first_name)
 
 
 def not_finished(first_name):
