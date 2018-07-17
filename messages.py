@@ -306,13 +306,13 @@ Seu boleto está disponível <a href=\"{}\">aqui</a>.""".format(boleto)
 {}, você não possui boletos em aberto.""".format(first_name)
 
 
-def formata_users(telegram_id, first_name, last_name, admin):
-    if admin:
-        return """
-{} - <b>{} {}</b>""".format(telegram_id, first_name, last_name)
-    else:
+def formata_users(telegram_id, first_name, last_name, sapu_username):
+    if sapu_username == " ":
         return """
 {} - {} {}""".format(telegram_id, first_name, last_name)
+    else:
+        return """
+{} - <b>{} {}</b>""".format(telegram_id, first_name, last_name)
 
 
 def formata_sugestoes(first_name, last_name, sugestao):

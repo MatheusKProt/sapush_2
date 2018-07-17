@@ -54,7 +54,7 @@ def users(bot, update, args):
     usuarios = "<b>Usuários</b>\n"
     if not args:
         for user in users:
-            usuarios += messages.formata_users(user.telegram_id, user.first_name, user.last_name, user.admins)
+            usuarios += messages.formata_users(user.telegram_id, user.first_name, user.last_name, user.sapu_username)
         bot.send_message(chat_id=update['message']['chat']['id'], text=usuarios, parse_mode=ParseMode.HTML)
     elif len(args) == 1:
         if str(args[0]).lower() == "count":
@@ -63,7 +63,7 @@ def users(bot, update, args):
         else:
             for user in users:
                 if str(args[0]).lower() in str(user.first_name).lower():
-                    usuarios += messages.formata_users(user.telegram_id, user.first_name, user.last_name, user.admins)
+                    usuarios += messages.formata_users(user.telegram_id, user.first_name, user.last_name, user.sapu_username)
             if usuarios:
                 bot.send_message(chat_id=update['message']['chat']['id'], text=usuarios, parse_mode=ParseMode.HTML)
             else:
@@ -73,7 +73,7 @@ def users(bot, update, args):
     elif len(args) == 2:
         for user in users:
             if str(args[0]).lower() in str(user.first_name).lower() and str(args[1]).lower() in str(user.last_name).lower():
-                usuarios += messages.formata_users(user.telegram_id, user.first_name, user.last_name, user.admins)
+                usuarios += messages.formata_users(user.telegram_id, user.first_name, user.last_name, user.sapu_username)
         if usuarios:
             bot.send_message(chat_id=update['message']['chat']['id'], text=usuarios, parse_mode=ParseMode.HTML)
         else:
