@@ -30,8 +30,8 @@ def comandos_admin():
 <b>Lista de comandos administrativos</b>
 
 /users [nome]* [sobrenome]* - exibe todos os usuários cadastrados
-/alert [id]** [mensagem] - envia um aviso para uma pessoa específica 
-/statement [mensagem] - envia um comunicado a todos os usuários 
+/alert [mensagem] - envia um alerta a todos os usuários 
+/message [id]** [mensagem] - envia uma mensagem para uma pessoa específica
 /suggestions [número de sugestões]* ** - exibe as as sugestões recebidas
 /push [notas/frequencia]* [número de atualizações]* ** - exibe o status de atualização das notificações push
 /errors [número de erros]* ** - exibe erros encontrados durante a execução
@@ -122,6 +122,14 @@ def not_logged_in(first_name):
     return """
 {}, para ter acesso a esta funcionalidade você deverá realizar o login em seu SAPU utilizando o comando \
 /login [usuário] [senha].""".format(first_name)
+
+
+def message(msg, admin, user):
+    return """
+<b>Mensagem</b>
+De <b>{}</b> para <b>{}</b>:
+
+{}""".format(admin, user, msg)
 
 
 def alert(msg):
@@ -381,6 +389,21 @@ def formata_curriculo(materia, ch, link):
 def notas_empty(first_name):
     return """
 {}, ainda não há notas cadastradas no SAPU.""".format(first_name)
+
+
+def frequencia_empty(first_name):
+    return """
+{}, ainda não há frequência cadastrada no SAPU.""".format(first_name)
+
+
+def horarios_empty(first_name):
+    return """
+{}, ainda não há horários cadastrados no SAPU.""".format(first_name)
+
+
+def disciplinas_empty(first_name):
+    return """
+{}, ainda não há disciplinas cadastradas no SAPU.""".format(first_name)
 
 
 def count_users(first_name, num):

@@ -109,6 +109,8 @@ def get_horarios(user):
         for index in tdatagrid_body.find_all(childof=i):
             materia, inicio, fim, predio, sala = util.formata_horarios(index)
             msg += messages.formata_horario(materia, inicio, fim, predio, sala)
+    if not dias:
+        msg = messages.horarios_empty(user.first_name)
     return msg
 
 
@@ -127,7 +129,10 @@ def get_disciplinas(user):
             table.append(td)
             td = []
             count = 0
-    return util.formata_disciplinas(table)
+    msg = util.formata_disciplinas(table)
+    if not table:
+        msg = messages.disciplinas_empty(user.first_name)
+    return msg
 
 
 def get_curriculo(user):
@@ -163,6 +168,8 @@ def get_boleto(user):
     if str(index.get_text().lstrip()).split("'")[1] == "Erro":
         if "títulos em aberto" in str(index.get_text().lstrip()).split("'")[3]:
             return "Você não possui boletos em aberto", False
+        else:
+            return "Você não possui boletos", False
     else:
         return str(index.get_text().lstrip()).split("'")[1], True
 

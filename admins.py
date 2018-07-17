@@ -162,7 +162,7 @@ def push(bot, update, args):
 
 @restricted
 @run_async
-def alert(bot, update, args):
+def message(bot, update, args):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
     msg = ""
     count = 0
@@ -177,8 +177,9 @@ def alert(bot, update, args):
         count += 1
     try:
         if int(args[0]):
-            bot.send_message(chat_id=args[0], text=messages.alert(msg), parse_mode=ParseMode.HTML)
             session = Session()
+            user = session.query(db.User).filter_by(telegram_id=int(args[0])).first()
+            bot.send_message(chat_id=args[0], text=messages.message(msg, update['message']['chat']['first_name'], user.first_name), parse_mode=ParseMode.HTML)
             admin = session.query(db.Admins).filter_by(user_id=update['message']['chat']['id']).first()
             session.add(db.Alert(admin.id, int(args[0]), str(msg)))
             user = session.query(db.User).filter_by(telegram_id=admin.user_id).first()
@@ -194,7 +195,7 @@ def alert(bot, update, args):
 
 @restricted
 @run_async
-def statement(bot, update, args):
+def alert(bot, update, args):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
     msg = ""
     if len(args) == 0:

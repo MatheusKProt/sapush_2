@@ -68,8 +68,8 @@ def main():
 
     # funções dos administradores
     dp.add_handler(CommandHandler("users", admins.users, pass_args=True))
+    dp.add_handler(CommandHandler("message", admins.message, pass_args=True))
     dp.add_handler(CommandHandler("alert", admins.alert, pass_args=True))
-    dp.add_handler(CommandHandler("statement", admins.statement, pass_args=True))
     dp.add_handler(CommandHandler("suggestions", admins.suggestions, pass_args=True))
     dp.add_handler(CommandHandler("push", admins.push, pass_args=True))
     dp.add_handler(CommandHandler("statistics", admins.statistics))

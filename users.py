@@ -390,10 +390,12 @@ def frequencia(bot, update):
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
     session = Session()
     frequencia = session.query(db.Frequencia).filter_by(user_id=telegram_id, semestre=semestre)
-
-    msg = "<b>Frequência</b>"
-    for freq in frequencia:
-        msg += "\n" + util.formata_frequencia(freq)
+    if frequencia.first():
+        msg = "<b>Frequência</b>"
+        for freq in frequencia:
+            msg += "\n" + util.formata_frequencia(freq)
+    else:
+        msg = messages.frequencia_empty(update['message']['chat']['first_name'])
     bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
     session.close()
 
