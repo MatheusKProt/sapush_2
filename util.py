@@ -123,7 +123,7 @@ def formata_horarios(index):
     predios = horario[2].split(" ")
     predio = ""
     count = 0
-    if predios == [' ']:
+    if not predios == ['']:
         for p in predios:
             if count == 0:
                 predio += p.lower() + " "
