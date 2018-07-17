@@ -41,7 +41,7 @@ def start(bot):
     admins = session.query(db.Admins)
     for admin in admins:
         bot.send_message(chat_id=admin.user_id,
-                         text="Hey, estou funcionando!",
+                         text="Iniciei ou fui atualizado com sucesso.",
                          parse_mode=ParseMode.HTML)
 
 
