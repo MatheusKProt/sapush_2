@@ -350,7 +350,7 @@ def statement_error(first_name):
 
 def alert_success(first_name):
     return """
-{}, seu alerta foi enviado com sucesso!""".format(first_name)
+{}, sua mensagem foi enviada com sucesso!""".format(first_name)
 
 
 def statistics(ligado, uso_processador, uso_memoria, uso_disco, memoria_total, memoria_disponivel, disco_total,
