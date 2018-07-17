@@ -8,6 +8,7 @@ from telegram import ParseMode, ChatAction, InlineKeyboardButton, InlineKeyboard
     InputTextMessageContent
 from telegram.ext import run_async
 
+import admins
 import crawlers
 import dao
 import db
@@ -258,6 +259,12 @@ def button(bot, update):
     elif query.data == 'comandos':
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
         comandos(bot, update['callback_query'])
+
+    # Users
+    elif 'users_anterior' in query.data:
+        admins.users_menu(bot, update['callback_query'], ["", "", query['message']['message_id'], int(str(query.data).split(" ")[1]) - 10, 1])
+    elif 'users_proxima' in query.data:
+        admins.users_menu(bot, update['callback_query'], ["", "", query['message']['message_id'], int(str(query.data).split(" ")[1]) + 10, 1])
 
     # Geral
     elif query.data == 'sair':

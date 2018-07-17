@@ -307,6 +307,8 @@ Seu boleto está disponível <a href=\"{}\">aqui</a>.""".format(boleto)
 
 
 def formata_users(telegram_id, first_name, last_name, sapu_username):
+    if not last_name:
+        last_name = ""
     if sapu_username == " ":
         return """
 {} - {} {}""".format(telegram_id, first_name, last_name)

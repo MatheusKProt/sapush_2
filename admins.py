@@ -1,12 +1,11 @@
 import time
 import subprocess
 import operator
-import os
 from functools import wraps
 
 import psutil
 from sqlalchemy.orm import sessionmaker
-from telegram import ParseMode, ChatAction
+from telegram import ParseMode, ChatAction, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import run_async
 
 import db
@@ -22,7 +21,7 @@ Session = sessionmaker(bind=engine)
 def restricted(func):
     @wraps(func)
     def wrapped(bot, update, *args, **kwargs):
-        user_id = update.effective_user.id
+        user_id = update['message']['chat']['id']
         session = Session()
         admin = session.query(db.Admins).filter_by(user_id=user_id).first()
         if not admin:
@@ -51,35 +50,17 @@ def start(bot):
 def users(bot, update, args):
     session = Session()
     users = session.query(db.User).order_by(db.User.first_name.asc(), db.User.last_name.asc())
-    usuarios = "<b>Usuários</b>\n"
+    session.close()
     if not args:
-        for user in users:
-            usuarios += messages.formata_users(user.telegram_id, user.first_name, user.last_name, user.sapu_username)
-        bot.send_message(chat_id=update['message']['chat']['id'], text=usuarios, parse_mode=ParseMode.HTML)
+        users_menu(bot, update, args)
     elif len(args) == 1:
         if str(args[0]).lower() == "count":
             usuarios = messages.count_users(update['message']['chat']['first_name'], users.count())
             bot.send_message(chat_id=update['message']['chat']['id'], text=usuarios, parse_mode=ParseMode.HTML)
         else:
-            for user in users:
-                if str(args[0]).lower() in str(user.first_name).lower():
-                    usuarios += messages.formata_users(user.telegram_id, user.first_name, user.last_name, user.sapu_username)
-            if usuarios:
-                bot.send_message(chat_id=update['message']['chat']['id'], text=usuarios, parse_mode=ParseMode.HTML)
-            else:
-                bot.send_message(chat_id=update['message']['chat']['id'],
-                                 text=messages.usuario_nao_encontrado(update['message']['chat']['first_name']),
-                                 parse_mode=ParseMode.HTML)
+            users_menu(bot, update, [args[0], "", -1, 0, 2])
     elif len(args) == 2:
-        for user in users:
-            if str(args[0]).lower() in str(user.first_name).lower() and str(args[1]).lower() in str(user.last_name).lower():
-                usuarios += messages.formata_users(user.telegram_id, user.first_name, user.last_name, user.sapu_username)
-        if usuarios:
-            bot.send_message(chat_id=update['message']['chat']['id'], text=usuarios, parse_mode=ParseMode.HTML)
-        else:
-            bot.send_message(chat_id=update['message']['chat']['id'],
-                             text=messages.usuario_nao_encontrado(update['message']['chat']['first_name']),
-                             parse_mode=ParseMode.HTML)
+        users_menu(bot, update, [args[0], args[1], -1, 0, 3])
     else:
         bot.send_message(chat_id=update['message']['chat']['id'],
                          text=messages.usuario_nao_encontrado(update['message']['chat']['first_name']),
@@ -89,9 +70,9 @@ def users(bot, update, args):
 @restricted
 @run_async
 def suggestions(bot, update, args):
+    session = Session()
     text = "<b>Sugestões</b>\n"
     if len(args) == 0:
-        session = Session()
         sugestoes = session.query(db.Sugestoes).order_by(db.Sugestoes.id.desc()).limit(10)
         sug = False
         for sugestao in sugestoes:
@@ -102,7 +83,6 @@ def suggestions(bot, update, args):
             text += messages.no_suggestions()
         bot.send_message(chat_id=update['message']['chat']['id'], text=text, parse_mode=ParseMode.HTML)
     elif len(args) == 1:
-        session = Session()
         sug = False
         try:
             if int(args[0]) == 0:
@@ -118,6 +98,7 @@ def suggestions(bot, update, args):
         if not sug:
             text += messages.no_suggestions()
         bot.send_message(chat_id=update['message']['chat']['id'], text=text, parse_mode=ParseMode.HTML)
+    session.close()
 
 
 @restricted
@@ -158,6 +139,7 @@ def push(bot, update, args):
         msg += "\n\n<b>Frequência</b>"
         msg += util.push(frequencia)
         bot.send_message(chat_id=update['message']['chat']['id'], text=msg, parse_mode=ParseMode.HTML)
+    session.close()
 
 
 @restricted
@@ -280,9 +262,9 @@ def commands(bot, update):
 @restricted
 @run_async
 def errors(bot, update, args):
+    session = Session()
     text = "<b>Erros</b>\n"
     if len(args) == 0:
-        session = Session()
         errors = session.query(db.Error).order_by(db.Error.id.desc()).limit(10)
         sug = False
         for error in errors:
@@ -292,7 +274,6 @@ def errors(bot, update, args):
             text += messages.no_error()
         bot.send_message(chat_id=update['message']['chat']['id'], text=text, parse_mode=ParseMode.HTML)
     elif len(args) == 1:
-        session = Session()
         sug = False
         try:
             if int(args[0]) == 0:
@@ -307,3 +288,79 @@ def errors(bot, update, args):
         if not sug:
             text += messages.no_error()
         bot.send_message(chat_id=update['message']['chat']['id'], text=text, parse_mode=ParseMode.HTML)
+    session.close()
+
+
+@restricted
+@run_async
+def users_menu(bot, update, args):
+    telegram_id = update['message']['chat']['id']
+    session = Session()
+    usuarios = "<b>Usuários</b>\n"
+    if not args:
+        users = session.query(db.User).order_by(db.User.first_name.asc(), db.User.last_name.asc())
+    elif args[4] == 1:
+        users = session.query(db.User).order_by(db.User.first_name.asc(), db.User.last_name.asc())
+    elif args[4] == 2:
+        users = session.query(db.User).filter(db.User.first_name.like('%' + args[0] + '%')).order_by(db.User.first_name.asc(), db.User.last_name.asc()).from_self()
+        if not users.first():
+            users = session.query(db.User).filter(db.User.first_name.like('%' + args[0].capitalize() + '%')).order_by(db.User.first_name.asc(), db.User.last_name.asc()).from_self()
+            if not users.first():
+                bot.send_message(chat_id=update['message']['chat']['id'],
+                                 text=messages.usuario_nao_encontrado(update['message']['chat']['first_name']),
+                                 parse_mode=ParseMode.HTML)
+                return
+    elif args[4] == 3:
+        users = session.query(db.User).filter(db.User.first_name.like('%' + args[0] + '%'),
+                                              db.User.last_name.like('%' + args[1] + '%')).order_by(db.User.first_name.asc(), db.User.last_name.asc()).from_self()
+        if not users.first():
+            users = session.query(db.User).filter(db.User.first_name.like('%' + args[0].capitalize() + '%'),
+                                                  db.User.last_name.like('%' + args[1].capitalize() + '%')).order_by(db.User.first_name.asc(), db.User.last_name.asc()).from_self()
+            if not users.first():
+                users = session.query(db.User).filter(db.User.first_name.like('%' + args[0] + '%'),
+                                                      db.User.last_name.like('%' + args[1].capitalize() + '%')).order_by(
+                    db.User.first_name.asc(), db.User.last_name.asc()).from_self()
+                if not users.first():
+                    users = session.query(db.User).filter(db.User.first_name.like('%' + args[0].capitalize() + '%'),
+                                                          db.User.last_name.like('%' + args[1] + '%')).order_by(
+                        db.User.first_name.asc(), db.User.last_name.asc()).from_self()
+                    if not users.first():
+                        bot.send_message(chat_id=update['message']['chat']['id'],
+                                         text=messages.usuario_nao_encontrado(update['message']['chat']['first_name']),
+                                         parse_mode=ParseMode.HTML)
+                        return
+    inicio = 0
+    if not args:
+        pass
+    elif args[3] < 0:
+        inicio = 0
+    elif args[3] > users.count():
+        inicio = args[3] - 10
+    else:
+        inicio = args[3]
+    fim = inicio + 10
+    for user in users.slice(inicio, fim):
+        usuarios += messages.formata_users(user.telegram_id, user.first_name, user.last_name, user.sapu_username)
+    session.close()
+    mod = divmod(users.count(), 10)
+    if mod[1] == 0:
+        pag_final = mod[0]
+    else:
+        pag_final = mod[0] + 1
+    usuarios += "\n\nPágina {} de {}".format(int(fim / 10), pag_final)
+
+    keyboard = [[InlineKeyboardButton('Anterior', callback_data='users_anterior {}'.format(inicio)), InlineKeyboardButton('Próxima', callback_data='users_proxima {}'.format(inicio))],
+                [InlineKeyboardButton('Sair', callback_data='sair')]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    if len(args) == 0:
+        bot.send_message(chat_id=telegram_id, text=usuarios,
+                         reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+    elif args[2] == -1:
+        bot.send_message(chat_id=telegram_id, text=usuarios,
+                         reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+    else:
+        try:
+            bot.edit_message_text(chat_id=telegram_id, message_id=args[2],
+                                  text=usuarios, reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+        except:
+            pass
