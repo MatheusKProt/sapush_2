@@ -22,7 +22,7 @@ def comandos():
 /ajuda - exibe instruções de uso
 /menu - exibe o menu de comandos*
 
-*Versão beta"""
+*Funcionalidade em testes"""
 
 
 def comandos_admin():
