@@ -86,11 +86,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admins.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="admins.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admins.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="241" column="40" selection-start-line="241" selection-start-column="40" selection-end-line="241" selection-end-column="40" />
+            <state relative-caret-position="309">
+              <caret line="235" column="55" selection-start-line="235" selection-start-column="55" selection-end-line="235" selection-end-column="55" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -107,11 +107,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="messages.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="messages.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/messages.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="367" column="19" lean-forward="true" selection-start-line="367" selection-start-column="19" selection-end-line="367" selection-end-column="19" />
+            <state relative-caret-position="411">
+              <caret line="370" column="31" lean-forward="true" selection-start-line="370" selection-start-column="31" selection-end-line="370" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -162,8 +162,8 @@
         <option value="$PROJECT_DIR$/crawlers.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/users.py" />
-        <option value="$PROJECT_DIR$/admins.py" />
         <option value="$PROJECT_DIR$/messages.py" />
+        <option value="$PROJECT_DIR$/admins.py" />
       </list>
     </option>
   </component>
@@ -644,16 +644,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/users.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="635" column="58" lean-forward="true" selection-start-line="635" selection-start-column="58" selection-end-line="635" selection-end-column="58" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
@@ -664,20 +654,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admins.py">
+    <entry file="file://$PROJECT_DIR$/messages.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="241" column="40" selection-start-line="241" selection-start-column="40" selection-end-line="241" selection-end-column="40" />
+        <state relative-caret-position="411">
+          <caret line="370" column="31" lean-forward="true" selection-start-line="370" selection-start-column="31" selection-end-line="370" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/users.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="635" column="58" lean-forward="true" selection-start-line="635" selection-start-column="58" selection-end-line="635" selection-end-column="58" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/messages.py">
+    <entry file="file://$PROJECT_DIR$/admins.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="367" column="19" lean-forward="true" selection-start-line="367" selection-start-column="19" selection-end-line="367" selection-end-column="19" />
+        <state relative-caret-position="309">
+          <caret line="235" column="55" selection-start-line="235" selection-start-column="55" selection-end-line="235" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
