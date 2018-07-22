@@ -17,6 +17,7 @@ def comandos():
 /boleto - retorna o link com seu boleto
 /editais - retorna os ultimos editais publicados
 /chave - retorna sua chave de matricula
+/moodle - retonra o link do moodle
 
 /desenvolvedores - exibe os desenvolvedores do bot
 /termos - exibe os termos de uso
@@ -511,3 +512,10 @@ def formata_atestado(nome, atestado):
 <b>Atestado de Matricula</b>
 
 Seu atestado de matricula {}está disponível <a href=\"http://sapu.ucpel.edu.br/portal/{}\">aqui</a>.""".format(nome, atestado)
+
+
+def formata_moodle(moodle):
+    return """
+<b>Moodle</b>
+
+Para acessar clique <a href=\"{}\">aqui</a>.""".format(moodle)

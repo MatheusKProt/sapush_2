@@ -160,6 +160,14 @@ def get_historico(user):
     return str(index.get_text().lstrip()).split("'")[1]
 
 
+def get_moodle(user):
+    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    historico = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=LoginMoodle&method=index")
+    soup = BeautifulSoup(historico.content, 'html.parser')
+    index = soup.find('script')
+    return str(index.get_text().lstrip()).split("'")[1]
+
+
 def get_boleto(user):
     session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
     boleto = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=SolicitacaoBoletoFormList&method=emitirBoleto")
