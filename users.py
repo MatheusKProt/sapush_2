@@ -245,6 +245,8 @@ def button(bot, update):
     elif query.data == 'chave':
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
         chave(bot, update['callback_query'])
+    elif query.data == 'atestados':
+        atestado(bot, update['callback_query'], query['message']['message_id'])
 
     # Outros
     elif query.data == 'desenvolvedores':
@@ -471,13 +473,18 @@ def curriculo(bot, update):
 @run_async
 @restricted
 @logged
-def atestado(bot, update):
-    keyboard = [[InlineKeyboardButton('Simples', callback_data='atestado_simples'), InlineKeyboardButton('Completo', callback_data='atestado_completo')],
-                [InlineKeyboardButton('Apto', callback_data='atestado_apto'), InlineKeyboardButton('Sair', callback_data='sair')]]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    bot.send_message(chat_id=update['message']['chat']['id'],
-                     text=messages.atestado(),
-                     reply_markup=reply_markup)
+def atestado(bot, update, *args):
+    if args:
+        keyboard = [[InlineKeyboardButton('Simples', callback_data='atestado_simples'), InlineKeyboardButton('Completo', callback_data='atestado_completo')],
+                    [InlineKeyboardButton('Apto', callback_data='atestado_apto'), InlineKeyboardButton('Voltar', callback_data='menu_funcionalidades')]]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        bot.edit_message_text(chat_id=update['message']['chat']['id'], message_id=args[0], text=messages.atestado(),
+                              reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+    else:
+        keyboard = [[InlineKeyboardButton('Simples', callback_data='atestado_simples'), InlineKeyboardButton('Completo', callback_data='atestado_completo')],
+                    [InlineKeyboardButton('Apto', callback_data='atestado_apto'), InlineKeyboardButton('Sair', callback_data='sair')]]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        bot.send_message(chat_id=update['message']['chat']['id'], text=messages.atestado(), reply_markup=reply_markup)
 
 
 def atestado_simples(bot, update, query):
@@ -692,6 +699,8 @@ def callback(bot, update):
         sugerir(bot, update, args)
     elif "menu" in str(update['message']['text']).lower():
         menu(bot, update, [])
+    elif "atestado" in str(update['message']['text']).lower():
+        atestado(bot, update)
     else:
         bot.send_message(chat_id=update['message']['chat']['id'],
                          text=messages.answer_error(format(update['message']['chat']['first_name'])),
@@ -777,7 +786,8 @@ def menu_funcionalidades(bot, update, query):
                 [InlineKeyboardButton('Horários', callback_data='horarios'), InlineKeyboardButton('Disciplinas', callback_data='disciplinas')],
                 [InlineKeyboardButton('Histórico', callback_data='historico'), InlineKeyboardButton('Curriculo', callback_data='curriculo')],
                 [InlineKeyboardButton('Boleto', callback_data='boleto'), InlineKeyboardButton('Editais', callback_data='editais')],
-                [InlineKeyboardButton('Chave', callback_data='chave'), InlineKeyboardButton('Voltar', callback_data='voltar_menu')]]
+                [InlineKeyboardButton('Chave', callback_data='chave'), InlineKeyboardButton('Atestados', callback_data='atestados')],
+                [InlineKeyboardButton('Voltar', callback_data='voltar_menu')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
                           message_id=query['message']['message_id'],
