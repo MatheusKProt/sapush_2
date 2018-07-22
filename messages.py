@@ -5,7 +5,7 @@ def comandos():
 /login [usuário] [senha] - faz o login no SAPU ou alterar login existente
 /deletar - deleta suas informações de login do SAPU 
 /sugerir [mensagem] - envia uma sugestão aos desenvolvedores 
-/configurar - configura o estado das atualizações push
+/configurar - configura o estado das notificações push
 
 /notas - retorna suas notas do semestre atual 
 /frequencia - retorna sua frequência do semestre atual 
