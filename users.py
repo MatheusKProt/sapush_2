@@ -192,6 +192,9 @@ def button(bot, update):
     elif query.data == 'deletar_conta':
         deletar_conta(bot, update)
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
+    elif query.data == 'nao_deletar_conta':
+        bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'],
+                              text=messages.not_delete_account(update['callback_query']['message']['chat']['first_name']), parse_mode=ParseMode.HTML)
 
     # Menu
     elif query.data == 'menu_perfil':
@@ -333,7 +336,7 @@ def login(bot, update, args):
 @restricted
 def deletar(bot, update):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
-    keyboard = [[InlineKeyboardButton('Sim', callback_data='deletar_conta'), InlineKeyboardButton('Não', callback_data='sair')]]
+    keyboard = [[InlineKeyboardButton('Sim', callback_data='deletar_conta'), InlineKeyboardButton('Não', callback_data='nao_deletar_conta')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     bot.send_message(chat_id=update['message']['chat']['id'], text=messages.delete_user(update['message']['chat']['first_name']),
                      reply_markup=reply_markup, parse_mode=ParseMode.HTML)
@@ -630,6 +633,8 @@ def callback(bot, update):
             text.pop(0)
             args = text
         sugerir(bot, update, args)
+    elif "menu" in str(update['message']['text']).lower():
+        menu(bot, update, [])
     else:
         bot.send_message(chat_id=update['message']['chat']['id'],
                          text=messages.answer_error(format(update['message']['chat']['first_name'])),

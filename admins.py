@@ -268,7 +268,7 @@ def errors(bot, update, args):
         errors = session.query(db.Error).order_by(db.Error.id.desc()).limit(10)
         sug = False
         for error in errors:
-            text += messages.formata_error(error.erro, time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+            text += messages.formata_error(error.erro, error.data)
             sug = True
         if not sug:
             text += messages.no_error()
@@ -283,7 +283,7 @@ def errors(bot, update, args):
         except ValueError:
             errors = session.query(db.Error).order_by(db.Error.id.desc()).limit(10)
         for error in errors:
-            text += messages.formata_error(error.erro, time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+            text += messages.formata_error(error.erro, error.data)
             sug = True
         if not sug:
             text += messages.no_error()

@@ -491,3 +491,8 @@ def configurar_frequencia_ativado(first_name):
 def configurar_frequencia_desativado(first_name):
     return """
 {}, as notificações relacionadas a frequência foram desativadas.""".format(first_name)
+
+
+def not_delete_account(first_name):
+    return """
+{}, você optou por não deletar suas informações.""".format(first_name)
