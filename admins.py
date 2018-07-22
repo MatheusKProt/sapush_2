@@ -232,6 +232,7 @@ def statistics(bot, update):
 
     ligado = "Ligado há %d dias, %d horas, %d minutos e %d segundos" % (dias_ligado, horas_ligado, minutos_ligado, segundos_ligado)
     memoria_total = memoria.total / 1000000000
+    memoria_usada = memoria.used / 1000000000
     memoria_disponivel = memoria.available / 1000000000
     disco_total = disco.total / 1073741824
     disco_usado = disco.used / 1073741824
@@ -239,7 +240,7 @@ def statistics(bot, update):
 
     bot.send_message(chat_id=update['message']['chat']['id'],
                      text=messages.statistics(ligado, processador, memoria.percent, disco.percent, memoria_total,
-                                              memoria_disponivel, disco_total, disco_usado, disco_disponivel,
+                                              memoria_usada, memoria_disponivel, disco_total, disco_usado, disco_disponivel,
                                               processos_consumindo),
                      parse_mode=ParseMode.HTML)
     

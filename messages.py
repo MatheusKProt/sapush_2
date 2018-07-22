@@ -355,7 +355,7 @@ def alert_success(first_name):
 {}, sua mensagem foi enviada com sucesso!""".format(first_name)
 
 
-def statistics(ligado, uso_processador, uso_memoria, uso_disco, memoria_total, memoria_disponivel, disco_total,
+def statistics(ligado, uso_processador, uso_memoria, uso_disco, memoria_total, memoria_usada, memoria_disponivel, disco_total,
                disco_usado, disco_disponivel, processos_consumindo):
     return """
 <b>Estatísticas de uso do servidor</b>
@@ -365,6 +365,7 @@ Memória: {}%
 Disco utilizado: {}%
 
 Memória total: {}GB
+Memória usada: {}GB
 Memória disponível: {}GB
 
 Capacidade total de disco: {}GB
@@ -372,9 +373,10 @@ Capacidade usada: {}GB
 Capacidade disponível: {}GB
 
 Os processos com maior consumo de memória são:{}""".format(ligado, uso_processador, uso_memoria, uso_disco,
-                                                           round(memoria_total, 2), round(memoria_disponivel, 2),
-                                                           round(disco_total, 2), round(disco_usado, 2),
-                                                           round(disco_disponivel, 2), processos_consumindo)
+                                                           round(memoria_total, 2), round(memoria_usada, 2),
+                                                           round(memoria_disponivel, 2), round(disco_total, 2),
+                                                           round(disco_usado, 2), round(disco_disponivel, 2),
+                                                           processos_consumindo)
 
 
 def formata_horario(materia, inicio, fim, predio, sala):
