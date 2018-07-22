@@ -460,7 +460,7 @@ Ainda não há erros."""
 
 def configurar():
     return """
-O que você deseja configurar?"""
+Você deseja configurar as notificações de qual funcionalidade?"""
 
 
 def configurar_notas():
