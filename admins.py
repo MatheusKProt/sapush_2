@@ -232,9 +232,9 @@ def statistics(bot, update):
 
     ligado = "Ligado há %d dias, %d horas, %d minutos e %d segundos" % (dias_ligado, horas_ligado, minutos_ligado, segundos_ligado)
     memoria_total = memoria.total / 1000000000
-    memoria_usada = memoria.active / 1000000000
+    memoria_disponivel = memoria.available / 1000000000
+    memoria_usada = memoria_total - memoria_disponivel
     disco_total = disco.total / 1073741824
-    memoria_disponivel = memoria_total - memoria_usada
     disco_usado = disco.used / 1073741824
     disco_disponivel = disco.free / 1073741824
 
