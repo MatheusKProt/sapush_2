@@ -583,38 +583,53 @@ def callback(bot, update):
         ajuda(bot, update)
     elif "nota" in str(update['message']['text']).lower():
         notas(bot, update)
-    elif "frequencia" in str(update['message']['text']).lower():
+    elif "frequencia" in str(update['message']['text']).lower() or "frequência" in str(update['message']['text']).lower():
         frequencia(bot, update)
-    elif "horario" in str(update['message']['text']).lower():
+    elif "horario" in str(update['message']['text']).lower() or "horário" in str(update['message']['text']).lower():
         horarios(bot, update)
     elif "disciplina" in str(update['message']['text']).lower():
         disciplinas(bot, update)
-    elif "historico" in str(update['message']['text']).lower():
+    elif "historico" in str(update['message']['text']).lower() or "histórico" in str(update['message']['text']).lower():
         historico(bot, update)
-    elif "curriculo" in str(update['message']['text']).lower():
+    elif "curriculo" in str(update['message']['text']).lower() or "currículo" in str(update['message']['text']).lower():
         curriculo(bot, update)
     elif "boleto" in str(update['message']['text']).lower():
         boleto(bot, update)
     elif "chave" in str(update['message']['text']).lower():
         chave(bot, update)
-    elif "comandos" in str(update['message']['text']).lower():
+    elif "comando" in str(update['message']['text']).lower():
         comandos(bot, update)
-    elif "termos" in str(update['message']['text']).lower():
+    elif "termo" in str(update['message']['text']).lower():
         termos(bot, update)
-    elif "desenvolvedores" in str(update['message']['text']).lower():
+    elif "desenvolvedor" in str(update['message']['text']).lower() or "desenvolveu" in str(update['message']['text']).lower():
         desenvolvedores(bot, update)
-    elif "editais" in str(update['message']['text']).lower():
-        editais(bot, update, [])
-    elif "configurar" in str(update['message']['text']).lower():
+    elif "editais" in str(update['message']['text']).lower() or "edital" in str(update['message']['text']).lower():
+        args = []
+        text = str(update['message']['text']).split(" ")
+        if text[0].lower() == "editais":
+            if len(text) == 2:
+                args = [text[1]]
+        editais(bot, update, args)
+    elif "configura" in str(update['message']['text']).lower():
         configurar(bot, update)
     elif "start" in str(update['message']['text']).lower():
         start(bot, update)
     elif "login" in str(update['message']['text']).lower():
-        login(bot, update)
-    elif "deletar" in str(update['message']['text']).lower():
+        args = []
+        text = str(update['message']['text']).split(" ")
+        if text[0].lower() == "login":
+            if len(text) == 3:
+                args = [text[1], text[2]]
+        login(bot, update, args)
+    elif "delet" in str(update['message']['text']).lower():
         deletar(bot, update)
-    elif "sugerir" in str(update['message']['text']).lower():
-        sugerir(bot, update)
+    elif "sugerir" in str(update['message']['text']).lower() or "sugiro" in str(update['message']['text']).lower() or "sugest" in str(update['message']['text']).lower():
+        args = []
+        text = str(update['message']['text']).split(" ")
+        if text[0].lower() == "sugerir":
+            text.pop(0)
+            args = text
+        sugerir(bot, update, args)
     else:
         bot.send_message(chat_id=update['message']['chat']['id'],
                          text=messages.answer_error(format(update['message']['chat']['first_name'])),
