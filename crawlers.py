@@ -186,3 +186,27 @@ def get_editais(quantidade):
         if count >= quantidade:
             break
     return msg
+
+
+def get_atestado_simples(user):
+    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    boleto = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=MatriculaFormList&method=imprimirSimples")
+    soup = BeautifulSoup(boleto.content, 'html.parser')
+    index = soup.find_all('script')
+    return str(index[1].get_text().lstrip()).split("'")[1]
+
+
+def get_atestado_completo(user):
+    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    boleto = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=MatriculaFormList&method=imprimirCompleto")
+    soup = BeautifulSoup(boleto.content, 'html.parser')
+    index = soup.find_all('script')
+    return str(index[1].get_text().lstrip()).split("'")[1]
+
+
+def get_atestado_apto(user):
+    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    boleto = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=MatriculaFormList&method=imprimirRematricula")
+    soup = BeautifulSoup(boleto.content, 'html.parser')
+    index = soup.find_all('script')
+    return str(index[1].get_text().lstrip()).split("'")[1]

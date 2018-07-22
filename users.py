@@ -269,6 +269,14 @@ def button(bot, update):
     elif 'users_proxima' in query.data:
         admins.users_menu(bot, update['callback_query'], ["", "", query['message']['message_id'], int(str(query.data).split(" ")[1]) + 10, 1])
 
+    # Atestado
+    elif 'atestado_simples' in query.data:
+        atestado_simples(bot, update['callback_query'], query)
+    elif 'atestado_completo' in query.data:
+        atestado_completo(bot, update['callback_query'], query)
+    elif 'atestado_apto' in query.data:
+        atestado_apto(bot, update['callback_query'], query)
+
     # Geral
     elif query.data == 'sair':
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
@@ -456,6 +464,55 @@ def curriculo(bot, update):
     session = Session()
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     bot.send_message(chat_id=telegram_id, text=crawlers.get_curriculo(user), parse_mode=ParseMode.HTML)
+    session.close()
+
+
+@registered
+@run_async
+@restricted
+@logged
+def atestado(bot, update):
+    keyboard = [[InlineKeyboardButton('Simples', callback_data='atestado_simples'), InlineKeyboardButton('Completo', callback_data='atestado_completo')],
+                [InlineKeyboardButton('Apto', callback_data='atestado_apto'), InlineKeyboardButton('Sair', callback_data='sair')]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    bot.send_message(chat_id=update['message']['chat']['id'],
+                     text=messages.atestado(),
+                     reply_markup=reply_markup)
+
+
+def atestado_simples(bot, update, query):
+    telegram_id = update['message']['chat']['id']
+    session = Session()
+    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
+    atestado = crawlers.get_atestado_simples(user)
+    bot.edit_message_text(chat_id=update['message']['chat']['id'],
+                          message_id=query['message']['message_id'],
+                          text=messages.formata_atestado("simples ", atestado), parse_mode=ParseMode.HTML,
+                          disable_web_page_preview=True)
+    session.close()
+
+
+def atestado_completo(bot, update, query):
+    telegram_id = update['message']['chat']['id']
+    session = Session()
+    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
+    atestado = crawlers.get_atestado_completo(user)
+    bot.edit_message_text(chat_id=update['message']['chat']['id'],
+                          message_id=query['message']['message_id'],
+                          text=messages.formata_atestado("completo ", atestado), parse_mode=ParseMode.HTML,
+                          disable_web_page_preview=True)
+    session.close()
+
+
+def atestado_apto(bot, update, query):
+    telegram_id = update['message']['chat']['id']
+    session = Session()
+    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
+    atestado = crawlers.get_atestado_apto(user)
+    bot.edit_message_text(chat_id=update['message']['chat']['id'],
+                          message_id=query['message']['message_id'],
+                          text=messages.formata_atestado("", atestado), parse_mode=ParseMode.HTML,
+                          disable_web_page_preview=True)
     session.close()
 
 

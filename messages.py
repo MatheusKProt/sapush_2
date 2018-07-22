@@ -13,6 +13,7 @@ def comandos():
 /disciplinas - retorna suas disciplinas do semestre atual
 /historico - retorna seu histórico 
 /curriculo - retorna o currículo do curso
+/atestado - retorna seu atestado de matricula do semestre atual
 /boleto - retorna o link com seu boleto
 /editais - retorna os ultimos editais publicados
 /chave - retorna sua chave de matricula
@@ -498,3 +499,15 @@ def configurar_frequencia_desativado(first_name):
 def not_delete_account(first_name):
     return """
 {}, você optou por não deletar suas informações.""".format(first_name)
+
+
+def atestado():
+    return """
+Você deseja qual atestado de matricula?"""
+
+
+def formata_atestado(nome, atestado):
+    return """
+<b>Atestado de Matricula</b>
+
+Seu atestado de matricula {}está disponível <a href=\"http://sapu.ucpel.edu.br/portal/{}\">aqui</a>.""".format(nome, atestado)
