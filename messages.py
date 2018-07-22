@@ -284,7 +284,7 @@ Caso você queira ver a lista completa de comandos disponíveis, utilize /comand
 
 def answer_error(first_name):
     return """
-{}, ainda não consigo conversar com você de forma natural. Você pode digitar ajuda a qualquer momento caso necessite \
+{}, ainda não consigo conversar com você de forma natural. Você pode pedir ajuda a qualquer momento caso necessite \
 de auxílio.""".format(first_name)
 
 
