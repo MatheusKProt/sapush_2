@@ -203,6 +203,20 @@ class Error(base):
         self.data = data
 
 
+class Usage(base):
+    __tablename__ = 'usage'
+
+    id = Column('id', Integer, primary_key=True)
+    user_id = Column('user_id', Integer, ForeignKey('user.telegram_id'))
+    funcionabilidade = Column('funcionalidade', String)
+    data = Column('data', String)
+
+    def __init__(self, user_id, funcionabilidade, data):
+        self.user_id = user_id
+        self.funcionabilidade = funcionabilidade
+        self.data = data
+
+
 def gen_engine(url):
     engine = create_engine(url)
 

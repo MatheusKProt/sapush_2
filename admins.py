@@ -4,6 +4,7 @@ import operator
 from functools import wraps
 
 import psutil
+from sqlalchemy import func
 from sqlalchemy.orm import sessionmaker
 from telegram import ParseMode, ChatAction, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import run_async
@@ -243,8 +244,32 @@ def statistics(bot, update):
                                               memoria_usada, memoria_disponivel, disco_total, disco_usado, disco_disponivel,
                                               processos_consumindo),
                      parse_mode=ParseMode.HTML)
-    
-    
+
+
+@restricted
+@run_async
+def usage(bot, update, args):
+    session = Session()
+    bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
+    try:
+        try:
+            limite = int(args[1])
+        except:
+            limite = 5
+        usages = session.query(db.Usage).filter_by(user_id=int(args[0])).order_by(db.Usage.data.desc()).limit(limite)
+        user = session.query(db.User.first_name, db.User.last_name).filter_by(telegram_id=int(args[0])).first()
+        msg = "<b>Histórico de {} {}</b>\n".format(user[0], user[1])
+        for usage in usages:
+            msg += messages.formata_usage(usage.funcionabilidade, usage.data[:-3])
+        bot.send_message(chat_id=update['message']['chat']['id'], text=msg, parse_mode=ParseMode.HTML)
+    except:
+        usages = session.query(db.Usage.funcionabilidade, func.count(db.Usage.funcionabilidade)).group_by(db.Usage.funcionabilidade).order_by(func.count(db.Usage.funcionabilidade).desc(), db.Usage.funcionabilidade.asc()).all()
+        msg = "<b>Histórico</b>\n"
+        for usage in usages:
+            msg += messages.formata_usage(usage[0], usage[1])
+        bot.send_message(chat_id=update['message']['chat']['id'], text=msg, parse_mode=ParseMode.HTML)
+
+
 @restricted
 def reboot(bot, update):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)

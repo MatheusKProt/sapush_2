@@ -130,8 +130,10 @@ def start(bot, update):
 
 
 def termos(bot, update):
-    bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
-    bot.send_message(chat_id=update['message']['chat']['id'], text=messages.termos(), parse_mode=ParseMode.HTML)
+    telegram_id = update['message']['chat']['id']
+    usage(telegram_id, "Termos", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    bot.send_message(chat_id=telegram_id, text=messages.termos(), parse_mode=ParseMode.HTML)
 
 
 @agreed
@@ -164,7 +166,7 @@ def button(bot, update):
 
     # Configurar
     elif query.data == 'configurar_notas':
-        configurar_notas(bot, update, query)
+        configurar_notas(bot, update['callback_query'], query)
     elif query.data == 'notas_ativar':
         user.push_notas = True
         bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
@@ -176,7 +178,7 @@ def button(bot, update):
                               message_id=query['message']['message_id'],
                               text=messages.configurar_notas_desativado(query['message']['chat']['first_name']))
     elif query.data == 'configurar_frequencia':
-        configurar_frequencia(bot, update, query)
+        configurar_frequencia(bot, update['callback_query'], query)
     elif query.data == 'frequencia_ativar':
         user.push_frequencia = True
         bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
@@ -301,6 +303,7 @@ def button(bot, update):
 def login(bot, update, args):
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    usage(telegram_id, "Login", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
 
     username = update['message']['chat']['username']
     first_name = update['message']['chat']['first_name']
@@ -362,6 +365,7 @@ def deletar_conta(bot, update):
     telegram_id = update['callback_query']['message']['chat']['id']
     first_name = update['callback_query']['message']['chat']['first_name']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    usage(telegram_id, "Deletar", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
 
     session = Session()
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
@@ -385,13 +389,14 @@ def deletar_conta(bot, update):
 @restricted
 @logged
 def notas(bot, update):
+    session = Session()
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    usage(telegram_id, "Notas", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     if int(time.strftime("%m", time.localtime())) >= 7:
         semestre = str(time.strftime("%Y/2", time.localtime()))
     else:
         semestre = str(time.strftime("%Y/1", time.localtime()))
-    telegram_id = update['message']['chat']['id']
-    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
-    session = Session()
     notas_resumo = session.query(db.NotasResumo).filter_by(user_id=telegram_id, semestre=semestre)
 
     if notas_resumo.first():
@@ -408,13 +413,14 @@ def notas(bot, update):
 @restricted
 @logged
 def frequencia(bot, update):
+    session = Session()
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    usage(telegram_id, "Frequência", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     if int(time.strftime("%m", time.localtime())) >= 7:
         semestre = str(time.strftime("%Y/2", time.localtime()))
     else:
         semestre = str(time.strftime("%Y/1", time.localtime()))
-    telegram_id = update['message']['chat']['id']
-    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
-    session = Session()
     frequencia = session.query(db.Frequencia).filter_by(user_id=telegram_id, semestre=semestre)
     if frequencia.first():
         msg = "<b>Frequência</b>"
@@ -430,9 +436,10 @@ def frequencia(bot, update):
 @restricted
 @logged
 def horarios(bot, update):
+    session = Session()
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
-    session = Session()
+    usage(telegram_id, "Horários", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     bot.send_message(chat_id=telegram_id, text=crawlers.get_horarios(user), parse_mode=ParseMode.HTML)
     session.close()
@@ -442,8 +449,10 @@ def horarios(bot, update):
 @restricted
 @logged
 def historico(bot, update):
-    telegram_id = update['message']['chat']['id']
     session = Session()
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    usage(telegram_id, "Histórico", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     bot.send_message(chat_id=telegram_id, text=messages.historico(crawlers.get_historico(user)),
                      parse_mode=ParseMode.HTML, disable_web_page_preview=True)
@@ -454,8 +463,10 @@ def historico(bot, update):
 @restricted
 @logged
 def disciplinas(bot, update):
-    telegram_id = update['message']['chat']['id']
     session = Session()
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    usage(telegram_id, "Disciplinas", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     disciplinas = crawlers.get_disciplinas(user)
     bot.send_message(chat_id=telegram_id, text=disciplinas, parse_mode=ParseMode.HTML)
@@ -467,9 +478,10 @@ def disciplinas(bot, update):
 @restricted
 @logged
 def curriculo(bot, update):
+    session = Session()
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
-    session = Session()
+    usage(telegram_id, "Currículo", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     bot.send_message(chat_id=telegram_id, text=crawlers.get_curriculo(user), parse_mode=ParseMode.HTML)
     session.close()
@@ -496,6 +508,7 @@ def atestado(bot, update, *args):
 def atestado_simples(bot, update, query):
     telegram_id = update['message']['chat']['id']
     session = Session()
+    usage(telegram_id, "Atestado simples", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     atestado = crawlers.get_atestado_simples(user)
     bot.edit_message_text(chat_id=update['message']['chat']['id'],
@@ -508,6 +521,7 @@ def atestado_simples(bot, update, query):
 def atestado_completo(bot, update, query):
     telegram_id = update['message']['chat']['id']
     session = Session()
+    usage(telegram_id, "Atestado completo", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     atestado = crawlers.get_atestado_completo(user)
     bot.edit_message_text(chat_id=update['message']['chat']['id'],
@@ -520,6 +534,7 @@ def atestado_completo(bot, update, query):
 def atestado_apto(bot, update, query):
     telegram_id = update['message']['chat']['id']
     session = Session()
+    usage(telegram_id, "Atestado apto", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     atestado = crawlers.get_atestado_apto(user)
     bot.edit_message_text(chat_id=update['message']['chat']['id'],
@@ -534,7 +549,9 @@ def atestado_apto(bot, update, query):
 @logged
 def boleto(bot, update):
     telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
     session = Session()
+    usage(telegram_id, "Boleto", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     boleto, status = crawlers.get_boleto(user)
     if status:
@@ -551,7 +568,9 @@ def boleto(bot, update):
 @logged
 def chave(bot, update):
     telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
     session = Session()
+    usage(telegram_id, "Chave", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     bot.send_message(chat_id=telegram_id, text=messages.chave(user.chave[:-1]), parse_mode=ParseMode.HTML)
     session.close()
@@ -565,6 +584,7 @@ def moodle(bot, update):
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
     session = Session()
+    usage(telegram_id, "Moodle", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     bot.send_message(chat_id=telegram_id, text=messages.formata_moodle(crawlers.get_moodle(user)), parse_mode=ParseMode.HTML)
     session.close()
@@ -578,6 +598,7 @@ def emails(bot, update, args):
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
     session = Session()
+    usage(telegram_id, "Emails", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     bot.send_message(chat_id=telegram_id, text=crawlers.get_emails(user, args), parse_mode=ParseMode.HTML)
     session.close()
@@ -587,18 +608,21 @@ def emails(bot, update, args):
 @restricted
 @logged
 def sugerir(bot, update, args):
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    session = Session()
+    usage(telegram_id, "Sugerir", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     if len(args) == 0:
-        bot.send_message(chat_id=update['message']['chat']['id'],
+        bot.send_message(chat_id=telegram_id,
                          text=messages.suggest_without_parameters(update['message']['chat']['first_name']),
                          parse_mode=ParseMode.HTML)
     else:
-        session = Session()
-        sugestao = db.Sugestoes(update['message']['chat']['id'], " ".join(args), time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+        sugestao = db.Sugestoes(telegram_id, " ".join(args), time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
         session.add(sugestao)
-        bot.send_message(chat_id=update['message']['chat']['id'], text=messages.sugestao(update['message']['chat']['first_name']), parse_mode=ParseMode.HTML)
+        bot.send_message(chat_id=telegram_id, text=messages.sugestao(update['message']['chat']['first_name']), parse_mode=ParseMode.HTML)
 
         session.commit()
-        session.close()
+    session.close()
 
 
 def inlinequery(bot, update):
@@ -662,16 +686,20 @@ def horarios_inline(user):
 @registered
 @restricted
 def comandos(bot, update):
-    bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
-    bot.send_message(chat_id=update['message']['chat']['id'], text=messages.comandos(), parse_mode=ParseMode.HTML)
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    usage(telegram_id, "Comandos", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    bot.send_message(chat_id=telegram_id, text=messages.comandos(), parse_mode=ParseMode.HTML)
 
 
 @registered
 @restricted
 def ajuda(bot, update):
-    bot.send_message(chat_id=update['message']['chat']['id'],
-                     text=messages.help_user(),
-                     parse_mode=ParseMode.HTML)
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    usage(telegram_id, "Ajuda", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+    bot.send_message(chat_id=telegram_id, text=messages.help_user(), parse_mode=ParseMode.HTML)
 
 
 @registered
@@ -746,19 +774,24 @@ def callback(bot, update):
 @registered
 @restricted
 def desenvolvedores(bot, update):
-    bot.send_message(chat_id=update['message']['chat']['id'],
-                     text=messages.developers(),
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    usage(telegram_id, "Desenvolvedores", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+    bot.send_message(chat_id=telegram_id, text=messages.developers(),
                      parse_mode=ParseMode.HTML, disable_web_page_preview=True)
 
 
 @registered
 @restricted
 def editais(bot, update, args):
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    usage(telegram_id, "Editais", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     try:
-        bot.send_message(chat_id=update['message']['chat']['id'], text=crawlers.get_editais(int(args[0])),
+        bot.send_message(chat_id=telegram_id, text=crawlers.get_editais(int(args[0])),
                          parse_mode=ParseMode.HTML, disable_web_page_preview=True)
     except:
-        bot.send_message(chat_id=update['message']['chat']['id'], text=crawlers.get_editais(5),
+        bot.send_message(chat_id=telegram_id, text=crawlers.get_editais(5),
                          parse_mode=ParseMode.HTML, disable_web_page_preview=True)
 
 
@@ -774,20 +807,22 @@ def configurar(bot, update):
 
 
 def configurar_notas(bot, update, query):
+    telegram_id = update['message']['chat']['id']
+    usage(telegram_id, "Configurar notas", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     keyboard = [[InlineKeyboardButton('Ativar', callback_data='notas_ativar'), InlineKeyboardButton('Desativar', callback_data='notas_desativar')],
                 [InlineKeyboardButton('Sair', callback_data='sair')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
-                          message_id=query['message']['message_id'],
+    bot.edit_message_text(chat_id=telegram_id, message_id=query['message']['message_id'],
                           text=messages.configurar_notas(), reply_markup=reply_markup)
 
 
 def configurar_frequencia(bot, update, query):
+    telegram_id = update['message']['chat']['id']
+    usage(telegram_id, "Configurar frequência", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     keyboard = [[InlineKeyboardButton('Ativar', callback_data='frequencia_ativar'), InlineKeyboardButton('Desativar', callback_data='frequencia_desativar')],
                 [InlineKeyboardButton('Sair', callback_data='sair')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
-                          message_id=query['message']['message_id'],
+    bot.edit_message_text(chat_id=telegram_id, message_id=query['message']['message_id'],
                           text=messages.configurar_frequencia(), reply_markup=reply_markup)
 
 
@@ -796,6 +831,7 @@ def configurar_frequencia(bot, update, query):
 @run_async
 def menu(bot, update, args):
     telegram_id = update['message']['chat']['id']
+    usage(telegram_id, "Menu", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     keyboard = [[InlineKeyboardButton('Perfil', callback_data='menu_perfil'), InlineKeyboardButton('Funcionalidades', callback_data='menu_funcionalidades')],
                 [InlineKeyboardButton('Outros', callback_data='menu_outros'), InlineKeyboardButton('Sair', callback_data='sair')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
@@ -839,3 +875,11 @@ def menu_outros(bot, update, query):
     bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
                           message_id=query['message']['message_id'],
                           text="<b>Menu</b>", reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+
+
+@run_async
+def usage(telegram_id, funcionabilidade, data):
+    session = Session()
+    session.add(db.Usage(telegram_id, funcionabilidade, data))
+    session.commit()
+    session.close()
