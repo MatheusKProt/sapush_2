@@ -17,8 +17,8 @@ def comandos():
 /boleto - retorna o link com seu boleto
 /editais - retorna os ultimos editais publicados
 /chave - retorna sua chave de matricula
-/moodle - retonra o link do moodle
-/email - retonra os últimos emails recebidos
+/moodle - retorna o link do moodle
+/email - retorna os últimos emails recebidos
 
 /desenvolvedores - exibe os desenvolvedores do bot
 /termos - exibe os termos de uso
