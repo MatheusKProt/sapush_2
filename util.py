@@ -205,6 +205,21 @@ def formata_disciplinas(disciplinas):
     return msg
 
 
+def formata_email(emails, args):
+    msg = "<b>Emails</b>\n"
+    count = 1
+    try:
+        limite = int(args[0])
+    except:
+        limite = 5
+    for email in emails:
+        msg += messages.formata_email(email[0], email[1], email[2])
+        count += 1
+        if count > limite:
+            break
+    return msg
+
+
 def push(pushs):
     msg = ""
     for push in pushs:

@@ -168,6 +168,24 @@ def get_moodle(user):
     return str(index.get_text().lstrip()).split("'")[1]
 
 
+def get_emails(user, args):
+    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    historico = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=MensagemForm&method=inbox")
+    soup = BeautifulSoup(historico.content, 'html.parser')
+    table = []
+    td = []
+    count = 0
+    for index in soup.find('table').find_all('td'):
+        if index.get_text().lstrip():
+            td.append(index.get_text().lstrip())
+            count += 1
+        if count > 2:
+            table.append(td)
+            count = 0
+            td = []
+    return util.formata_email(table, args)
+
+
 def get_boleto(user):
     session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
     boleto = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=SolicitacaoBoletoFormList&method=emitirBoleto")

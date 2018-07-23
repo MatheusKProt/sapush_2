@@ -250,6 +250,9 @@ def button(bot, update):
     elif query.data == 'moodle':
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
         moodle(bot, update['callback_query'])
+    elif query.data == 'email':
+        bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
+        email(bot, update['callback_query'], [])
 
     # Outros
     elif query.data == 'desenvolvedores':
@@ -568,6 +571,19 @@ def moodle(bot, update):
 
 
 @registered
+@run_async
+@restricted
+@logged
+def email(bot, update, args):
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    session = Session()
+    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
+    bot.send_message(chat_id=telegram_id, text=crawlers.get_emails(user, args), parse_mode=ParseMode.HTML)
+    session.close()
+
+
+@registered
 @restricted
 @logged
 def sugerir(bot, update, args):
@@ -719,6 +735,8 @@ def callback(bot, update):
         atestado(bot, update)
     elif "moodle" in str(update['message']['text']).lower():
         moodle(bot, update)
+    elif "email" in str(update['message']['text']).lower() or "e-mail" in str(update['message']['text']).lower():
+        email(bot, update, [])
     else:
         bot.send_message(chat_id=update['message']['chat']['id'],
                          text=messages.answer_error(format(update['message']['chat']['first_name'])),
@@ -805,7 +823,8 @@ def menu_funcionalidades(bot, update, query):
                 [InlineKeyboardButton('Histórico', callback_data='historico'), InlineKeyboardButton('Curriculo', callback_data='curriculo')],
                 [InlineKeyboardButton('Boleto', callback_data='boleto'), InlineKeyboardButton('Editais', callback_data='editais')],
                 [InlineKeyboardButton('Chave', callback_data='chave'), InlineKeyboardButton('Atestados', callback_data='atestados')],
-                [InlineKeyboardButton('Moodle', callback_data='moodle'), InlineKeyboardButton('Voltar', callback_data='voltar_menu')]]
+                [InlineKeyboardButton('Moodle', callback_data='moodle'), InlineKeyboardButton('Emails', callback_data='email')],
+                [InlineKeyboardButton('Voltar', callback_data='voltar_menu')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
                           message_id=query['message']['message_id'],

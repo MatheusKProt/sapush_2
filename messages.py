@@ -13,11 +13,12 @@ def comandos():
 /disciplinas - retorna suas disciplinas do semestre atual
 /historico - retorna seu histórico 
 /curriculo - retorna o currículo do curso
-/atestado - retorna seu atestado de matricula do semestre atual
+/atestado - retorna seu atestado de matricula
 /boleto - retorna o link com seu boleto
 /editais - retorna os ultimos editais publicados
 /chave - retorna sua chave de matricula
 /moodle - retonra o link do moodle
+/email - retonra os últimos emails recebidos
 
 /desenvolvedores - exibe os desenvolvedores do bot
 /termos - exibe os termos de uso
@@ -519,3 +520,11 @@ def formata_moodle(moodle):
 <b>Moodle</b>
 
 Para acessar clique <a href=\"{}\">aqui</a>.""".format(moodle)
+
+
+def formata_email(de, assunto, data):
+    return """
+De: {}
+Assunto: {}
+Data: {}
+""".format(de, assunto, data[:-3])

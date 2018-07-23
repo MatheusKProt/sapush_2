@@ -60,6 +60,7 @@ def main():
     dp.add_handler(CommandHandler("boleto", users.boleto))
     dp.add_handler(CommandHandler("chave", users.chave))
     dp.add_handler(CommandHandler("moodle", users.moodle))
+    dp.add_handler(CommandHandler("email", users.email, pass_args=True))
     dp.add_handler(CommandHandler("comandos", users.comandos))
     dp.add_handler(CommandHandler("ajuda", users.ajuda))
     dp.add_handler(CommandHandler("termos", users.termos))
