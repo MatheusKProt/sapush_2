@@ -3,7 +3,6 @@ import os
 import time
 from functools import wraps
 from uuid import uuid4
-import speech as sr
 
 from sqlalchemy.orm import sessionmaker
 from telegram import ParseMode, ChatAction, InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, \
@@ -16,6 +15,7 @@ import dao
 import db
 import messages
 import util
+import speech as sr
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
