@@ -1,7 +1,9 @@
 import logging
+import os
 import time
 from functools import wraps
 from uuid import uuid4
+import speech as sr
 
 from sqlalchemy.orm import sessionmaker
 from telegram import ParseMode, ChatAction, InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, \
@@ -97,7 +99,7 @@ def agreed(func):
 
 @run_async
 def start(bot, update):
-    bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)  # Comando para o bot ficar digitando...
+    bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
     telegram_id = update['message']['chat']['id']
     username = update['message']['chat']['username']
     first_name = update['message']['chat']['first_name']
@@ -706,64 +708,68 @@ def ajuda(bot, update):
 @restricted
 def callback(bot, update):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
-    if "ajud" in str(update['message']['text']).lower() or "help" in str(update['message']['text']).lower():
+    verifica_callback(bot, update, str(update['message']['text']).lower())
+
+
+def verifica_callback(bot, update, arg):
+    if "ajud" in arg or "help" in arg:
         ajuda(bot, update)
-    elif "nota" in str(update['message']['text']).lower():
+    elif "nota" in arg:
         notas(bot, update)
-    elif "frequencia" in str(update['message']['text']).lower() or "frequência" in str(update['message']['text']).lower():
+    elif "frequencia" in arg or "frequência" in arg:
         frequencia(bot, update)
-    elif "horario" in str(update['message']['text']).lower() or "horário" in str(update['message']['text']).lower():
+    elif "horario" in arg or "horário" in arg:
         horarios(bot, update)
-    elif "disciplina" in str(update['message']['text']).lower():
+    elif "disciplina" in arg:
         disciplinas(bot, update)
-    elif "historico" in str(update['message']['text']).lower() or "histórico" in str(update['message']['text']).lower():
+    elif "historico" in arg or "histórico" in arg:
         historico(bot, update)
-    elif "curriculo" in str(update['message']['text']).lower() or "currículo" in str(update['message']['text']).lower():
+    elif "curriculo" in arg or "currículo" in arg:
         curriculo(bot, update)
-    elif "boleto" in str(update['message']['text']).lower():
+    elif "boleto" in arg:
         boleto(bot, update)
-    elif "chave" in str(update['message']['text']).lower():
+    elif "chave" in arg:
         chave(bot, update)
-    elif "comando" in str(update['message']['text']).lower():
+    elif "comando" in arg:
         comandos(bot, update)
-    elif "termo" in str(update['message']['text']).lower():
+    elif "termo" in arg:
         termos(bot, update)
-    elif "desenvolvedor" in str(update['message']['text']).lower() or "desenvolveu" in str(update['message']['text']).lower():
+    elif "desenvolvedor" in arg or "desenvolveu" in arg:
         desenvolvedores(bot, update)
-    elif "editais" in str(update['message']['text']).lower() or "edital" in str(update['message']['text']).lower():
+    elif "editais" in arg or "edital" in arg:
         args = []
         text = str(update['message']['text']).split(" ")
         if text[0].lower() == "editais":
             if len(text) == 2:
                 args = [text[1]]
         editais(bot, update, args)
-    elif "configura" in str(update['message']['text']).lower():
+    elif "configura" in arg:
         configurar(bot, update)
-    elif "start" in str(update['message']['text']).lower():
+    elif "start" in arg:
         start(bot, update)
-    elif "login" in str(update['message']['text']).lower():
+    elif "login" in arg:
         args = []
         text = str(update['message']['text']).split(" ")
         if text[0].lower() == "login":
             if len(text) == 3:
                 args = [text[1], text[2]]
         login(bot, update, args)
-    elif "delet" in str(update['message']['text']).lower():
+    elif "delet" in arg:
         deletar(bot, update)
-    elif "sugerir" in str(update['message']['text']).lower() or "sugiro" in str(update['message']['text']).lower() or "sugest" in str(update['message']['text']).lower():
+    elif "sugerir" in arg or "sugiro" in arg or "sugest" in arg:
         args = []
         text = str(update['message']['text']).split(" ")
         if text[0].lower() == "sugerir":
             text.pop(0)
             args = text
         sugerir(bot, update, args)
-    elif "menu" in str(update['message']['text']).lower():
+    elif "menu" in arg:
         menu(bot, update, [])
-    elif "atestado" in str(update['message']['text']).lower():
+    elif "atestado" in arg:
         atestado(bot, update)
-    elif "moodle" in str(update['message']['text']).lower():
+    elif "moodle" in arg:
         moodle(bot, update)
-    elif "email" in str(update['message']['text']).lower() or "e-mail" in str(update['message']['text']).lower():
+    elif "email" in arg or "e-mail" in arg:
         emails(bot, update, [])
     else:
         bot.send_message(chat_id=update['message']['chat']['id'],
@@ -883,3 +889,32 @@ def usage(telegram_id, funcionabilidade, data):
     session.add(db.Usage(telegram_id, funcionabilidade, data))
     session.commit()
     session.close()
+
+
+@registered
+@run_async
+@restricted
+@logged
+def voice_to_text(bot, update):
+    telegram_id = update['message']['chat']['id']
+    first_name = update['message']['chat']['first_name']
+    file_name = 'audios//' + str(telegram_id) + '_' + str(update.message.from_user.id) + str(update.message.message_id) + '.ogg'
+
+    update.message.voice.get_file().download(file_name)
+
+    BING_KEY = "07021ed50fb04b89bacf60c4eec35e51"  # Microsoft Bing Voice Recognition API keys 32-character lowercase hexadecimal strings
+    try:
+        message_text = sr.recognize_bing(file_name, key=BING_KEY, language="pt-BR")
+        success = True
+    except sr.UnknownValueError:
+        message_text = messages.speech_error(first_name)
+        success = False
+    except sr.RequestError:
+        message_text = messages.speech_request_error(first_name)
+        success = False
+    os.remove(file_name)
+
+    if success:
+        verifica_callback(bot, update, str(message_text).lower())
+    else:
+        bot.send_message(chat_id=telegram_id, text=message_text, parse_mode=ParseMode.HTML)

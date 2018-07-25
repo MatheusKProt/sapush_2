@@ -41,6 +41,7 @@ def main():
     dp.add_handler(CallbackQueryHandler(users.button))
     dp.add_handler(MessageHandler(Filters.text, users.callback))
     dp.add_handler(InlineQueryHandler(users.inlinequery))
+    dp.add_handler(MessageHandler(Filters.voice, users.voice_to_text))
 
     dp.add_error_handler(error_callback)
 

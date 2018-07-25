@@ -534,3 +534,13 @@ Data: {}
 def formata_usage(func, num):
     return """
 {} | {}""".format(num, func)
+
+
+def speech_error(first_name):
+    return """
+{}, não consegui entender o que você falou.""".format(first_name)
+
+
+def speech_request_error(first_name):
+    return """
+{}, não consegui processar seu audio. Que tal enviar outro?""".format(first_name)
