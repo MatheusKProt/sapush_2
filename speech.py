@@ -1,8 +1,8 @@
-import uuid
 import json
+import uuid
 from urllib.parse import urlencode
-from urllib.request import Request, urlopen
-from urllib.error import URLError, HTTPError
+import requests
+from bs4 import BeautifulSoup
 
 
 class RequestError(Exception):
@@ -14,43 +14,35 @@ class UnknownValueError(Exception):
 
 
 def recognize_bing(audio, key, language="en-US"):
+    session = requests.session()
     credential_url = "https://api.cognitive.microsoft.com/sts/v1.0/issueToken"
-    credential_request = Request(credential_url, data=b"", headers={
+    credential_request = session.post(credential_url, data=b"", headers={
         "Content-type": "application/x-www-form-urlencoded",
         "Content-Length": "0",
         "Ocp-Apim-Subscription-Key": key,
     })
+    access_token = BeautifulSoup(credential_request.content, 'html.parser')
 
-    try:
-        credential_response = urlopen(credential_request, timeout=60)  # credential response can take longer, use longer timeout instead of default one
-    except HTTPError as e:
-        raise RequestError("credential request failed: {}".format(e.reason))
-    except URLError as e:
-        raise RequestError("credential connection failed: {}".format(e.reason))
-    access_token = credential_response.read().decode("utf-8")
     url = "https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?{}".format(urlencode({
         "language": language,
         "locale": language,
         "requestid": uuid.uuid4(),
     }))
 
-    request = Request(url, data=stream_audio_file(audio), headers={
-        "Authorization": "Bearer {}".format(access_token),
-        "Content-type": "audio/ogg; codec=\"audio/pcm\"; samplerate=16000",
-        "Transfer-Encoding": "chunked",
-    })
-
     try:
-        response = urlopen(request)
-    except HTTPError as e:
-        raise RequestError("recognition request failed: {}".format(e.reason))
-    except URLError as e:
-        raise RequestError("recognition connection failed: {}".format(e.reason))
-    response_text = response.read().decode("utf-8")
+        response = session.post(url, data=stream_audio_file(audio), headers={
+            "Authorization": "Bearer {}".format(access_token),
+            "Content-type": "audio/ogg; codec=\"audio/pcm\"; samplerate=16000",
+            "Transfer-Encoding": "chunked",
+        })
+    except:
+        raise RequestError()
 
-    result = json.loads(response_text)
+    result = json.loads(str(BeautifulSoup(response.content, 'html.parser')))
+
     if "RecognitionStatus" not in result or result["RecognitionStatus"] != "Success" or "DisplayText" not in result:
         raise UnknownValueError()
+
     return result["DisplayText"]
 
 
