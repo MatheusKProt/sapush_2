@@ -1,3 +1,4 @@
+import datetime
 import logging
 
 from telegram import Bot
@@ -84,8 +85,8 @@ def main():
     dp.add_handler(CommandHandler("errors", admins.errors, pass_args=True))
 
     # inicia notificação push
-    job.run_repeating(push.notas, 1800)
-    job.run_repeating(push.frequencia, 7200)
+    job.run_repeating(push.notas, 1800, first=datetime.datetime.now())
+    job.run_repeating(push.frequencia, 7200, first=datetime.datetime.now())
 
     admins.start(bot)
 

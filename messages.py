@@ -184,7 +184,7 @@ Sua média atual é <b>{}</b>.
 
 def push_grades_null(first_name, materia, data):
     return """
-{}, sua avaliação de {} acabou de ser cadastrada no sistema e está marcada para o dia {}.
+{}, sua avaliação de <b>{}</b> acabou de ser cadastrada no sistema e está marcada para o dia <b>{}</b>.
 Bons estudos!""".format(first_name, materia, data)
 
 

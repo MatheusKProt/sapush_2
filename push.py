@@ -50,22 +50,30 @@ def get_notas(bot, update, user):
     notas_resumo, notas_detalhe = crawlers.get_notas(user)
     for detalhe in notas_detalhe:
         resumo = session.query(db.NotasResumo).filter_by(user_id=user.telegram_id, materia=detalhe[8]).first()
-        detalhe_sapu = session.query(db.NotasDetalhe).filter_by(materia=resumo.id,
-                                                                descricao=str(detalhe[0]),
-                                                                data=str(detalhe[1]),
-                                                                peso=float(util.verifica_vazio_menos_um(detalhe[2])),
-                                                                nota=float(util.verifica_vazio_menos_um(detalhe[3])),
-                                                                peso_x_nota=float(util.verifica_vazio_menos_um(detalhe[5]))).first()
-        if not detalhe_sapu:
+        if not resumo:
             try:
                 bot.send_message(chat_id=user.telegram_id,
-                                 text=messages.push_grades(user.first_name, util.formata_nome_materia(resumo.materia),
-                                                           float(util.verifica_vazio(detalhe[3])),
-                                                           resumo.media,
-                                                           util.formata_notas_msg(detalhe[3])),
+                                 text=messages.push_grades_null(user.first_name, util.formata_nome_materia(detalhe[8])[:-1], detalhe[1]),
                                  parse_mode=ParseMode.HTML)
             except Exception as error:
                 main.error_callback(bot, update, error)
+        else:
+            detalhe_sapu = session.query(db.NotasDetalhe).filter_by(materia=resumo.id,
+                                                                    descricao=str(detalhe[0]),
+                                                                    data=str(detalhe[1]),
+                                                                    peso=float(util.verifica_vazio_menos_um(detalhe[2])),
+                                                                    nota=float(util.verifica_vazio_menos_um(detalhe[3])),
+                                                                    peso_x_nota=float(util.verifica_vazio_menos_um(detalhe[5]))).first()
+            if not detalhe_sapu:
+                try:
+                    bot.send_message(chat_id=user.telegram_id,
+                                     text=messages.push_grades(user.first_name, util.formata_nome_materia(resumo.materia),
+                                                               float(util.verifica_vazio(detalhe[3])),
+                                                               resumo.media,
+                                                               util.formata_notas_msg(detalhe[3])),
+                                     parse_mode=ParseMode.HTML)
+                except Exception as error:
+                    main.error_callback(bot, update, error)
     dao.set_notas(user, notas_resumo, notas_detalhe)
     session.close()
 

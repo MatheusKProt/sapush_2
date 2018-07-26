@@ -340,7 +340,7 @@ def login(bot, update, args):
         session.close()
 
         bot.send_message(chat_id=telegram_id, text=messages.valid_login(first_name), parse_mode=ParseMode.HTML)
-        bot.send_message(chat_id=telegram_id, text=messages.comandos(), parse_mode=ParseMode.HTML)
+        menu(bot, update, [])
         return
     else:
         if error == "senha":
