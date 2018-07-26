@@ -206,7 +206,7 @@ def not_agreed(first_name):
 
 def agreed(first_name):
     return """
-{}, você já aceitou os Termos de Uso. Digite /comandos para ver o que eu posso fazer.""".format(first_name)
+{}, você já aceitou os Termos de Uso. Digite /menu para ver o que eu posso fazer.""".format(first_name)
 
 
 def user_doesnt_exist(first_name):

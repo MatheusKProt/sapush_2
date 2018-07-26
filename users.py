@@ -110,11 +110,15 @@ def start(bot, update):
     try:
         user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
         if user:
-            bot.send_message(chat_id=update['message']['chat']['id'],
-                             text=messages.start(update['message']['chat']['first_name']),
-                             parse_mode=ParseMode.HTML)
             if not user.termos:
+                bot.send_message(chat_id=update['message']['chat']['id'],
+                                 text=messages.start(update['message']['chat']['first_name']),
+                                 parse_mode=ParseMode.HTML)
                 do_you_agree(bot, update)
+            else:
+                bot.send_message(chat_id=update['message']['chat']['id'],
+                                 text=messages.agreed(user.first_name),
+                                 parse_mode=ParseMode.HTML)
             session.close()
             return
         user = db.User(telegram_id, username, first_name, last_name, " ", " ", False, True, True, data_criacao, " ", " ")
