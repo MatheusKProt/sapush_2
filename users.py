@@ -10,6 +10,7 @@ from telegram import ParseMode, ChatAction, InlineKeyboardButton, InlineKeyboard
 from telegram.ext import run_async
 
 import admins
+import config
 import crawlers
 import dao
 import db
@@ -890,8 +891,10 @@ def menu_outros(bot, update, query):
 @run_async
 def usage(telegram_id, funcionabilidade, data):
     session = Session()
-    session.add(db.Usage(telegram_id, funcionabilidade, data))
-    session.commit()
+    admin = session.query(db.Admins).filter_by(user_id=telegram_id).first()
+    if not admin:
+        session.add(db.Usage(telegram_id, funcionabilidade, data))
+        session.commit()
     session.close()
 
 
@@ -905,11 +908,10 @@ def voice_to_text(bot, update):
     first_name = update['message']['chat']['first_name']
     file_name = '/home/pi/SAPU/audios/' + str(telegram_id) + '_' + str(update.message.from_user.id) + str(update.message.message_id) + '.ogg'
 
-    update.message.voice.get_file().download(file_name)
+    update['message']['voice'].get_file().download(file_name)
 
-    BING_KEY = "07021ed50fb04b89bacf60c4eec35e51"  # Microsoft Bing Voice Recognition API keys 32-character lowercase hexadecimal strings
     try:
-        message_text = sr.recognize_bing(file_name, key=BING_KEY, language="pt-BR")
+        message_text = sr.recognize_bing(file_name, key=config.bing(), language="pt-BR")
         success = True
     except sr.UnknownValueError:
         message_text = messages.speech_error(first_name)

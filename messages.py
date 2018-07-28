@@ -544,3 +544,10 @@ def speech_error(first_name):
 def speech_request_error(first_name):
     return """
 {}, não consegui processar seu audio. Que tal enviar outro?""".format(first_name)
+
+
+def start_server():
+    return """
+<b>Comunicado</b>
+
+O servidor foi reiniciado ou atualizado com sucesso."""

@@ -42,7 +42,7 @@ def start(bot):
     admins = session.query(db.Admins)
     for admin in admins:
         bot.send_message(chat_id=admin.user_id,
-                         text="<b>Comunicado</b>\n\nO servidor foi reiniciado ou atualizado com sucesso.",
+                         text=messages.start_server(),
                          parse_mode=ParseMode.HTML)
 
 
@@ -275,7 +275,8 @@ def statistics(bot, update):
 @run_async
 def usage(bot, update, args):
     session = Session()
-    bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
     try:
         try:
             limite = int(args[1])
@@ -286,13 +287,15 @@ def usage(bot, update, args):
         msg = "<b>Histórico de {} {}</b>\n".format(user[0], user[1])
         for usage in usages:
             msg += messages.formata_usage(usage.funcionabilidade, usage.data[:-3])
-        bot.send_message(chat_id=update['message']['chat']['id'], text=msg, parse_mode=ParseMode.HTML)
+        bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
+        session.close()
     except:
         usages = session.query(db.Usage.funcionabilidade, func.count(db.Usage.funcionabilidade)).group_by(db.Usage.funcionabilidade).order_by(func.count(db.Usage.funcionabilidade).desc(), db.Usage.funcionabilidade.asc()).all()
         msg = "<b>Histórico</b>\n"
         for usage in usages:
             msg += messages.formata_usage(usage[0], usage[1])
-        bot.send_message(chat_id=update['message']['chat']['id'], text=msg, parse_mode=ParseMode.HTML)
+        bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
+        session.close()
 
 
 @restricted
