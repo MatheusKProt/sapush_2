@@ -545,3 +545,13 @@ def start_server():
 <b>Comunicado</b>
 
 O servidor foi reiniciado ou atualizado com sucesso."""
+
+
+def invalid(first_name):
+    return """
+{}, não consigo interpretar a informação contida na mensagem que você enviou.""".format(first_name)
+
+
+def unknown_command(first_name):
+    return """
+{}, este comando é inválido.""".format(first_name)

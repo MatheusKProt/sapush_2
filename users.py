@@ -925,3 +925,15 @@ def voice_to_text(bot, update):
         verifica_callback(bot, update, str(message_text).lower())
     else:
         bot.send_message(chat_id=telegram_id, text=message_text, parse_mode=ParseMode.HTML)
+
+
+def invalid(bot, update):
+    telegram_id = update['message']['chat']['id']
+    first_name = update['message']['chat']['first_name']
+    bot.send_message(chat_id=telegram_id, text=messages.invalid(first_name), parse_mode=ParseMode.HTML)
+
+
+def unknown(bot, update):
+    telegram_id = update['message']['chat']['id']
+    first_name = update['message']['chat']['first_name']
+    bot.sendMessage(chat_id=telegram_id, text=messages.unknown_command(first_name))

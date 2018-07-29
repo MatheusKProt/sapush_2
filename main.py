@@ -44,6 +44,20 @@ def main():
     dp.add_handler(InlineQueryHandler(users.inlinequery))
     dp.add_handler(MessageHandler(Filters.voice, users.voice_to_text))
 
+    # entradas invalidas
+    dp.add_handler(MessageHandler(Filters.audio, users.invalid))
+    dp.add_handler(MessageHandler(Filters.document, users.invalid))
+    dp.add_handler(MessageHandler(Filters.contact, users.invalid))
+    dp.add_handler(MessageHandler(Filters.game, users.invalid))
+    dp.add_handler(MessageHandler(Filters.group, users.invalid))
+    dp.add_handler(MessageHandler(Filters.location, users.invalid))
+    dp.add_handler(MessageHandler(Filters.photo, users.invalid))
+    dp.add_handler(MessageHandler(Filters.reply, users.invalid))
+    dp.add_handler(MessageHandler(Filters.sticker, users.invalid))
+    dp.add_handler(MessageHandler(Filters.video, users.invalid))
+    dp.add_handler(MessageHandler(Filters.video_note, users.invalid))
+
+    # erros
     dp.add_error_handler(error_callback)
 
     # funções dos usuários
@@ -83,6 +97,9 @@ def main():
     dp.add_handler(CommandHandler("reboot", admins.reboot))
     dp.add_handler(CommandHandler("commands", admins.commands))
     dp.add_handler(CommandHandler("errors", admins.errors, pass_args=True))
+
+    # filtra comandos invalidos
+    dp.add_handler(MessageHandler(Filters.command, users.unknown))
 
     # inicia notificação push
     job.run_repeating(push.notas, 1800, first=datetime.datetime.now())
