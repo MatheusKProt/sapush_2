@@ -2,7 +2,7 @@ def comandos():
     return """
 <b>Lista de comandos</b>
 
-/login [usuário] [senha] - faz o login no SAPU ou alterar login existente
+/login [usuário] [senha] - faz o login no SAPU ou altera o login existente
 /deletar - deleta suas informações de login do SAPU 
 /sugerir [mensagem] - envia uma sugestão aos desenvolvedores 
 /configurar - configura o estado das notificações push
@@ -18,7 +18,7 @@ def comandos():
 /editais - retorna os ultimos editais publicados
 /chave - retorna sua chave de matricula
 /email - retorna os últimos emails recebidos
-/moodle - retorna o link do moodle
+/moodle - retorna o link com o moodle logado
 
 /desenvolvedores - exibe os desenvolvedores do bot
 /termos - exibe os termos de uso
@@ -35,6 +35,7 @@ def comandos_admin():
 /users [nome]* [sobrenome]* - exibe todos os usuários cadastrados
 /alert [mensagem] - envia um alerta a todos os usuários 
 /message [id]** [mensagem] - envia uma mensagem para uma pessoa específica
+/users [nome/count]* [sobrenome]* - exibe todos os usuários cadastrados
 /suggestions [número de sugestões]* ** - exibe as as sugestões recebidas
 /history [id/all]* ** [número de resultados]* ** - exibe o histórico de uso das funções de todos os usuários ou de um usuário específico
 /push [notas/frequencia]* [número de atualizações]* ** - exibe o status de atualização das notificações push
@@ -53,11 +54,11 @@ Olá {}!
 
 Se você chegou até aqui, é por que você já sabe qual é a minha utilidade. Mas caso você não saiba, minha utilidade \
 é fornecer a você uma forma de fonte única e simples de acompanhar todas as informações armazenadas no SAPU, como avaliações, \
-horários e muito mais. 
+frequência, horários e muito mais. 
 
 Vamos começar? 
 
-Leia com atenção os Termos de Uso e siga as instruções a seguir para ver tudo o que eu posso fazer por você.
+Leia com atenção os Termos de Uso e siga as instruções a seguir para ver tudo o que eu sou capaz de fazer.
 
 <b>Termos de Uso</b>
 Pelo acesso e uso deste bot, você aceita e concorda em cumprir os termos legais de uso. Ao utilizar este bot, \
@@ -110,13 +111,12 @@ vírus ou outra contaminação ou propriedades destrutivas serão transmitidas o
 seu computador e/ou celular. Você é o único responsável pela proteção e backup adequados de dados e/ou equipamentos \
 e por tomar precauções razoáveis e apropriadas para verificar se há vírus de computador ou outras propriedades destrutivas.
 
-<b>Copyright Universidade Católica de Pelotas (UCPel)</b>
+<b>Copyright Universidade Católica de Pelotas (UCPEL)</b>
 Todos os textos, imagens, gráficos, animações, vídeos, músicas, sons e outros materiais \
 são protegidos por direitos autorais e outros direitos de propriedade intelectual pertencentes à Universidade Católica \
 de Pelotas, suas subsidiárias, afiliadas e licenciantes.
 
-Este projeto <b>não</b> é oficialmente afiliado com a instituição de ensino Universidade Católica de Pelotas (UCPEL). Este é apenas \
-um experimento de código aberto construido para fins didáticos. 
+Este projeto <b>não</b> é oficialmente afiliado com a instituição de ensino Universidade Católica de Pelotas (UCPEL).
 
 Por favor, ajude-nos a melhorar. Caso haja alguma dúvida ou sugestão, entre em contato utilizando o comando \
 /desenvolvedores."""
@@ -211,7 +211,7 @@ def agreed(first_name):
 
 def user_doesnt_exist(first_name):
     return """
-{}, você não possui nada para deletar.""".format(first_name)
+{}, não há informações de login para deletar.""".format(first_name)
 
 
 def delete_user(first_name):
@@ -223,11 +223,6 @@ Se você fizer isso, você não poderá acessar mais nenhuma funcionalidade que 
 def user_deleted(first_name):
     return """
 {}, suas informações de login foram deletadas com sucesso!""".format(first_name)
-
-
-def not_finished(first_name):
-    return """
-{}, esta função não está habilitada ou está em fase de testes internos.""".format(first_name)
 
 
 def do_you_agree():
@@ -249,7 +244,7 @@ Caso necessite de auxilio, digite ajuda a qualquer momento."""
 def no(first_name):
     return """
 {}, suas funcionalidades não estão habilitadas. Você não poderá utilizar o bot enquanto não aceitar os Termos de Uso. \
-Caso você mude de ideia, utilize o comando /acordo e siga as instruções.""".format(first_name)
+Caso você mude de ideia, utilize o comando /start e siga as instruções.""".format(first_name)
 
 
 def formata_notas_resumo(materia, primeira_av, segunda_av, av_complementar, media_final, condicao):
@@ -328,7 +323,7 @@ def formata_sugestoes(first_name, last_name, sugestao):
 
 def formata_error(erro, data):
     return """
-{} - {}""".format(data, erro)
+{} | {}""".format(data, erro)
 
 
 def usuario_nao_encontrado(first_name):
@@ -451,7 +446,7 @@ Este bot foi desenvolvido com muito código e café por <a href="https://t.me/lu
 
 def editais(nome, link):
     return """
-{} - <a href=\"{}\">acesse aqui</a>.""".format(nome, link)
+{} | <a href=\"{}\">acesse aqui</a>.""".format(nome, link)
 
 
 def no_suggestions():
@@ -506,14 +501,14 @@ def not_delete_account(first_name):
 
 def atestado():
     return """
-Você deseja qual atestado de matricula?"""
+Você deseja receber qual atestado de matricula?"""
 
 
 def formata_atestado(nome, atestado):
     return """
 <b>Atestado de Matricula</b>
 
-Seu atestado de matricula {}está disponível <a href=\"http://sapu.ucpel.edu.br/portal/{}\">aqui</a>.""".format(nome, atestado)
+Seu atestado de matricula {} está disponível <a href=\"http://sapu.ucpel.edu.br/portal/{}\">aqui</a>.""".format(nome, atestado)
 
 
 def formata_moodle(moodle):
@@ -538,7 +533,7 @@ def formata_usage(func, num):
 
 def speech_error(first_name):
     return """
-{}, não consegui entender o que você falou.""".format(first_name)
+{}, não entendi o que você falou.""".format(first_name)
 
 
 def speech_request_error(first_name):
