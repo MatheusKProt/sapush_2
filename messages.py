@@ -115,7 +115,7 @@ Todos os textos, imagens, gráficos, animações, vídeos, músicas, sons e outr
 são protegidos por direitos autorais e outros direitos de propriedade intelectual pertencentes à Universidade Católica \
 de Pelotas, suas subsidiárias, afiliadas e licenciantes.
 
-Este projeto não é oficialmente afiliado com a instituição de ensino Universidade Católica de Pelotas (UCPEL). Este é apenas \
+Este projeto <b>não</b> é oficialmente afiliado com a instituição de ensino Universidade Católica de Pelotas (UCPEL). Este é apenas \
 um experimento de código aberto construido para fins didáticos. 
 
 Por favor, ajude-nos a melhorar. Caso haja alguma dúvida ou sugestão, entre em contato utilizando o comando \
@@ -366,15 +366,15 @@ def statistics(ligado, uso_processador, uso_memoria, uso_disco, memoria_total, m
 {}
 Processador: {}%
 Memória: {}%
-Disco utilizado: {}%
+Disco: {}%
 
 Memória total: {}GB
 Memória usada: {}GB
 Memória disponível: {}GB
 
-Capacidade total de disco: {}GB
-Capacidade usada: {}GB
-Capacidade disponível: {}GB
+Disco total: {}GB
+Disco usado: {}GB
+Disco disponível: {}GB
 
 Os processos com maior consumo de memória são:{}""".format(ligado, uso_processador, uso_memoria, uso_disco,
                                                            round(memoria_total, 2), round(memoria_usada, 2),
