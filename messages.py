@@ -315,10 +315,10 @@ def formata_users(telegram_id, first_name, last_name, sapu_username):
         last_name = ""
     if sapu_username == " ":
         return """
-{} - {} {}""".format(telegram_id, first_name, last_name)
+<a href="tg://user?id={}">{}</a> - {} {}""".format(telegram_id, telegram_id, first_name, last_name)
     else:
         return """
-{} - <b>{} {}</b>""".format(telegram_id, first_name, last_name)
+<a href="tg://user?id={}">{}</a> - <b>{} {}</b>""".format(telegram_id, telegram_id, first_name, last_name)
 
 
 def formata_sugestoes(first_name, last_name, sugestao):
