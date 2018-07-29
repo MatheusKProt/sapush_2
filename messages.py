@@ -507,7 +507,7 @@ def formata_atestado(nome, atestado):
     return """
 <b>Atestado de Matricula</b>
 
-Seu atestado de matricula {} está disponível <a href=\"http://sapu.ucpel.edu.br/portal/{}\">aqui</a>.""".format(nome, atestado)
+Seu atestado de matricula {}está disponível <a href=\"http://sapu.ucpel.edu.br/portal/{}\">aqui</a>.""".format(nome, atestado)
 
 
 def formata_moodle(moodle):
