@@ -36,7 +36,7 @@ def comandos_admin():
 /alert [mensagem] - envia um alerta a todos os usuários 
 /message [id]** [mensagem] - envia uma mensagem para uma pessoa específica
 /suggestions [número de sugestões]* ** - exibe as as sugestões recebidas
-/history [id]* ** [número de resultados]* ** - exibe o histórico de uso das funções de todos os usuários ou de um usuário específico
+/history [id/all]* ** [número de resultados]* ** - exibe o histórico de uso das funções de todos os usuários ou de um usuário específico
 /push [notas/frequencia]* [número de atualizações]* ** - exibe o status de atualização das notificações push
 /errors [número de erros]* ** - exibe erros encontrados durante a execução
 

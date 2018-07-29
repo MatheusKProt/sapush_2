@@ -802,7 +802,7 @@ def editais(bot, update, args):
         bot.send_message(chat_id=telegram_id, text=crawlers.get_editais(int(args[0])),
                          parse_mode=ParseMode.HTML, disable_web_page_preview=True)
     except:
-        bot.send_message(chat_id=telegram_id, text=crawlers.get_editais(5),
+        bot.send_message(chat_id=telegram_id, text=crawlers.get_editais(10),
                          parse_mode=ParseMode.HTML, disable_web_page_preview=True)
 
 
@@ -911,7 +911,7 @@ def voice_to_text(bot, update):
     update['message']['voice'].get_file().download(file_name)
 
     try:
-        message_text = sr.recognize_bing(file_name, key=config.bing(), language="pt-BR")
+        message_text = sr.recognize_bing(file_name, key=config.bing(1), language="pt-BR")
         success = True
     except sr.UnknownValueError:
         message_text = messages.speech_error(first_name)
