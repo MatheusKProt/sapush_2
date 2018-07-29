@@ -778,7 +778,7 @@ def verifica_callback(bot, update, arg):
         emails(bot, update, [])
     else:
         bot.send_message(chat_id=update['message']['chat']['id'],
-                         text=messages.answer_error(format(update['message']['chat']['first_name'])),
+                         text=messages.invalid(update['message']['chat']['first_name']),
                          parse_mode=ParseMode.HTML)
 
 
