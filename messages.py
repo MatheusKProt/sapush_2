@@ -13,10 +13,10 @@ def comandos():
 /disciplinas - retorna suas disciplinas do semestre atual
 /historico - retorna seu histórico 
 /curriculo - retorna o currículo do curso
-/atestado - retorna seu atestado de matricula
+/atestado - retorna seu atestado de matrícula
 /boleto - retorna o link com seu boleto
 /editais - retorna os ultimos editais publicados
-/chave - retorna sua chave de matricula
+/chave - retorna sua chave de matrícula
 /email - retorna os últimos emails recebidos
 /moodle - retorna o link com o moodle logado
 
@@ -427,7 +427,7 @@ def chave(chave):
     return """
 <b>Chave</b>
 
-Sua chave de matricula é {}.""".format(chave)
+Sua chave de matrícula é {}.""".format(chave)
 
 
 def push(initial, users):
@@ -500,14 +500,14 @@ def not_delete_account(first_name):
 
 def atestado():
     return """
-Você deseja receber qual atestado de matricula?"""
+Você deseja receber qual atestado de matrícula?"""
 
 
 def formata_atestado(nome, atestado):
     return """
-<b>Atestado de Matricula</b>
+<b>Atestado de Matrícula</b>
 
-Seu atestado de matricula {}está disponível <a href=\"http://sapu.ucpel.edu.br/portal/{}\">aqui</a>.""".format(nome, atestado)
+Seu atestado de matrícula {}está disponível <a href=\"http://sapu.ucpel.edu.br/portal/{}\">aqui</a>.""".format(nome, atestado)
 
 
 def formata_moodle(moodle):
