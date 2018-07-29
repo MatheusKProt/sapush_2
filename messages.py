@@ -32,10 +32,9 @@ def comandos_admin():
     return """
 <b>Lista de comandos administrativos</b>
 
-/users [nome]* [sobrenome]* - exibe todos os usuários cadastrados
+/users [nome/count]* [sobrenome]* - exibe todos os usuários cadastrados
 /alert [mensagem] - envia um alerta a todos os usuários 
 /message [id]** [mensagem] - envia uma mensagem para uma pessoa específica
-/users [nome/count]* [sobrenome]* - exibe todos os usuários cadastrados
 /suggestions [número de sugestões]* ** - exibe as as sugestões recebidas
 /history [id/all]* ** [número de resultados]* ** - exibe o histórico de uso das funções de todos os usuários ou de um usuário específico
 /push [notas/frequencia]* [número de atualizações]* ** - exibe o status de atualização das notificações push
