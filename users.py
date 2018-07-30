@@ -230,6 +230,9 @@ def button(bot, update):
     elif query.data == 'notas':
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
         notas(bot, update['callback_query'])
+    elif query.data == 'provas':
+        bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
+        provas(bot, update['callback_query'])
     elif query.data == 'frequencia':
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
         frequencia(bot, update['callback_query'])
@@ -747,6 +750,8 @@ def verifica_callback(bot, update, arg):
         ajuda(bot, update)
     elif "nota" in arg:
         notas(bot, update)
+    elif "prova" in arg:
+        provas(bot, update)
     elif "frequencia" in arg or "frequência" in arg:
         frequencia(bot, update)
     elif "horario" in arg or "horário" in arg:
@@ -897,7 +902,7 @@ def menu_funcionalidades(bot, update, query):
                 [InlineKeyboardButton('Boleto', callback_data='boleto'), InlineKeyboardButton('Editais', callback_data='editais')],
                 [InlineKeyboardButton('Chave', callback_data='chave'), InlineKeyboardButton('Atestados', callback_data='atestados')],
                 [InlineKeyboardButton('Moodle', callback_data='moodle'), InlineKeyboardButton('Emails', callback_data='emails')],
-                [InlineKeyboardButton('Voltar', callback_data='voltar_menu')]]
+                [InlineKeyboardButton('Provas', callback_data='provas'), InlineKeyboardButton('Voltar', callback_data='voltar_menu')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
                           message_id=query['message']['message_id'],
