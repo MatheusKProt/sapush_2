@@ -65,15 +65,24 @@ def get_notas(bot, update, user):
                                                                     nota=float(util.verifica_vazio_menos_um(detalhe[3])),
                                                                     peso_x_nota=float(util.verifica_vazio_menos_um(detalhe[5]))).first()
             if not detalhe_sapu:
-                try:
+                detalhe_sapu = session.query(db.NotasDetalhe).filter_by(materia=resumo.id,
+                                                                        descricao=str(detalhe[0]),
+                                                                        data=str(detalhe[1])).first()
+                if detalhe_sapu:
+                    try:
+                        bot.send_message(chat_id=user.telegram_id,
+                                         text=messages.push_grades(user.first_name, util.formata_nome_materia(resumo.materia),
+                                                                   float(util.verifica_vazio(detalhe[3])),
+                                                                   resumo.media,
+                                                                   util.formata_notas_msg(detalhe[3])),
+                                         parse_mode=ParseMode.HTML)
+                    except Exception as error:
+                        main.error_callback(bot, update, error)
+                else:
                     bot.send_message(chat_id=user.telegram_id,
-                                     text=messages.push_grades(user.first_name, util.formata_nome_materia(resumo.materia),
-                                                               float(util.verifica_vazio(detalhe[3])),
-                                                               resumo.media,
-                                                               util.formata_notas_msg(detalhe[3])),
+                                     text=messages.push_provas(user.first_name,
+                                                               util.formata_nome_materia(resumo.materia))[:-2],
                                      parse_mode=ParseMode.HTML)
-                except Exception as error:
-                    main.error_callback(bot, update, error)
     dao.set_notas(user, notas_resumo, notas_detalhe)
     session.close()
 

@@ -11,6 +11,7 @@ def comandos():
 /frequencia - retorna sua frequência do semestre atual 
 /horarios - retorna seus horários do semestre atual 
 /disciplinas - retorna suas disciplinas do semestre atual
+/provas - retorna as datas de todas as suas provas
 /historico - retorna seu histórico 
 /curriculo - retorna o currículo do curso
 /atestado - retorna seu atestado de matrícula
@@ -179,6 +180,11 @@ def push_grades(first_name, materia, nota, media, msg):
 Você tirou <b>{}</b> de 10.0.
 Sua média atual é <b>{}</b>.
 <b>{}</b>""".format(first_name, materia, nota, media, msg)
+
+
+def push_provas(first_name, materia):
+    return """
+{}, sua avaliação de <b>{}</b> foi alterada. Por favor, verifique através do comando /provas.""".format(first_name, materia[:-1])
 
 
 def push_grades_null(first_name, materia, data):
@@ -549,3 +555,8 @@ def invalid(first_name):
 def unknown_command(first_name):
     return """
 {}, este comando é inválido.""".format(first_name)
+
+
+def formata_provas(data, detalhe):
+    return """
+{} | {}""".format(data, detalhe)

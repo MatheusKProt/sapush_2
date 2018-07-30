@@ -71,6 +71,7 @@ def main():
     dp.add_handler(CommandHandler("horarios", users.horarios))
     dp.add_handler(CommandHandler("historico", users.historico))
     dp.add_handler(CommandHandler("disciplinas", users.disciplinas))
+    dp.add_handler(CommandHandler("provas", users.provas))
     dp.add_handler(CommandHandler("curriculo", users.curriculo))
     dp.add_handler(CommandHandler("atestado", users.atestado))
     dp.add_handler(CommandHandler("boleto", users.boleto))

@@ -481,6 +481,32 @@ def disciplinas(bot, update):
 
 
 @registered
+@restricted
+@logged
+def provas(bot, update):
+    session = Session()
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    usage(telegram_id, "Provas", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+    if int(time.strftime("%m", time.localtime())) >= 7:
+        semestre = str(time.strftime("%Y/2", time.localtime()))
+    else:
+        semestre = str(time.strftime("%Y/1", time.localtime()))
+    notas_resumo = session.query(db.NotasResumo).filter_by(user_id=telegram_id, semestre=semestre)
+
+    if notas_resumo.first():
+        msg = "<b>Provas</b>"
+        for resumo in notas_resumo:
+            msg += "\n\n<b>{}</b>".format(util.formata_nome_materia(resumo.materia))
+            for detalhe in resumo.notas_detalhe:
+                msg += messages.formata_provas(detalhe.data, detalhe.descricao)
+    else:
+        msg = messages.notas_empty(update['message']['chat']['first_name'])
+    bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
+    session.close()
+
+
+@registered
 @run_async
 @restricted
 @logged
