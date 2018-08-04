@@ -284,16 +284,14 @@ A sintaxe usada pelo telegram na execução de comandos é representada pelo uso
 /notas
 
 Comandos onde são enviados parâmetros são executados da seguinte maneira:
-/login parametro1 parametro2 
+/login [usuario] [senha]
 
-Preste atenção na sintaxe bibliográfica que é utilizada nos comandos onde são enviados parâmetros: 
-/login [usuário] [senha]
-Neste caso, o uso dos [ ] não são necessários. 
+Preste atenção na sintaxe bibliográfica que é utilizada nos comandos onde são enviados parâmetros. Neste caso, o uso dos [ ] não são necessários. 
+/login 12345678910 12345
 
 Caso você queira ver a lista completa de comandos disponíveis, utilize /comandos.
 
-O bot suporta mensagens de áudio e perguntas. A qualquer momento, você pode mandar um audio pedindo alguma informação ou mandar \ 
-uma pergunta."""
+O bot suporta mensagens de áudio e perguntas. A qualquer momento, você pode mandar um audio pedindo alguma informação ou mandar uma pergunta, como por exemplo "Qual é a minha chave de matricula?"."""
 
 
 def historico(historico):
