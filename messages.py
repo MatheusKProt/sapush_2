@@ -450,7 +450,7 @@ def developers():
 Este bot foi desenvolvido com muita dedicação por <a href="https://t.me/lucaspeferreira">Lucas Ferreira</a> e \
 <a href="https://t.me/matheuskprot">Matheus Protzen</a>.
 
-Caso você queira falar com algum de nós, basta clicar no nosso nome e enviar uma mensagem. Faremos o possível para lhe ajudar."""
+Caso você queira falar com um de nós, basta clicar no nosso nome e enviar uma mensagem. Faremos o possível para lhe ajudar."""
 
 
 def editais(nome, link):
