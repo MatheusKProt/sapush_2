@@ -449,10 +449,10 @@ def developers():
     return """
 <b>Desenvolvedores</b>
 
-Este bot foi desenvolvido com muito código e café por <a href="https://t.me/lucaspeferreira">Lucas Ferreira</a> e \
+Este bot foi desenvolvido com muita dedicação por <a href="https://t.me/lucaspeferreira">Lucas Ferreira</a> e \
 <a href="https://t.me/matheuskprot">Matheus Protzen</a>.
 
-Caso você queira falar com algum de nós, basta clicar no nosso nome e enviar uma mensagem. Faremos o possível para lhe responder."""
+Caso você queira falar com algum de nós, basta clicar no nosso nome e enviar uma mensagem. Faremos o possível para lhe ajudar."""
 
 
 def editais(nome, link):
