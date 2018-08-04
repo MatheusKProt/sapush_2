@@ -107,6 +107,7 @@ def main():
     job.run_repeating(push.frequencia, 7200, first=datetime.datetime.now())
 
     admins.start(bot)
+    job.run_repeating(admins.alerta_uso, 60, first=datetime.datetime.now())
 
     updater.start_polling()
     updater.idle()

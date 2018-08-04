@@ -33,7 +33,7 @@ def comandos_admin():
     return """
 <b>Lista de comandos administrativos</b>
 
-/users [nome/count]* [sobrenome]* - exibe todos os usuários cadastrados
+/users [nome]* [sobrenome]* - exibe todos os usuários cadastrados
 /alert [mensagem] - envia um alerta a todos os usuários 
 /message [id]** [mensagem] - envia uma mensagem para uma pessoa específica
 /suggestions [número de sugestões]* ** - exibe as as sugestões recebidas
@@ -528,6 +528,11 @@ Data: {}
 def formata_usage(func, num):
     return """
 {} | {}""".format(num, func)
+
+
+def formata_history(data, func, nome):
+    return """
+{} | {} | {}""".format(data, func, nome)
 
 
 def speech_error(first_name):

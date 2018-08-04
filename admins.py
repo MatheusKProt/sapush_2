@@ -49,17 +49,10 @@ def start(bot):
 @restricted
 @run_async
 def users(bot, update, args):
-    session = Session()
-    users = session.query(db.User).order_by(db.User.first_name.asc(), db.User.last_name.asc())
-    session.close()
     if not args:
         users_menu(bot, update, args)
     elif len(args) == 1:
-        if str(args[0]).lower() == "count":
-            usuarios = messages.count_users(update['message']['chat']['first_name'], users.count())
-            bot.send_message(chat_id=update['message']['chat']['id'], text=usuarios, parse_mode=ParseMode.HTML)
-        else:
-            users_menu(bot, update, [args[0], "", -1, 0, 2])
+        users_menu(bot, update, [args[0], "", -1, 0, 2])
     elif len(args) == 2:
         users_menu(bot, update, [args[0], args[1], -1, 0, 3])
     else:
@@ -287,7 +280,7 @@ def usage(bot, update, args):
             msg = "<b>Histórico</b>\n"
             for usage in usages:
                 user = session.query(db.User).filter_by(telegram_id=usage.user_id).first()
-                msg += messages.formata_usage(usage.funcionabilidade + " | " + user.first_name + " " + user.last_name, usage.data[:-3])
+                msg += messages.formata_history(usage.data[:-3], usage.funcionabilidade, user.first_name + " " + user.last_name)
             bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
         else:
             try:
@@ -313,8 +306,11 @@ def usage(bot, update, args):
 @restricted
 def reboot(bot, update):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
-    bot.send_message(chat_id=update['message']['chat']['id'], text="O servidor está reiniciando...",
-                     parse_mode=ParseMode.HTML)
+    session = Session()
+    admins = session.query(db.Admins).all()
+    for admin in admins:
+        bot.send_message(chat_id=admin.user_id, text="O servidor está reiniciando...",
+                         parse_mode=ParseMode.HTML)
     subprocess.call(["sudo", "reboot", "now"])
 
 
@@ -405,15 +401,13 @@ def users_menu(bot, update, args):
     else:
         inicio = args[3]
     fim = inicio + 10
+    count = 0
     for user in users.slice(inicio, fim):
         usuarios += messages.formata_users(user.telegram_id, user.first_name, user.last_name, user.sapu_username)
+        count += 1
     session.close()
-    mod = divmod(users.count(), 10)
-    if mod[1] == 0:
-        pag_final = mod[0]
-    else:
-        pag_final = mod[0] + 1
-    usuarios += "\n\nPágina {} de {}".format(int(fim / 10), pag_final)
+
+    usuarios += "\n\nExibindo {} do total de {} usuários".format(count, users.count())
 
     keyboard = [[InlineKeyboardButton('Anterior', callback_data='users_anterior {}'.format(inicio)), InlineKeyboardButton('Próxima', callback_data='users_proxima {}'.format(inicio))],
                 [InlineKeyboardButton('Sair', callback_data='sair')]]
@@ -430,3 +424,33 @@ def users_menu(bot, update, args):
                                   text=usuarios, reply_markup=reply_markup, parse_mode=ParseMode.HTML)
         except:
             pass
+
+
+def alerta_uso(bot, update):
+    devo_enviar = False
+
+    processador = 0
+    for i in range(0, 10):
+        processador += psutil.cpu_percent()
+        time.sleep(2)
+
+    memoria = 0
+    for i in range(0, 10):
+        memoria += psutil.virtual_memory().percent
+        time.sleep(2)
+    processador /= 10
+    memoria /= 10
+
+    if processador > 85:
+        text = "<b>Alerta</b>\nO uso do processador ultrapassou 85% e agora está operando em {}%.".format(round(processador, 2))
+        devo_enviar = True
+
+    if memoria > 85:
+        text = "<b>Alerta</b>\nO uso da memória ultrapassou 85% e está atualmente em {}%.".format(round(memoria, 2))
+        devo_enviar = True
+
+    if devo_enviar:
+        session = Session()
+        admins = session.query(db.Admins).all()
+        for admin in admins:
+            bot.send_message(chat_id=admin.user_id, text=text, parse_mode=ParseMode.HTML)
