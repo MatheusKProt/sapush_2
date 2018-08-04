@@ -280,7 +280,10 @@ def usage(bot, update, args):
             msg = "<b>Histórico</b>\n"
             for usage in usages:
                 user = session.query(db.User).filter_by(telegram_id=usage.user_id).first()
-                msg += messages.formata_history(usage.data[:-3], usage.funcionabilidade, user.first_name + " " + user.last_name)
+                try:
+                    msg += messages.formata_history(usage.data[:-3], usage.funcionabilidade, user.first_name + " " + user.last_name)
+                except:
+                    pass
             bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
         else:
             try:
