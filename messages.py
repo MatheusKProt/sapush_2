@@ -54,7 +54,8 @@ Olá {}!
 
 Se você chegou até aqui, é por que você já sabe qual é a minha utilidade. Mas caso você não saiba, minha utilidade \
 é fornecer a você uma forma de fonte única e simples de acompanhar todas as informações armazenadas no SAPU, como avaliações, \
-frequência, horários e muito mais. 
+frequência, horários e muito mais, utilizando comandos, mensagens de áudio ou simples perguntas do tipo "Qual é a minha \ 
+chave de matricula?".
 
 Vamos começar? 
 
@@ -125,7 +126,9 @@ Por favor, ajude-nos a melhorar. Caso haja alguma dúvida ou sugestão, entre em
 def not_logged_in(first_name):
     return """
 {}, para ter acesso a esta funcionalidade você deverá realizar o login em seu SAPU utilizando o comando \
-/login [usuário] [senha].""".format(first_name)
+/login [usuário] [senha].
+
+O uso das chaves neste caso não é necessário, é apenas uma forma de exemplificar como os parametros devem ser enviados.""".format(first_name)
 
 
 def message(msg, admin, user):
@@ -145,7 +148,9 @@ def alert(msg):
 
 def invalid_login(first_name):
     return """
-{}, utilize o comando /login [usuário] [senha].""".format(first_name)
+{}, utilize o comando /login [usuário] [senha].
+
+O uso das chaves neste caso não é necessário, é apenas uma forma de exemplificar como os parametros devem ser enviados.""".format(first_name)
 
 
 def valid_login(first_name):
@@ -171,7 +176,9 @@ def suggest_without_parameters(first_name):
 def not_registered(first_name):
     return """
 {}, para ter acesso a esta funcionalidade você deverá realizar o login em seu SAPU utilizando o \ 
-comando /login [usuário] [senha].""".format(first_name)
+comando /login [usuário] [senha].
+
+O uso das chaves neste caso não é necessário, é apenas uma forma de exemplificar como os parametros devem ser enviados.""".format(first_name)
 
 
 def push_grades(first_name, materia, nota, media, msg):
@@ -211,7 +218,7 @@ def not_agreed(first_name):
 
 def agreed(first_name):
     return """
-{}, você já aceitou os Termos de Uso. Digite /menu para ver o que eu posso fazer.""".format(first_name)
+{}, você já aceitou os Termos de Uso. Digite /menu e veja tudo o que sou capaz de fazer.""".format(first_name)
 
 
 def user_doesnt_exist(first_name):
@@ -283,7 +290,10 @@ Preste atenção na sintaxe bibliográfica que é utilizada nos comandos onde s�
 /login [usuário] [senha]
 Neste caso, o uso dos [ ] não são necessários. 
 
-Caso você queira ver a lista completa de comandos disponíveis, utilize /comandos."""
+Caso você queira ver a lista completa de comandos disponíveis, utilize /comandos.
+
+O bot suporta mensagens de áudio e perguntas. A qualquer momento, você pode mandar um audio pedindo alguma informação ou mandar \ 
+uma pergunta."""
 
 
 def historico(historico):
@@ -440,7 +450,9 @@ def developers():
 <b>Desenvolvedores</b>
 
 Este bot foi desenvolvido com muito código e café por <a href="https://t.me/lucaspeferreira">Lucas Ferreira</a> e \
-<a href="https://t.me/matheuskprot">Matheus Protzen</a>."""
+<a href="https://t.me/matheuskprot">Matheus Protzen</a>.
+
+Caso você queira falar com algum de nós, basta clicar no nosso nome e enviar uma mensagem. Faremos o possível para lhe responder."""
 
 
 def editais(nome, link):
@@ -542,7 +554,7 @@ def speech_error(first_name):
 
 def speech_request_error(first_name):
     return """
-{}, não consegui processar seu audio. Que tal enviar outro?""".format(first_name)
+{}, não consegui processar o seu audio. Que tal enviar outro?""".format(first_name)
 
 
 def start_server():
