@@ -103,8 +103,8 @@ def main():
     dp.add_handler(MessageHandler(Filters.command, users.unknown))
 
     # inicia notificação push
-    job.run_repeating(push.notas, 1800, first=datetime.datetime.now())
-    job.run_repeating(push.frequencia, 7200, first=datetime.datetime.now())
+    # job.run_repeating(push.notas, 1800, first=datetime.datetime.now())
+    # job.run_repeating(push.frequencia, 7200, first=datetime.datetime.now())
 
     admins.start(bot)
     job.run_repeating(admins.alerta_uso, 60, first=datetime.datetime.now())
