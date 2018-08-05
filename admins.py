@@ -312,7 +312,7 @@ def reboot(bot, update):
     session = Session()
     admins = session.query(db.Admins).all()
     for admin in admins:
-        bot.send_message(chat_id=admin.user_id, text="O servidor está reiniciando...",
+        bot.send_message(chat_id=admin.user_id, text="<b>Comunicado</b>\n\nO servidor está reiniciando...",
                          parse_mode=ParseMode.HTML)
     subprocess.call(["sudo", "reboot", "now"])
 
