@@ -39,8 +39,27 @@ def formata_notas_resumo(notas_resumo):
                 condicao = "reprovado"
 
     return messages.formata_notas_resumo(formata_nome_materia(notas_resumo.materia), notas_resumo.primeira_av,
-                                         notas_resumo.segunda_av,
-                                         notas_resumo.av_complementar, notas_resumo.media_final, condicao)
+                                         notas_resumo.segunda_av, notas_resumo.av_complementar,
+                                         notas_resumo.media_final, condicao)
+
+
+def formata_notas_resumo_direto(notas_resumo):
+    if float(notas_resumo[5]) < 4:
+        condicao = "reprovado"
+    elif float(notas_resumo[5]) >= 7:
+        condicao = "aprovado"
+    else:
+        if notas_resumo[4] == "":
+            condicao = "em exame"
+        else:
+            if float(notas_resumo[4]) >= 6:
+                condicao = "aprovado"
+            else:
+                condicao = "reprovado"
+
+    return messages.formata_notas_resumo(formata_nome_materia(notas_resumo[0]), verifica_vazio(notas_resumo[1]),
+                                         verifica_vazio(notas_resumo[2]), verifica_vazio(notas_resumo[4]),
+                                         verifica_vazio(notas_resumo[5]), condicao)
 
 
 def formata_frequencia(frequencia):
@@ -142,24 +161,7 @@ def formata_horarios(index):
 
 
 def formata_curriculo(index, session):
-    # link = "http://sapu.ucpel.edu.br/portal/" + find_between(str(index), 'href="', '">')
-    # link = link.split("?")
-    # link = "http://sapu.ucpel.edu.br/portal/engine.php?" + link[1]
-    # link = link.split("amp;")
-    # novo_link = ""
-    # for i in link:
-    #     novo_link += i
-    # pdf = session.get(novo_link)
-    # soup = BeautifulSoup(pdf.content, 'html.parser')
     link = ""
-
-    # for i in soup.find_all('script'):
-    #     try:
-    #         if "pdf" in str(i.get_text().lstrip()).split("'")[1]:
-    #             link = "http://sapu.ucpel.edu.br/portal/" + str(i.get_text().lstrip()).split("'")[1]
-    #     except:
-    #         pass
-
     curriculo = str(index.get_text().lstrip()).split("\n")
     materia = ""
     materias = str(curriculo[0]).split(" ")

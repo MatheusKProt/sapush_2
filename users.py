@@ -401,20 +401,28 @@ def deletar_conta(bot, update):
 def notas(bot, update):
     session = Session()
     telegram_id = update['message']['chat']['id']
+    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
     usage(telegram_id, "Notas", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
-    if int(time.strftime("%m", time.localtime())) >= 7:
-        semestre = str(time.strftime("%Y/2", time.localtime()))
-    else:
-        semestre = str(time.strftime("%Y/1", time.localtime()))
-    notas_resumo = session.query(db.NotasResumo).filter_by(user_id=telegram_id, semestre=semestre)
+    if user.push_notas:
+        if int(time.strftime("%m", time.localtime())) >= 7:
+            semestre = str(time.strftime("%Y/2", time.localtime()))
+        else:
+            semestre = str(time.strftime("%Y/1", time.localtime()))
+        notas_resumo = session.query(db.NotasResumo).filter_by(user_id=telegram_id, semestre=semestre)
 
-    if notas_resumo.first():
-        msg = "<b>Notas</b>"
-        for resumo in notas_resumo:
-            msg += "\n" + util.formata_notas_resumo(resumo)
+        if notas_resumo.first():
+            msg = "<b>Notas</b>"
+            for resumo in notas_resumo:
+                msg += "\n" + util.formata_notas_resumo(resumo)
+        else:
+            msg = messages.notas_empty(update['message']['chat']['first_name'])
     else:
-        msg = messages.notas_empty(update['message']['chat']['first_name'])
+        msg = "<b>Notas</b>"
+        notas_resumo, _ = crawlers.get_notas(user)
+        for resumo in notas_resumo:
+            msg += "\n" + util.formata_notas_resumo_direto(resumo)
+
     bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
     session.close()
 
