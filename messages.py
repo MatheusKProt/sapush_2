@@ -527,7 +527,7 @@ def formata_moodle(moodle):
     return """
 <b>Moodle</b>
 
-Para acessar clique <a href=\"{}\">aqui</a>.""".format(moodle)
+Para acessar o moodle, clique <a href=\"{}\">aqui</a>.""".format(moodle)
 
 
 def formata_email(de, assunto, data):
