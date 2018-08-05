@@ -85,7 +85,7 @@ def get_notas(bot, update, user):
                                      text=messages.push_provas(user.first_name,
                                                                util.formata_nome_materia(resumo.materia))[:-2],
                                      parse_mode=ParseMode.HTML)
-    dao.set_notas(user, notas_resumo, notas_detalhe)
+    dao.set_notas(user, notas_resumo, notas_detalhe, bot)
     session.close()
 
 

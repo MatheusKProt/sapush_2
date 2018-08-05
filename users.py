@@ -343,7 +343,7 @@ def login(bot, update, args):
         notas_resumo, notas_detalhe = crawlers.get_notas(user)
         frequencia = crawlers.get_frequencia(user)
 
-        dao.set_notas(user, notas_resumo, notas_detalhe)
+        dao.set_notas(user, notas_resumo, notas_detalhe, bot)
         dao.set_frequencia(user, frequencia)
         session.close()
 
