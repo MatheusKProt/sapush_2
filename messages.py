@@ -54,7 +54,7 @@ Olá {}!
 
 Se você chegou até aqui, é por que você já sabe qual é a minha utilidade. Mas caso você não saiba, minha utilidade \
 é fornecer a você uma forma de fonte única e simples de acompanhar todas as informações armazenadas no SAPU, como avaliações, \
-frequência, horários e muito mais, utilizando comandos, mensagens de áudio ou simples perguntas do tipo "Qual é a minha \ 
+frequência, horários e muito mais, utilizando comandos, mensagens de áudio ou simples perguntas do tipo "Qual é a minha \
 chave de matricula?".
 
 Vamos começar? 
