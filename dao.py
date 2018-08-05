@@ -51,7 +51,11 @@ def set_notas(user, notas_resumo, notas_detalhe):
         resumo = session.query(db.NotasResumo).filter_by(user_id=user.telegram_id, materia=str(detalhe[8]), semestre=semestre).first()
         session.close()
         session = Session()
-        notas = session.query(db.NotasDetalhe).filter_by(materia=resumo.id, descricao=detalhe[0], data=detalhe[1], semestre=semestre).first()
+        try:
+            notas = session.query(db.NotasDetalhe).filter_by(materia=resumo.id, descricao=detalhe[0], data=detalhe[1], semestre=semestre).first()
+        except:
+            print(user.first_name, user.last_name)
+            break
 
         descricao = detalhe[0]
         materia = resumo.id
