@@ -20,6 +20,7 @@ engine = db.gen_engine(url)
 Session = sessionmaker(bind=engine)
 
 
+@run_async
 def notas(bot, update):
     session = Session()
     users_count = 0
@@ -32,6 +33,7 @@ def notas(bot, update):
     session.close()
 
 
+@run_async
 def frequencia(bot, update):
     session = Session()
     users_count = 0

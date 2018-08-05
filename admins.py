@@ -429,6 +429,7 @@ def users_menu(bot, update, args):
             pass
 
 
+@run_async
 def alerta_uso(bot, update):
     devo_enviar = False
 

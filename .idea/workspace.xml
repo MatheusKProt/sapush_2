@@ -14,8 +14,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="105" column="67" lean-forward="true" selection-start-line="105" selection-start-column="67" selection-end-line="105" selection-end-column="67" />
+            <state relative-caret-position="370">
+              <caret line="109" column="34" selection-start-line="109" selection-start-column="34" selection-end-line="109" selection-end-column="34" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -32,11 +32,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admins.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="admins.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admins.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
-              <caret line="288" column="16" selection-start-line="288" selection-start-column="16" selection-end-line="288" selection-end-column="16" />
+            <state relative-caret-position="162">
+              <caret line="430" lean-forward="true" selection-start-line="430" selection-end-line="430" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -95,8 +95,8 @@
       <file leaf-file-name="push.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/push.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="56" column="59" selection-start-line="56" selection-start-column="59" selection-end-line="56" selection-end-column="59" />
+            <state relative-caret-position="383">
+              <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -104,10 +104,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dao.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dao.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dao.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
+            <state relative-caret-position="340">
               <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
             </state>
           </provider>
@@ -126,27 +126,27 @@
     <findStrings>
       <find>atuali</find>
       <find>Você</find>
-      <find />
+      <find>com peso</find>
       <find>push</find>
       <find>receb</find>
       <find>error_callback</find>
       <find>get_</find>
       <find>get_label</find>
-      <find />
-      <find />
-      <find />
+      <find>def get_label</find>
+      <find>def get</find>
+      <find>para ter ace</find>
       <find>login_requirement</find>
       <find>erro</find>
       <find>remove</find>
       <find>refres</find>
       <find>ei</find>
       <find>notas</find>
-      <find />
+      <find>seu aler</find>
       <find>str(update['message']['text']).lower()</find>
       <find>admin</find>
       <find>desenvolvedores</find>
       <find>error</find>
-      <find />
+      <find>se voc</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -163,11 +163,11 @@
         <option value="$PROJECT_DIR$/crawlers.py" />
         <option value="$PROJECT_DIR$/util.py" />
         <option value="$PROJECT_DIR$/users.py" />
-        <option value="$PROJECT_DIR$/admins.py" />
-        <option value="$PROJECT_DIR$/push.py" />
         <option value="$PROJECT_DIR$/messages.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/dao.py" />
+        <option value="$PROJECT_DIR$/push.py" />
+        <option value="$PROJECT_DIR$/admins.py" />
       </list>
     </option>
   </component>
@@ -623,16 +623,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="288" column="16" selection-start-line="288" selection-start-column="16" selection-end-line="288" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/users.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -657,30 +647,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/dao.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="105" column="67" lean-forward="true" selection-start-line="105" selection-start-column="67" selection-end-line="105" selection-end-column="67" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="340">
+          <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/push.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="56" column="59" selection-start-line="56" selection-start-column="59" selection-end-line="56" selection-end-column="59" />
+        <state relative-caret-position="383">
+          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dao.py">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
+        <state relative-caret-position="370">
+          <caret line="109" column="34" selection-start-line="109" selection-start-column="34" selection-end-line="109" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="430" lean-forward="true" selection-start-line="430" selection-end-line="430" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
