@@ -266,7 +266,7 @@ def statistics(bot, update):
 
 @restricted
 @run_async
-def usage(bot, update, args):
+def history(bot, update, args):
     session = Session()
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
@@ -280,10 +280,10 @@ def usage(bot, update, args):
             msg = "<b>Histórico</b>\n"
             for usage in usages:
                 user = session.query(db.User).filter_by(telegram_id=usage.user_id).first()
-                try:
+                if user.last_name:
                     msg += messages.formata_history(usage.data[:-3], usage.funcionabilidade, user.first_name + " " + user.last_name)
-                except:
-                    pass
+                else:
+                    msg += messages.formata_history(usage.data[:-3], usage.funcionabilidade, user.first_name)
             bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
         else:
             try:
