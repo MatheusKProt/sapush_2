@@ -131,12 +131,12 @@ def formata_horarios(index):
         inicio = hora[0].split(":")
         inicial = inicio[0] + ":" + inicio[1]
     except:
-        inicial = "(horário não cadastrado)"
+        inicial = "(horário não definido)"
     try:
         fim = hora[1].split(":")
         final = fim[0] + ":" + fim[1]
     except:
-        final = "(horário não cadastrado)"
+        final = "(horário não definido)"
     predios = horario[2].split(" ")
     predio = ""
     count = 0
@@ -149,14 +149,14 @@ def formata_horarios(index):
             count += 1
         predio = predio[:-1]
     else:
-        predio = "(prédio não cadastrado)"
+        predio = "(prédio não definido)"
     if horario[3]:
         if " " in horario[3]:
             sala = horario[3].lower()
         else:
             sala = "sala " + horario[3]
     else:
-        sala = "(sala não cadastrada)"
+        sala = "(sala não definida)"
     return formata_nome_materia_frequencia(horario[0]), inicial, final, predio, sala
 
 
