@@ -994,9 +994,3 @@ def invalid(bot, update):
     first_name = update['message']['chat']['first_name']
     bot.send_message(chat_id=telegram_id, text=messages.invalid(first_name), parse_mode=ParseMode.HTML)
     
-    
-def unknown(bot, update):
-    telegram_id = update['message']['chat']['id']
-    first_name = update['message']['chat']['first_name']
-    bot.sendMessage(chat_id=telegram_id, text=messages.unknown_command(first_name))
-
