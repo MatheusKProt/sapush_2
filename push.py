@@ -46,7 +46,6 @@ def frequencia(bot, update):
     session.close()
 
 
-@run_async
 def get_notas(bot, update, user):
     session = Session()
     notas_resumo, notas_detalhe = crawlers.get_notas(user)
@@ -89,7 +88,6 @@ def get_notas(bot, update, user):
     session.close()
 
 
-@run_async
 def get_frequencia(bot, update, user):
     session = Session()
     frequencias = crawlers.get_frequencia(user)

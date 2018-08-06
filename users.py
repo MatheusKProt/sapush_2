@@ -815,6 +815,30 @@ def verifica_callback(bot, update, arg):
         moodle(bot, update)
     elif "email" in arg or "e-mail" in arg:
         emails(bot, update, [])
+    elif "olá" in arg or "ola" in arg or "olà" in arg:
+        bot.send_message(chat_id=update['message']['chat']['id'],
+                         text="Olá, {}! Como você está?".format(update['message']['chat']['first_name']),
+                         parse_mode=ParseMode.HTML)
+    elif "boa noite" in arg:
+        bot.send_message(chat_id=update['message']['chat']['id'],
+                         text="Boa noite, {}!".format(update['message']['chat']['first_name']),
+                         parse_mode=ParseMode.HTML)
+    elif "bom dia" in arg:
+        bot.send_message(chat_id=update['message']['chat']['id'],
+                         text="Bom dia, {}!".format(update['message']['chat']['first_name']),
+                         parse_mode=ParseMode.HTML)
+    elif "boa tarde" in arg:
+        bot.send_message(chat_id=update['message']['chat']['id'],
+                         text="Boa tarde, {}!".format(update['message']['chat']['first_name']),
+                         parse_mode=ParseMode.HTML)
+    elif "bem" in arg or "bom" in arg or "tudo" in arg or "estou" in arg:
+        bot.send_message(chat_id=update['message']['chat']['id'],
+                         text="Que bom! O que você vai consultar hoje?",
+                         parse_mode=ParseMode.HTML)
+    elif "oi" == arg or "oie" == arg:
+        bot.send_message(chat_id=update['message']['chat']['id'],
+                         text="Oi, {}! Como você está?".format(update['message']['chat']['first_name']),
+                         parse_mode=ParseMode.HTML)
     else:
         bot.send_message(chat_id=update['message']['chat']['id'],
                          text=messages.invalid(update['message']['chat']['first_name']),

@@ -49,12 +49,12 @@ def set_notas(user, notas_resumo, notas_detalhe, bot):
     for detalhe in notas_detalhe:
         session = Session()
         resumo = session.query(db.NotasResumo).filter_by(user_id=user.telegram_id, materia=str(detalhe[8]), semestre=semestre).first()
-        session.close()
-        session = Session()
         try:
             notas = session.query(db.NotasDetalhe).filter_by(materia=resumo.id, descricao=detalhe[0], data=detalhe[1], semestre=semestre).first()
         except:
-            bot.send_message(chat_id=164515990, text=user.telegram_id)
+            admins = session.query(db.Admins).all()
+            for admin in admins:
+                bot.send_message(chat_id=admin.user_id, text=user.telegram_id)
             break
 
         descricao = detalhe[0]
