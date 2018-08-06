@@ -101,6 +101,7 @@ def main():
 
     # filtra comandos invalidos
     dp.add_handler(MessageHandler(Filters.command, admins.unknown))
+    dp.add_handler(MessageHandler(Filters.command, users.unknown))
 
     # inicia notificação push
     job.run_repeating(push.notas, 1800, first=datetime.datetime.now())
