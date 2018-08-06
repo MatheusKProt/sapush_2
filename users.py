@@ -341,7 +341,7 @@ def login(bot, update, args):
         session.commit()
 
         user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
-        notas_resumo, notas_detalhe = crawlers.get_notas(user)
+        notas_resumo, notas_detalhe = crawlers.get_notas(user, bot)
         frequencia = crawlers.get_frequencia(user)
 
         dao.set_notas(user, notas_resumo, notas_detalhe, bot)
@@ -420,7 +420,7 @@ def notas(bot, update):
             msg = messages.notas_empty(update['message']['chat']['first_name'])
     else:
         msg = "<b>Notas</b>"
-        notas_resumo, _ = crawlers.get_notas(user)
+        notas_resumo, _ = crawlers.get_notas(user, bot)
         for resumo in notas_resumo:
             msg += "\n" + util.formata_notas_resumo_direto(resumo)
 
@@ -993,4 +993,4 @@ def invalid(bot, update):
     telegram_id = update['message']['chat']['id']
     first_name = update['message']['chat']['first_name']
     bot.send_message(chat_id=telegram_id, text=messages.invalid(first_name), parse_mode=ParseMode.HTML)
-    
+

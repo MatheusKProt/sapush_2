@@ -85,7 +85,7 @@ def main():
     dp.add_handler(CommandHandler("editais", users.editais, pass_args=True))
     dp.add_handler(CommandHandler("configurar", users.configurar))
     dp.add_handler(CommandHandler("menu", users.menu, pass_args=True))
-    
+
     # funções dos administradores
     dp.add_handler(CommandHandler("users", admins.users, pass_args=True))
     dp.add_handler(CommandHandler("message", admins.message, pass_args=True))

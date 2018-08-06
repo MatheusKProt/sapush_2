@@ -48,7 +48,7 @@ def frequencia(bot, update):
 
 def get_notas(bot, update, user):
     session = Session()
-    notas_resumo, notas_detalhe = crawlers.get_notas(user)
+    notas_resumo, notas_detalhe = crawlers.get_notas(user, bot)
     for detalhe in notas_detalhe:
         resumo = session.query(db.NotasResumo).filter_by(user_id=user.telegram_id, materia=detalhe[8]).first()
         if not resumo:

@@ -311,7 +311,7 @@ def history(bot, update, args):
                     if user.last_name:
                         msg += messages.formata_usage(user.first_name + " " + user.last_name, usage.data[:-3])
                     else:
-                        msg += messages.formata_usage(user.first_name + " " + user.last_name, usage.data[:-3])
+                        msg += messages.formata_usage(user.first_name, usage.data[:-3])
                 bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
             except:
                 try:

@@ -1,9 +1,16 @@
 import lxml.html
 import requests
 from bs4 import BeautifulSoup
+from sqlalchemy.orm import sessionmaker
 
+import db
 import messages
 import util
+
+
+url = db.get_database_url()
+engine = db.gen_engine(url)
+Session = sessionmaker(bind=engine)
 
 
 def get_session(email, password):
@@ -37,44 +44,51 @@ def get_session(email, password):
             return session, True, "True", chave, curso
 
 
-def get_notas(user):
-    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
-    notas = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=AvaliacaoFormList")
-    soup = BeautifulSoup(notas.content, 'html.parser')
-    tdatagrid = soup.find_all(class_='tdatagrid_body')
+def get_notas(user, bot):
+    try:
+        session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+        notas = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=AvaliacaoFormList")
+        soup = BeautifulSoup(notas.content, 'html.parser')
+        tdatagrid = soup.find_all(class_='tdatagrid_body')
 
-    count = 0
-    notas_resumo = []
-    resumo = []
-    for index in tdatagrid[0].find_all('td'):
-        resumo.append(index.get_text().lstrip())
-        count += 1
-        if count == 6:
-            notas_resumo.append(resumo)
-            resumo = []
-            count = 0
-
-    count = 0
-    materia = ""
-    materias = []
-    notas_detalhe = []
-    detalhe = []
-    for index in tdatagrid[1].find_all(class_='tdatagrid_group'):
-        materias.append(index.get_text().lstrip())
-    for index in tdatagrid[1].find_all('td'):
-        if str(index.get_text().lstrip() + "\n") in materias:
-            materia = index.get_text().lstrip()
-        else:
+        count = 0
+        notas_resumo = []
+        resumo = []
+        for index in tdatagrid[0].find_all('td'):
+            resumo.append(index.get_text().lstrip())
             count += 1
-            detalhe.append(index.get_text().lstrip())
-        if count == 9:
-            if "(" not in detalhe[0]:
-                detalhe.append(materia)
-                detalhe.pop(0)
-                notas_detalhe.append(detalhe)
-            detalhe = []
-            count = 0
-    return notas_resumo, notas_detalhe
+            if count == 6:
+                notas_resumo.append(resumo)
+                resumo = []
+                count = 0
+
+        count = 0
+        materia = ""
+        materias = []
+        notas_detalhe = []
+        detalhe = []
+        for index in tdatagrid[1].find_all(class_='tdatagrid_group'):
+            materias.append(index.get_text().lstrip())
+        for index in tdatagrid[1].find_all('td'):
+            if str(index.get_text().lstrip() + "\n") in materias:
+                materia = index.get_text().lstrip()
+            else:
+                count += 1
+                detalhe.append(index.get_text().lstrip())
+            if count == 9:
+                if "(" not in detalhe[0]:
+                    detalhe.append(materia)
+                    detalhe.pop(0)
+                    notas_detalhe.append(detalhe)
+                detalhe = []
+                count = 0
+        return notas_resumo, notas_detalhe
+    except:
+        session = Session()
+        admins = session.query(db.Admins).all()
+        for admin in admins:
+            bot.send_message(chat_id=admin.user_id, text=user.telegram_id)
+
 
 
 def get_frequencia(user):
