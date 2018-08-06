@@ -170,7 +170,9 @@ def wrong_user(first_name):
 
 def suggest_without_parameters(first_name):
     return """
-{}, utilize o comando /sugerir [mensagem].""".format(first_name)
+{}, utilize o comando /sugerir [mensagem].
+
+O uso das chaves neste caso não é necessário, é apenas uma forma de exemplificar como os parametros devem ser enviados.""".format(first_name)
 
 
 def not_registered(first_name):
