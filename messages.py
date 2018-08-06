@@ -4,29 +4,27 @@ def comandos():
 
 /login [usuário] [senha] - faz o login no SAPU ou altera o login existente
 /deletar - deleta suas informações de login do SAPU 
-/sugerir [mensagem] - envia uma sugestão aos desenvolvedores 
+/sugerir [mensagem] - envia uma sugestão aos desenvolvedores do bot
 /configurar - configura o estado das notificações push
 
-/notas - retorna suas notas do semestre atual 
-/frequencia - retorna sua frequência do semestre atual 
-/horarios - retorna seus horários do semestre atual 
-/disciplinas - retorna suas disciplinas do semestre atual
-/provas - retorna as datas de todas as suas provas
-/historico - retorna seu histórico 
-/curriculo - retorna o currículo do curso
-/atestado - retorna seu atestado de matrícula
-/boleto - retorna o link com seu boleto
-/editais - retorna os ultimos editais publicados
-/chave - retorna sua chave de matrícula
-/email - retorna os últimos emails recebidos
-/moodle - retorna o link com o moodle logado
+/notas - exibe suas notas atuais
+/frequencia - exibe sua frequência atual
+/horarios - exibe seus horários atuais
+/disciplinas - exibe suas disciplinas atuais
+/provas - exibe as datas de todas as suas provas
+/historico - exibe seu histórico 
+/curriculo - exibe o currículo do seu curso
+/atestado - exibe seu atestado de matrícula
+/boleto - exibe o link para acesso
+/editais - exibe os ultimos editais publicados
+/chave - exibe sua chave de matrícula
+/email - exibe seus últimos emails recebidos
+/moodle - exibe o link para acesso
 
 /desenvolvedores - exibe os desenvolvedores do bot
 /termos - exibe os termos de uso
 /ajuda - exibe instruções de uso
-/menu - exibe o menu de comandos*
-
-*Funcionalidade em fase de testes"""
+/menu - exibe o menu de comandos"""
 
 
 def comandos_admin():
