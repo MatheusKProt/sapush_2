@@ -68,12 +68,12 @@ def get_notas(user):
             count += 1
             detalhe.append(index.get_text().lstrip())
         if count == 9:
-            detalhe.append(materia)
-            detalhe.pop(0)
-            notas_detalhe.append(detalhe)
+            if "(" not in detalhe[0]:
+                detalhe.append(materia)
+                detalhe.pop(0)
+                notas_detalhe.append(detalhe)
             detalhe = []
             count = 0
-
     return notas_resumo, notas_detalhe
 
 

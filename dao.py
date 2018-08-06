@@ -54,7 +54,7 @@ def set_notas(user, notas_resumo, notas_detalhe, bot):
         try:
             notas = session.query(db.NotasDetalhe).filter_by(materia=resumo.id, descricao=detalhe[0], data=detalhe[1], semestre=semestre).first()
         except:
-            bot.send_message(chat_id=164515990, text=user.first_name + " " + user.last_name)
+            bot.send_message(chat_id=164515990, text=user.telegram_id)
             break
 
         descricao = detalhe[0]
