@@ -37,6 +37,23 @@ def restricted(func):
     return wrapped
 
 
+def restricted_commands(func):
+    @wraps(func)
+    def wrapped(bot, update, *args, **kwargs):
+        user_id = update['message']['chat']['id']
+        first_name = update['message']['chat']['first_name']
+        session = Session()
+        admin = session.query(db.Admins).filter_by(user_id=user_id).first()
+        if not admin:
+            bot.sendMessage(chat_id=user_id, text=messages.unknown_command(first_name))
+            session.close()
+            return
+        session.close()
+        return func(bot, update, *args, **kwargs)
+
+    return wrapped
+
+
 def start(bot):
     session = Session()
     admins = session.query(db.Admins)
@@ -287,15 +304,26 @@ def history(bot, update, args):
             bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
         else:
             try:
-                limite = int(args[1])
+                usages = session.query(db.Usage).filter_by(funcionabilidade=str(args[0]).capitalize()).all()
+                msg = "<b>Histórico da função {}</b>\n".format(str(args[0]).lower())
+                for usage in usages:
+                    user = session.query(db.User).filter_by(telegram_id=usage.user_id).first()
+                    if user.last_name:
+                        msg += messages.formata_usage(user.first_name + " " + user.last_name, usage.data[:-3])
+                    else:
+                        msg += messages.formata_usage(user.first_name + " " + user.last_name, usage.data[:-3])
+                bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
             except:
-                limite = 5
-            usages = session.query(db.Usage).filter_by(user_id=int(args[0])).order_by(db.Usage.data.desc()).limit(limite)
-            user = session.query(db.User.first_name, db.User.last_name).filter_by(telegram_id=int(args[0])).first()
-            msg = "<b>Histórico de {} {}</b>\n".format(user[0], user[1])
-            for usage in usages:
-                msg += messages.formata_usage(usage.funcionabilidade, usage.data[:-3])
-            bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
+                try:
+                    limite = int(args[1])
+                except:
+                    limite = 5
+                usages = session.query(db.Usage).filter_by(user_id=int(args[0])).order_by(db.Usage.data.desc()).limit(limite)
+                user = session.query(db.User.first_name, db.User.last_name).filter_by(telegram_id=int(args[0])).first()
+                msg = "<b>Histórico de {} {}</b>\n".format(user[0], user[1])
+                for usage in usages:
+                    msg += messages.formata_usage(usage.funcionabilidade, usage.data[:-3])
+                bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
         session.close()
     except:
         usages = session.query(db.Usage.funcionabilidade, func.count(db.Usage.funcionabilidade)).group_by(db.Usage.funcionabilidade).order_by(func.count(db.Usage.funcionabilidade).desc(), db.Usage.funcionabilidade.asc()).all()
@@ -458,3 +486,41 @@ def alerta_uso(bot, update):
         admins = session.query(db.Admins).all()
         for admin in admins:
             bot.send_message(chat_id=admin.user_id, text=text, parse_mode=ParseMode.HTML)
+
+
+@restricted_commands
+@run_async
+def unknown(bot, update):
+    telegram_id = update['message']['chat']['id']
+    session = Session()
+    user = session.query(db.User).filter_by(telegram_id=str(update['message']['text']).split("/")[1]).first()
+    historys = session.query(db.Usage).filter_by(user_id=user.telegram_id).order_by(db.Usage.id.desc()).limit(10).all()
+    hist = ""
+    for history in historys:
+        hist += history.data[:-3] + " | " + history.funcionabilidade + "\n"
+    if user.last_name:
+        last_name = user.last_name
+    else:
+        last_name = " "
+    if user.sapu_username == " ":
+        logado = False
+    else:
+        logado = True
+    bot.sendMessage(chat_id=telegram_id, text="""<b>Perfil</b>
+
+{}
+{}
+<a href="tg://user?id={}">Contato</a>
+
+<b>Configurações</b>
+
+Logado: {}
+Termos: {}
+Notas: {}
+Frequência: {}
+
+<b>Histórico</b>
+
+{}""".format(user.first_name + " " + last_name, user.curso[:-2], user.telegram_id, str(logado).lower(),
+             str(user.termos).lower(), str(user.push_notas).lower(), str(user.push_frequencia).lower(), hist),
+                    parse_mode=ParseMode.HTML)
