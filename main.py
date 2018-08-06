@@ -85,6 +85,8 @@ def main():
     dp.add_handler(CommandHandler("editais", users.editais, pass_args=True))
     dp.add_handler(CommandHandler("configurar", users.configurar))
     dp.add_handler(CommandHandler("menu", users.menu, pass_args=True))
+    
+    dp.add_handler(MessageHandler(Filters.command, users.unknown))
 
     # funções dos administradores
     dp.add_handler(CommandHandler("users", admins.users, pass_args=True))
@@ -101,7 +103,6 @@ def main():
 
     # filtra comandos invalidos
     dp.add_handler(MessageHandler(Filters.command, admins.unknown))
-    dp.add_handler(MessageHandler(Filters.command, users.unknown))
 
     # inicia notificação push
     job.run_repeating(push.notas, 1800, first=datetime.datetime.now())
