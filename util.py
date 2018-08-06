@@ -223,5 +223,5 @@ def formata_email(emails, args):
 def push(pushs):
     msg = ""
     for push in pushs:
-        msg += messages.push(push.initial, push.users)
+        msg += messages.push(push.initial, push.final, push.users)
     return msg

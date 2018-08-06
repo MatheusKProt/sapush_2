@@ -443,9 +443,9 @@ def chave(chave):
 Sua chave de matrícula é {}.""".format(chave)
 
 
-def push(initial, users):
+def push(initial, final, users):
     return """
-{} | {}""".format(initial, users)
+{} | {} | {}""".format(initial, final, users)
 
 
 def developers():
