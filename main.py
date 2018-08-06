@@ -86,8 +86,6 @@ def main():
     dp.add_handler(CommandHandler("configurar", users.configurar))
     dp.add_handler(CommandHandler("menu", users.menu, pass_args=True))
     
-    dp.add_handler(MessageHandler(Filters.command, users.unknown))
-
     # funções dos administradores
     dp.add_handler(CommandHandler("users", admins.users, pass_args=True))
     dp.add_handler(CommandHandler("message", admins.message, pass_args=True))
