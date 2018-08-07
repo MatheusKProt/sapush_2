@@ -481,16 +481,18 @@ def historico(bot, update):
 @registered
 @restricted
 @logged
+#def disciplinas(bot, update):
+#    session = Session()
+#    telegram_id = update['message']['chat']['id']
+#    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+#    usage(telegram_id, "Disciplinas", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+#    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
+#    disciplinas = crawlers.get_disciplinas(user)
+#    bot.send_message(chat_id=telegram_id, text=disciplinas, parse_mode=ParseMode.HTML)
+#    session.close()
 def disciplinas(bot, update):
-    session = Session()
-    telegram_id = update['message']['chat']['id']
-    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
-    usage(telegram_id, "Disciplinas", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
-    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
-    disciplinas = crawlers.get_disciplinas(user)
-    bot.send_message(chat_id=telegram_id, text=disciplinas, parse_mode=ParseMode.HTML)
-    session.close()
-
+    bot.sendMessage(chat_id=user_id, text=messages.bugged(first_name))
+    
 
 @registered
 @restricted
