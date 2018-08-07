@@ -582,4 +582,4 @@ def formata_provas(data, detalhe):
 
 def bugged(first_name):
     return """
-{}, esta funcionalidade está em manutenção.""".format(first_name)
+{}, esta funcionalidade está em manutenção no momento.""".format(first_name)
