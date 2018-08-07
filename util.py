@@ -186,11 +186,11 @@ def formata_disciplinas(disciplinas):
     for disciplina in disciplinas:
         td = []
         if not disciplina[3] in discs:
-            discs.append(disciplina[3])
-            td.append(disciplina[3])
-            if int(disciplina[3]) == 123:
+            discs.append(str(disciplina[3]).split(" ")[0])
+            td.append(str(disciplina[3]).split(" ")[0])
+            if int(str(disciplina[3]).split(" ")[0]) == 123:
                 td.append("\n<b>Regulares</b>")
-            elif int(disciplina[3]) == 200:
+            elif int(str(disciplina[3]).split(" ")[0]) == 200:
                 td.append("\n<b>Dependências</b>")
             else:
                 td.append("\n<b>Outras</b>")
