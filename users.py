@@ -491,7 +491,9 @@ def historico(bot, update):
 #    bot.send_message(chat_id=telegram_id, text=disciplinas, parse_mode=ParseMode.HTML)
 #    session.close()
 def disciplinas(bot, update):
-    bot.sendMessage(chat_id=user_id, text=messages.bugged(first_name))
+    telegram_id = update['message']['chat']['id']
+    first_name = update['message']['chat']['first_name']
+    bot.sendMessage(chat_id=telegram_id, text=messages.bugged(first_name), parse_mode=ParseMode.HTML)
     
 
 @registered
