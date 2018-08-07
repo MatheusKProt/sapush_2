@@ -578,3 +578,8 @@ def unknown_command(first_name):
 def formata_provas(data, detalhe):
     return """
 {} | {}""".format(data, detalhe)
+
+
+def bugged(first_name):
+    return """
+{}, esta funcionalidade está em manutenção.""".format(first_name)
