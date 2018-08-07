@@ -57,20 +57,20 @@ chave de matricula?".
 
 Vamos começar? 
 
-Leia com atenção os Termos de Uso e siga as instruções a seguir para ver tudo o que eu sou capaz de fazer.
+Leia com atenção os termos de uso e siga as instruções a seguir para ver tudo o que eu sou capaz de fazer.
 
 <b>Termos de Uso</b>
 Pelo acesso e uso deste bot, você aceita e concorda em cumprir os termos legais de uso. Ao utilizar este bot, \
 você declara que leu e compreendeu estes termos e condições e concorda em ficar vinculado aos mesmos. \
 A utilização dos serviços deste bot requer obrigatória e cumulativamente (i) a realização de cadastro prévio e (ii) \
-leitura e aceitação dos Termos de Uso.
+leitura e aceitação dos termos de uso.
 
 Nós desenvolvedores, juntamente com o serviço prestado, não compactuamos, incentivamos ou promovemos o uso ilegal dos \
 seus dados. Nosso objetivo por meio deste é facilitar a sua vida automatizando tarefas do dia a dia. \
 Não assumimos qualquer responsabilidade por aqueles que utilizam estes aplicativos para qualquer outra finalidade que \
 não o monitoramento próprio do Sistema de Apoio Universitário (SAPU) da Universidade Católica de Pelotas.
 
-Caso você queira ler os Termos de Uso detalhados, utilize o comando /termos.""".format(first_name)
+Caso você queira ler os termos de uso detalhados, utilize o comando /termos.""".format(first_name)
 
 
 def termos():
@@ -218,7 +218,7 @@ def not_agreed(first_name):
 
 def agreed(first_name):
     return """
-{}, você já aceitou os Termos de Uso.""".format(first_name)
+{}, você já aceitou os termos de uso.""".format(first_name)
 
 
 def user_doesnt_exist(first_name):
@@ -239,12 +239,12 @@ def user_deleted(first_name):
 
 def do_you_agree():
     return """
-Você leu e concorda com os Termos de Uso?"""
+Você leu e concorda com os termos de uso?"""
 
 
 def yes():
     return """
-Você concordou com os Termos de Uso."""
+Você concordou com os termos de uso."""
 
 
 def login_requirement():
@@ -258,7 +258,7 @@ Caso necessite de auxilio, digite ajuda a qualquer momento."""
 
 def no(first_name):
     return """
-{}, suas funcionalidades não estão habilitadas. Você não poderá utilizar o bot enquanto não aceitar os Termos de Uso. \
+{}, suas funcionalidades não estão habilitadas. Você não poderá utilizar o bot enquanto não aceitar os termos de uso. \
 Caso você mude de ideia, utilize o comando /start e siga as instruções.""".format(first_name)
 
 
