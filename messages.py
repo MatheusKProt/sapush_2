@@ -257,6 +257,8 @@ def login_requirement():
     return """
 Para ter acesso a todas as funcionalidades você deverá realizar o login em seu SAPU utilizando o comando /login [usuário] [senha].
 
+O usuário e a senha devem ser os mesmos utilizados no SAPU.
+
 O uso das chaves neste caso não é necessário, é apenas uma forma de exemplificar como os parametros devem ser enviados.
 
 Caso necessite de auxilio, digite ajuda a qualquer momento."""
