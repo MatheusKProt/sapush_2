@@ -126,6 +126,8 @@ def not_logged_in(first_name):
 {}, para ter acesso a esta funcionalidade você deverá realizar o login em seu SAPU utilizando o comando \
 /login [usuário] [senha].
 
+O usuário e a senha devem ser os mesmos utilizados no SAPU.
+
 O uso das chaves neste caso não é necessário, é apenas uma forma de exemplificar como os parametros devem ser enviados.""".format(first_name)
 
 
@@ -147,6 +149,8 @@ def alert(msg):
 def invalid_login(first_name):
     return """
 {}, utilize o comando /login [usuário] [senha].
+
+O usuário e a senha devem ser os mesmos utilizados no SAPU.
 
 O uso das chaves neste caso não é necessário, é apenas uma forma de exemplificar como os parametros devem ser enviados.""".format(first_name)
 
@@ -177,6 +181,8 @@ def not_registered(first_name):
     return """
 {}, para ter acesso a esta funcionalidade você deverá realizar o login em seu SAPU utilizando o \ 
 comando /login [usuário] [senha].
+
+O usuário e a senha devem ser os mesmos utilizados no SAPU.
 
 O uso das chaves neste caso não é necessário, é apenas uma forma de exemplificar como os parametros devem ser enviados.""".format(first_name)
 
