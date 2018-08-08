@@ -2,6 +2,7 @@ import lxml.html
 import requests
 from bs4 import BeautifulSoup
 from sqlalchemy.orm import sessionmaker
+from telegram import ParseMode
 
 import db
 import messages
@@ -46,8 +47,18 @@ def get_session(email, password):
 
 def get_notas(user, bot):
     try:
-        session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
-        notas = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=AvaliacaoFormList")
+        try:
+            session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+            notas = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=AvaliacaoFormList")
+        except:
+            session_bd = Session()
+            admins = session_bd.query(db.Admins).all()
+            for admin in admins:
+                bot.send_message(chat_id="<b>Erro</b>\n\n/{} Erro ao conectar ao SAPU".format(admin.user_id), text=user.telegram_id,
+                                 parse_mode=ParseMode.HTML)
+            session_bd.close()
+            session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+            notas = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=AvaliacaoFormList")
         soup = BeautifulSoup(notas.content, 'html.parser')
         tdatagrid = soup.find_all(class_='tdatagrid_body')
 
@@ -83,12 +94,14 @@ def get_notas(user, bot):
                 detalhe = []
                 count = 0
         return notas_resumo, notas_detalhe
-    except:
+    except Exception as e:
         session = Session()
         admins = session.query(db.Admins).all()
         for admin in admins:
-            bot.send_message(chat_id=admin.user_id, text=user.telegram_id)
-
+            bot.send_message(chat_id="<b>Erro</b>\n\n/{} Erro: {}".format(admin.user_id, e), text=user.telegram_id,
+                             parse_mode=ParseMode.HTML)
+        session.close()
+        return [], []
 
 
 def get_frequencia(user):
