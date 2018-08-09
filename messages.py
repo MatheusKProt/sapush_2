@@ -302,7 +302,7 @@ Preste atenção na sintaxe bibliográfica que é utilizada nos comandos onde s�
 
 O bot suporta mensagens de áudio e perguntas. A qualquer momento, você pode mandar um audio pedindo alguma informação ou mandar uma pergunta, como por exemplo "Qual é a minha chave de matricula?".
 
-Caso você queira ver uma demonstração de uso, clique no vídeo abaixo: <a href="https://youtu.be/B38cJfpi4XU"></a>"""
+Caso você queira ver uma demonstração de uso, clique no vídeo abaixo: <a href="https://youtu.be/B38cJfpi4XU"> </a>"""
 
 
 def historico(historico):
