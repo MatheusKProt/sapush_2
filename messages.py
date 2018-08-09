@@ -298,11 +298,11 @@ Comandos onde são enviados parâmetros são executados da seguinte maneira:
 /login [usuario] [senha]
 
 Preste atenção na sintaxe bibliográfica que é utilizada nos comandos onde são enviados parâmetros. Neste caso, o uso dos [ ] não são necessários. 
-/login 12345678910 12345
+/login 12345678910 12345 
 
-Caso você queira ver uma demonstração de uso, <a href="https://youtu.be/B38cJfpi4XU">clique aqui</a>. 
+O bot suporta mensagens de áudio e perguntas. A qualquer momento, você pode mandar um audio pedindo alguma informação ou mandar uma pergunta, como por exemplo "Qual é a minha chave de matricula?".
 
-O bot suporta mensagens de áudio e perguntas. A qualquer momento, você pode mandar um audio pedindo alguma informação ou mandar uma pergunta, como por exemplo "Qual é a minha chave de matricula?"."""
+Caso você queira ver uma demonstração de uso, clique no vídeo abaixo: <a href="https://youtu.be/B38cJfpi4XU"></a>"""
 
 
 def historico(historico):
