@@ -748,7 +748,7 @@ def ajuda(bot, update):
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
     usage(telegram_id, "Ajuda", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
-    bot.send_message(chat_id=telegram_id, text=messages.help_user(), parse_mode=ParseMode.HTML)
+    bot.send_message(chat_id=telegram_id, text=messages.help_user(first_name), parse_mode=ParseMode.HTML)
 
 
 @registered
