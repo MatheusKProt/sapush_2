@@ -291,13 +291,13 @@ def help_user():
     return """
 <b>Ajuda</b>
 
-Se você está aqui, algo está errado. Sendo assim, vou lhe mostrar algumas dicas de como usufruir de todas as funcionalidades disponíveis.
+Se você chegou até aqui, você certamente está com problemas para utilizar o bot. Sendo assim, vou lhe mostrar algumas dicas de como tirar proveito de todas as funcionalidades disponíveis.
 
 Ao utilizar o bot, você provavelmente se deparou com uma nova sintaxe para troca de mensagens: o uso da / antes de uma mensagem. Essa barra significa, na verdade, que a palavra que segue a mensagem é um comando. Qualquer função que vocë precisar acessar, você recorrerá a ela.
 
 /notas é um exemplo de comando disponível.
 
-Juntamente com os comandos, outras sintaxes são utilizadas. Comandos onde são enviados parâmetros serão executados da seguinte maneira:
+Juntamente com os comandos, outras sintaxes são utilizadas. Comandos onde são enviados parâmetros são executados da seguinte maneira:
 
 /login [usuario] [senha]
 
