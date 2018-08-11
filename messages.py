@@ -303,7 +303,7 @@ Juntamente com os comandos, outras sintaxes são utilizadas. Comandos onde são 
 
 Sendo assim, o comando de login na verdade é utilizado sem que seja necessário o uso dos [ ] envolvendo os argumentos. 
  
-/login 12345678910 <a href="https://youtu.be/B38cJfpi4XU">12345</a> é um exemplo de como são enviadas as informações.
+/login <a href="https://youtu.be/B38cJfpi4XU">12345678910 12345</a> é um exemplo de como são enviadas as informações.
 
 Ao ler estas informações, esperamos que você esteja apto a utilizar o bot de maneira satisfatória. Mas se, ainda assim você estiver com dúvidas em relação ao uso, recomendamos você a assistir ao vídeo de demonstração do bot abaixo:
 """.format(first_name)
