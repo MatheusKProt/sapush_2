@@ -54,7 +54,7 @@ def get_notas(user, bot):
             session_bd = Session()
             admins = session_bd.query(db.Admins).all()
             for admin in admins:
-                bot.send_message(chat_id="<b>Erro</b>\n\n/{} Erro ao conectar ao SAPU".format(admin.user_id), text=user.telegram_id,
+                bot.send_message(chat_id=admin.user_id, text="<b>Erro</b>\n\n/{} Erro ao conectar ao SAPU".format(user.telegram_id),
                                  parse_mode=ParseMode.HTML)
             session_bd.close()
             session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
@@ -98,7 +98,7 @@ def get_notas(user, bot):
         session = Session()
         admins = session.query(db.Admins).all()
         for admin in admins:
-            bot.send_message(chat_id="<b>Erro</b>\n\n/{} Erro: {}".format(admin.user_id, e), text=user.telegram_id,
+            bot.send_message(chat_id=admin.user_id, text="<b>Erro</b>\n\n/{} Erro: {}".format(user.telegram_id, e),
                              parse_mode=ParseMode.HTML)
         session.close()
         return [], []
