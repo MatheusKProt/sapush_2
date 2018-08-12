@@ -48,17 +48,22 @@ def get_session(email, password):
 def get_notas(user, bot):
     try:
         try:
-            session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+            session, logado, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+            if not logado:
+                return [], []
             notas = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=AvaliacaoFormList")
         except:
             session_bd = Session()
             admins = session_bd.query(db.Admins).all()
             for admin in admins:
-                bot.send_message(chat_id=admin.user_id, text="<b>Erro</b>\n\n/{} Erro ao conectar ao SAPU".format(user.telegram_id),
+                bot.send_message(chat_id=admin.user_id, text="<b>Erro</b>\n\n/{} | Erro ao conectar ao SAPU".format(user.telegram_id),
                                  parse_mode=ParseMode.HTML)
             session_bd.close()
-            session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+            session, logado, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+            if not logado:
+                return [], []
             notas = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=AvaliacaoFormList")
+
         soup = BeautifulSoup(notas.content, 'html.parser')
         tdatagrid = soup.find_all(class_='tdatagrid_body')
 
@@ -98,28 +103,51 @@ def get_notas(user, bot):
         session = Session()
         admins = session.query(db.Admins).all()
         for admin in admins:
-            bot.send_message(chat_id=admin.user_id, text="<b>Erro</b>\n\n/{} Erro: {}".format(user.telegram_id, e),
+            bot.send_message(chat_id=admin.user_id, text="<b>Erro</b>\n\n/{} | Erro: {}".format(user.telegram_id, e),
                              parse_mode=ParseMode.HTML)
         session.close()
         return [], []
 
 
-def get_frequencia(user):
-    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
-    frequencia = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=FrequenciaFormList")
-    soup = BeautifulSoup(frequencia.content, 'html.parser')
+def get_frequencia(user, bot):
+    try:
+        try:
+            session, logado, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+            if not logado:
+                return []
+            frequencia = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=FrequenciaFormList")
+        except:
+            session_bd = Session()
+            admins = session_bd.query(db.Admins).all()
+            for admin in admins:
+                bot.send_message(chat_id=admin.user_id, text="<b>Erro</b>\n\n/{} | Erro ao conectar ao SAPU".format(user.telegram_id),
+                                 parse_mode=ParseMode.HTML)
+            session_bd.close()
+            session, logado, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+            if not logado:
+                return []
+            frequencia = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=FrequenciaFormList")
 
-    count = 0
-    table = []
-    td = []
-    for index in soup.find(class_='tdatagrid_body').find_all('td'):
-        td.append(index.get_text().lstrip())
-        count += 1
-        if count == 4:
-            table.append(td)
-            td = []
-            count = 0
-    return table
+        soup = BeautifulSoup(frequencia.content, 'html.parser')
+        count = 0
+        table = []
+        td = []
+        for index in soup.find(class_='tdatagrid_body').find_all('td'):
+            td.append(index.get_text().lstrip())
+            count += 1
+            if count == 4:
+                table.append(td)
+                td = []
+                count = 0
+        return table
+    except Exception as e:
+        session = Session()
+        admins = session.query(db.Admins).all()
+        for admin in admins:
+            bot.send_message(chat_id=admin.user_id, text="<b>Erro</b>\n\n/{} | Erro: {}".format(user.telegram_id, e),
+                             parse_mode=ParseMode.HTML)
+        session.close()
+        return []
 
 
 def get_horarios(user):

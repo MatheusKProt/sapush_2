@@ -90,7 +90,7 @@ def get_notas(bot, update, user):
 
 def get_frequencia(bot, update, user):
     session = Session()
-    frequencias = crawlers.get_frequencia(user)
+    frequencias = crawlers.get_frequencia(user, bot)
     for freq in frequencias:
         frequencia_db = session.query(db.Frequencia).filter_by(user_id=user.telegram_id, materia=str(freq[0]),
                                                                frequencia=float(freq[2].split("%")[0]), faltas=int(freq[3])).first()

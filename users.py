@@ -342,7 +342,7 @@ def login(bot, update, args):
 
         user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
         notas_resumo, notas_detalhe = crawlers.get_notas(user, bot)
-        frequencia = crawlers.get_frequencia(user)
+        frequencia = crawlers.get_frequencia(user, bot)
 
         dao.set_notas(user, notas_resumo, notas_detalhe, bot)
         dao.set_frequencia(user, frequencia)
