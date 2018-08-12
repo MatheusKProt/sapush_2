@@ -23,24 +23,6 @@ def restricted(func):
     @wraps(func)
     def wrapped(bot, update, *args, **kwargs):
         user_id = update['message']['chat']['id']
-        session = Session()
-        admin = session.query(db.Admins).filter_by(user_id=user_id).first()
-        if not admin:
-            bot.send_message(chat_id=update['message']['chat']['id'],
-                             text=messages.not_allowed(update['message']['chat']['first_name']),
-                             parse_mode=ParseMode.HTML)
-            session.close()
-            return
-        session.close()
-        return func(bot, update, *args, **kwargs)
-
-    return wrapped
-
-
-def restricted_commands(func):
-    @wraps(func)
-    def wrapped(bot, update, *args, **kwargs):
-        user_id = update['message']['chat']['id']
         first_name = update['message']['chat']['first_name']
         session = Session()
         admin = session.query(db.Admins).filter_by(user_id=user_id).first()
@@ -304,7 +286,11 @@ def history(bot, update, args):
             bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
         else:
             try:
-                usages = session.query(db.Usage).filter_by(funcionabilidade=str(args[0]).capitalize()).all()
+                try:
+                    limite = int(args[1])
+                except:
+                    limite = 10
+                usages = session.query(db.Usage).filter_by(funcionabilidade=str(args[0]).capitalize()).limit(limite).all()
                 msg = "<b>Histórico da função {}</b>\n".format(str(args[0]).lower())
                 for usage in usages:
                     user = session.query(db.User).filter_by(telegram_id=usage.user_id).first()
@@ -488,25 +474,27 @@ def alerta_uso(bot, update):
             bot.send_message(chat_id=admin.user_id, text=text, parse_mode=ParseMode.HTML)
 
 
-@restricted_commands
+@restricted
 @run_async
 def unknown(bot, update):
     telegram_id = update['message']['chat']['id']
+    first_name = update['message']['chat']['first_name']
     session = Session()
     user = session.query(db.User).filter_by(telegram_id=str(update['message']['text']).split("/")[1]).first()
-    historys = session.query(db.Usage).filter_by(user_id=user.telegram_id).order_by(db.Usage.id.desc()).limit(10).all()
-    hist = ""
-    for history in historys:
-        hist += history.data[:-3] + " | " + history.funcionabilidade + "\n"
-    if user.last_name:
-        last_name = user.last_name
-    else:
-        last_name = " "
-    if user.sapu_username == " ":
-        logado = False
-    else:
-        logado = True
-    bot.sendMessage(chat_id=telegram_id, text="""<b>Perfil</b>
+    if user:
+        historys = session.query(db.Usage).filter_by(user_id=user.telegram_id).order_by(db.Usage.id.desc()).limit(10).all()
+        hist = ""
+        for history in historys:
+            hist += history.data[:-3] + " | " + history.funcionabilidade + "\n"
+        if user.last_name:
+            last_name = user.last_name
+        else:
+            last_name = " "
+        if user.sapu_username == " ":
+            logado = False
+        else:
+            logado = True
+        bot.sendMessage(chat_id=telegram_id, text="""<b>Perfil</b>
 
 {}
 {}
@@ -523,4 +511,6 @@ Frequência: {}
 
 {}""".format(user.first_name + " " + last_name, user.curso[:-2], user.telegram_id, str(logado).lower(),
              str(user.termos).lower(), str(user.push_notas).lower(), str(user.push_frequencia).lower(), hist),
-                    parse_mode=ParseMode.HTML)
+                        parse_mode=ParseMode.HTML)
+    else:
+        bot.sendMessage(chat_id=telegram_id, text=messages.unknown_command(first_name), parse_mode=ParseMode.HTML)
