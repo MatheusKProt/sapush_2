@@ -480,21 +480,24 @@ def unknown(bot, update):
     telegram_id = update['message']['chat']['id']
     first_name = update['message']['chat']['first_name']
     session = Session()
-    user = session.query(db.User).filter_by(telegram_id=str(update['message']['text']).split("/")[1]).first()
-    if user:
-        historys = session.query(db.Usage).filter_by(user_id=user.telegram_id).order_by(db.Usage.id.desc()).limit(10).all()
-        hist = ""
-        for history in historys:
-            hist += history.data[:-3] + " | " + history.funcionabilidade + "\n"
-        if user.last_name:
-            last_name = user.last_name
-        else:
-            last_name = " "
-        if user.sapu_username == " ":
-            logado = False
-        else:
-            logado = True
-        bot.sendMessage(chat_id=telegram_id, text="""<b>Perfil</b>
+    try:
+        user = session.query(db.User).filter_by(telegram_id=str(update['message']['text']).split("/")[1]).first()
+    except:
+        bot.sendMessage(chat_id=telegram_id, text=messages.unknown_command(first_name), parse_mode=ParseMode.HTML)
+        return 
+    historys = session.query(db.Usage).filter_by(user_id=user.telegram_id).order_by(db.Usage.id.desc()).limit(10).all()
+    hist = ""
+    for history in historys:
+        hist += history.data[:-3] + " | " + history.funcionabilidade + "\n"
+    if user.last_name:
+        last_name = user.last_name
+    else:
+        last_name = " "
+    if user.sapu_username == " ":
+        logado = False
+    else:
+        logado = True
+    bot.sendMessage(chat_id=telegram_id, text="""<b>Perfil</b>
 
 {}
 {}
@@ -512,5 +515,4 @@ Frequência: {}
 {}""".format(user.first_name + " " + last_name, user.curso[:-2], user.telegram_id, str(logado).lower(),
              str(user.termos).lower(), str(user.push_notas).lower(), str(user.push_frequencia).lower(), hist),
                         parse_mode=ParseMode.HTML)
-    else:
-        bot.sendMessage(chat_id=telegram_id, text=messages.unknown_command(first_name), parse_mode=ParseMode.HTML)
+
