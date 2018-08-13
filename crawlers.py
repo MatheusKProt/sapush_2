@@ -53,12 +53,12 @@ def get_notas(user, bot):
                 return [], []
             notas = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=AvaliacaoFormList")
         except:
-            session_bd = Session()
-            admins = session_bd.query(db.Admins).all()
-            for admin in admins:
-                bot.send_message(chat_id=admin.user_id, text="<b>Erro</b>\n\n/{} | Erro ao conectar ao SAPU".format(user.telegram_id),
-                                 parse_mode=ParseMode.HTML)
-            session_bd.close()
+            # session_bd = Session()
+            # admins = session_bd.query(db.Admins).all()
+            # for admin in admins:
+                # bot.send_message(chat_id=admin.user_id, text="<b>Erro</b>\n\n/{} | Erro ao conectar ao SAPU".format(user.telegram_id),
+                #                  parse_mode=ParseMode.HTML)
+            # session_bd.close()
             session, logado, _, _, _ = get_session(user.sapu_username, user.sapu_password)
             if not logado:
                 return [], []
@@ -117,12 +117,12 @@ def get_frequencia(user, bot):
                 return []
             frequencia = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=FrequenciaFormList")
         except:
-            session_bd = Session()
-            admins = session_bd.query(db.Admins).all()
-            for admin in admins:
-                bot.send_message(chat_id=admin.user_id, text="<b>Erro</b>\n\n/{} | Erro ao conectar ao SAPU".format(user.telegram_id),
-                                 parse_mode=ParseMode.HTML)
-            session_bd.close()
+            # session_bd = Session()
+            # admins = session_bd.query(db.Admins).all()
+            # for admin in admins:
+                # bot.send_message(chat_id=admin.user_id, text="<b>Erro</b>\n\n/{} | Erro ao conectar ao SAPU".format(user.telegram_id),
+               #                   parse_mode=ParseMode.HTML)
+            # session_bd.close()
             session, logado, _, _, _ = get_session(user.sapu_username, user.sapu_password)
             if not logado:
                 return []
