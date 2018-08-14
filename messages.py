@@ -68,7 +68,7 @@ leitura e aceitação dos termos de uso.
 Nós desenvolvedores, juntamente com o serviço prestado, não compactuamos, incentivamos ou promovemos o uso ilegal dos \
 seus dados. Nosso objetivo por meio deste é facilitar a sua vida automatizando tarefas do dia a dia. \
 Não assumimos qualquer responsabilidade por aqueles que utilizam estes aplicativos para qualquer outra finalidade que \
-não o monitoramento próprio do Sistema de Apoio Universitário (SAPU) da Universidade Católica de Pelotas.
+não o monitoramento próprio do Sistema de Apoio Universitário (SAPU) da Universidade Católica de Pelotas (UCPel).
 
 Caso você queira ler os termos de uso detalhados, utilize o comando /termos.""".format(first_name)
 
@@ -83,11 +83,10 @@ regem seu uso, que podem mudar de tempos em tempos. No caso de qualquer conflito
 prevalecerão. Os recursos e conteúdos fornecidos por este podem ser alterados a qualquer momento sem aviso prévio. \
 Acredita-se que as informações fornecidas por este sejam confiáveis quando postadas, mas não há garantia de que elas \
 sejam precisas, completas ou atuais em todos os momentos. Devido à natureza dinâmica da internet, os \
-recursos que estão disponíveis gratuitamente e publicamente no bot podem exigir uma taxa ou restringir \
-o acesso no dia seguinte, e a localização dos itens pode mudar à medida que menus e funcionalidades \
-são reorganizados. O usuário concorda expressamente que o uso deste bot é de sua total responsabilidade. \
-Nenhum material pode ser modificado, editado ou retirado de contexto, de modo que seu uso crie uma declaração \
-ou impressão falsa ou enganosa sobre as posições, declarações ou ações.
+recursos que estão disponíveis no bot podem restringir o acesso no dia seguinte, e a localização dos itens pode mudar à \
+medida que menus e funcionalidades são reorganizados. O usuário concorda expressamente que o uso deste bot é de sua total \
+responsabilidade. Nenhum material pode ser modificado, editado ou retirado de contexto, de modo que seu uso crie uma \
+declaração ou impressão falsa ou enganosa sobre as posições, declarações, informações ou ações.
 
 <b>Condições para Produtos e Serviços</b>
 Os termos e condições aplicáveis a qualquer produto, serviço ou informação serão aqueles determinados no momento \
@@ -110,12 +109,12 @@ vírus ou outra contaminação ou propriedades destrutivas serão transmitidas o
 seu computador e/ou celular. Você é o único responsável pela proteção e backup adequados de dados e/ou equipamentos \
 e por tomar precauções razoáveis e apropriadas para verificar se há vírus de computador ou outras propriedades destrutivas.
 
-<b>Copyright Universidade Católica de Pelotas (UCPEL)</b>
+<b>Copyright Universidade Católica de Pelotas (UCPel)</b>
 Todos os textos, imagens, gráficos, animações, vídeos, músicas, sons e outros materiais \
 são protegidos por direitos autorais e outros direitos de propriedade intelectual pertencentes à Universidade Católica \
 de Pelotas, suas subsidiárias, afiliadas e licenciantes.
 
-Este projeto <b>não</b> é oficialmente afiliado com a instituição de ensino Universidade Católica de Pelotas (UCPEL).
+Este projeto <b>não</b> é oficialmente afiliado com a instituição de ensino Universidade Católica de Pelotas (UCPel).
 
 Por favor, ajude-nos a melhorar. Caso haja alguma dúvida ou sugestão, entre em contato utilizando o comando \
 /desenvolvedores."""
