@@ -270,27 +270,46 @@ def history(bot, update, args):
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
     try:
-        if str(args[0]).lower() == "all":
-            try:
-                limite = int(args[1])
-            except:
-                limite = 10
-            usages = session.query(db.Usage).order_by(db.Usage.id.desc()).limit(limite)
+        if len(str(int(args[0]))) <= 3:
+            usages = session.query(db.Usage).order_by(db.Usage.id.desc()).limit(int(args[0]))
             msg = "<b>Histórico</b>\n"
             for usage in usages:
                 user = session.query(db.User).filter_by(telegram_id=usage.user_id).first()
                 if user.last_name:
-                    msg += messages.formata_history(usage.data[:-3], usage.funcionabilidade, user.first_name + " " + user.last_name)
+                    msg += messages.formata_history(usage.data[:-3], usage.funcionabilidade,
+                                                    user.first_name + " " + user.last_name)
                 else:
                     msg += messages.formata_history(usage.data[:-3], usage.funcionabilidade, user.first_name)
             bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
         else:
             try:
+                limite = int(args[1])
+            except:
+                limite = 5
+            usages = session.query(db.Usage).filter_by(user_id=int(args[0])).order_by(db.Usage.data.desc()).limit(
+                limite)
+            user = session.query(db.User.first_name, db.User.last_name).filter_by(telegram_id=int(args[0])).first()
+            msg = "<b>Histórico de {} {}</b>\n".format(user[0], user[1])
+            for usage in usages:
+                msg += messages.formata_usage(usage.funcionabilidade, usage.data[:-3])
+            bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
+    except:
+        try:
+            if str(args[0]).lower() == "all":
+                usages = session.query(db.Usage.funcionabilidade, func.count(db.Usage.funcionabilidade)).group_by(
+                    db.Usage.funcionabilidade).order_by(func.count(db.Usage.funcionabilidade).desc(),
+                                                        db.Usage.funcionabilidade.asc()).all()
+                msg = "<b>Histórico</b>\n"
+                for usage in usages:
+                    msg += messages.formata_usage(usage[0], usage[1])
+                bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
+                session.close()
+            else:
                 try:
                     limite = int(args[1])
                 except:
                     limite = 10
-                usages = session.query(db.Usage).filter_by(funcionabilidade=str(args[0]).capitalize()).limit(limite).all()
+                usages = session.query(db.Usage).filter_by(funcionabilidade=str(args[0]).capitalize()).order_by(db.Usage.id.desc()).limit(limite).all()
                 msg = "<b>Histórico da função {}</b>\n".format(str(args[0]).lower())
                 for usage in usages:
                     user = session.query(db.User).filter_by(telegram_id=usage.user_id).first()
@@ -299,25 +318,19 @@ def history(bot, update, args):
                     else:
                         msg += messages.formata_usage(user.first_name, usage.data[:-3])
                 bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
-            except:
-                try:
-                    limite = int(args[1])
-                except:
-                    limite = 5
-                usages = session.query(db.Usage).filter_by(user_id=int(args[0])).order_by(db.Usage.data.desc()).limit(limite)
-                user = session.query(db.User.first_name, db.User.last_name).filter_by(telegram_id=int(args[0])).first()
-                msg = "<b>Histórico de {} {}</b>\n".format(user[0], user[1])
-                for usage in usages:
-                    msg += messages.formata_usage(usage.funcionabilidade, usage.data[:-3])
-                bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
-        session.close()
-    except:
-        usages = session.query(db.Usage.funcionabilidade, func.count(db.Usage.funcionabilidade)).group_by(db.Usage.funcionabilidade).order_by(func.count(db.Usage.funcionabilidade).desc(), db.Usage.funcionabilidade.asc()).all()
-        msg = "<b>Histórico</b>\n"
-        for usage in usages:
-            msg += messages.formata_usage(usage[0], usage[1])
-        bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
-        session.close()
+        except:
+            usages = session.query(db.Usage).order_by(db.Usage.id.desc()).limit(10)
+            msg = "<b>Histórico</b>\n"
+            for usage in usages:
+                user = session.query(db.User).filter_by(telegram_id=usage.user_id).first()
+                if user.last_name:
+                    msg += messages.formata_history(usage.data[:-3], usage.funcionabilidade,
+                                                    user.first_name + " " + user.last_name)
+                else:
+                    msg += messages.formata_history(usage.data[:-3], usage.funcionabilidade, user.first_name)
+            bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)
+    session.close()
+    return
 
 
 @restricted

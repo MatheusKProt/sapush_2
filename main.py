@@ -62,7 +62,6 @@ def main():
 
     # funções dos usuários
     dp.add_handler(CommandHandler("start", users.start))
-    # dp.add_handler(CommandHandler("acordo", users.do_you_agree))
     dp.add_handler(CommandHandler("login", users.login, pass_args=True))
     dp.add_handler(CommandHandler("deletar", users.deletar))
     dp.add_handler(CommandHandler("sugerir", users.sugerir, pass_args=True))
