@@ -14,22 +14,16 @@ engine = db.gen_engine(url)
 Session = sessionmaker(bind=engine)
 
 
-def get_session(email, password):
+def get_session(email, password, html=False):
     session = requests.session()
 
-    login = session.get('http://sapu.ucpel.edu.br/')
-    login_html = lxml.html.fromstring(login.text)
+    sapu = session.post('http://sapu.ucpel.edu.br/portal/engine.php?class=LoginForm&method=onLogin', data={
+        "login": email,
+        "password": password,
+    })
 
-    hidden_inputs = login_html.xpath(r'//form//input[@type="hidden"]')
-    form = {x.attrib["name"]: x.attrib["value"] for x in hidden_inputs}
-
-    form['login'] = email
-    form['password'] = password
-
-    sapu = session.post('http://sapu.ucpel.edu.br/portal/engine.php?class=LoginForm&method=onLogin', data=form)
     soup = BeautifulSoup(sapu.content, 'html.parser')
     home = session.get("http://sapu.ucpel.edu.br/portal/index.php?class=Dashboard&message=1")
-    home_soup = BeautifulSoup(home.content, 'html.parser')
 
     for index in soup.find_all('script'):
         if str(index.get_text().lstrip()).split("'")[1] == "Erro":
@@ -40,9 +34,13 @@ def get_session(email, password):
             else:
                 return session, False, str(index.get_text().lstrip()).split("'")[3], "", ""
         else:
-            chave = str(home_soup.find(class_='div_matricula').get_text().lstrip()).split(" ")[1]
-            curso = util.formata_curso(str(home_soup.find(class_='div_curso').get_text().lstrip()).split(": ")[1])
-            return session, True, "True", chave, curso
+            if html:
+                home_soup = BeautifulSoup(home.content, 'html.parser')
+                chave = str(home_soup.find(class_='div_matricula').get_text().lstrip()).split(" ")[1]
+                curso = util.formata_curso(str(home_soup.find(class_='div_curso').get_text().lstrip()).split(": ")[1])
+                return session, True, "True", chave, curso
+            else:
+                return session, True, "True", False, False
 
 
 def get_notas(user, bot):

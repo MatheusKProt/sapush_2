@@ -329,7 +329,7 @@ def login(bot, update, args):
     session = Session()
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
 
-    _, logado, error, chave, curso = crawlers.get_session(sapu_username, sapu_password)
+    _, logado, error, chave, curso = crawlers.get_session(sapu_username, sapu_password, html=True)
     if logado:
         user.username = username
         user.first_name = first_name
