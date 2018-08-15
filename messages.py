@@ -278,15 +278,8 @@ Ao utilizar o bot, você provavelmente se deparou com uma nova sintaxe para troc
 
 /notas é um exemplo de comando disponível.
 
-Juntamente com os comandos, outras sintaxes são utilizadas. Comandos onde são enviados parâmetros são executados da seguinte maneira:
-
-/login [usuario] [senha]
-
-Sendo assim, o comando de login na verdade é utilizado sem que seja necessário o uso dos [ ] envolvendo os argumentos. 
- 
-/login <a href="https://youtu.be/B38cJfpi4XU">12345678910</a> <a href="https://youtu.be/B38cJfpi4XU">12345</a> é um exemplo de como são enviadas as informações.
-
-Ao ler estas informações, esperamos que você esteja apto a utilizar o bot de maneira satisfatória. Mas se, ainda assim você estiver com dúvidas em relação ao uso, recomendamos você a assistir ao vídeo de demonstração do bot abaixo:
+Ao ler estas informações, esperamos que você esteja apto a utilizar o bot de maneira satisfatória. Mas se, ainda assim você estiver com dúvidas em relação ao uso, \
+recomendamos você a assistir ao <a href="https://youtu.be/B38cJfpi4XU">vídeo de demonstração do bot</a>.
 """.format(first_name)
 
 
@@ -587,7 +580,9 @@ O usuário deve ser o mesmo utilizado no SAPU."""
 
 def user_invalido_login():
     return """
-Usuario inválido. Por favor, digite novamente."""
+Usuario inválido. Por favor, digite novamente. 
+
+Caso você queira cancelar o processo de login, digite /cancelar."""
 
 
 def pass_login():
@@ -601,9 +596,11 @@ def pass_invalido_login():
     return """
 Senha inválida. Por favor, digite novamente.
 
-Fique atento ao uso de letras maiúsculas e minúsculas, visto que o SAPU diferencia tais argumentos."""
+Fique atento ao uso de letras maiúsculas e minúsculas, visto que o SAPU diferencia tais argumentos.
+
+Caso você queira cancelar o processo de login, digite /cancelar."""
 
 
 def cancelar_login():
     return """
-Cancelado!"""
+O processo de login foi cancelado. Caso você precise de auxílio, peça a qualquer momento através do comando /ajuda ou entre em contato através do comando /desenvolvedores."""
