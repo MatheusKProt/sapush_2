@@ -7,6 +7,7 @@ from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageH
 
 import admins
 import config
+import conversation
 import push
 import users
 import dao
@@ -39,6 +40,8 @@ def main():
     dp = updater.dispatcher
     job = updater.job_queue
 
+    dp.add_handler(conversation.login())
+
     dp.add_handler(CallbackQueryHandler(users.button))
     dp.add_handler(MessageHandler(Filters.text, users.callback))
     dp.add_handler(InlineQueryHandler(users.inlinequery))
@@ -62,7 +65,7 @@ def main():
 
     # funções dos usuários
     dp.add_handler(CommandHandler("start", users.start))
-    dp.add_handler(CommandHandler("login", users.login, pass_args=True))
+    # dp.add_handler(CommandHandler("login", users.login, pass_args=True))
     dp.add_handler(CommandHandler("deletar", users.deletar))
     dp.add_handler(CommandHandler("sugerir", users.sugerir, pass_args=True))
     dp.add_handler(CommandHandler("notas", users.notas))

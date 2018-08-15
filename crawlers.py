@@ -14,6 +14,15 @@ engine = db.gen_engine(url)
 Session = sessionmaker(bind=engine)
 
 
+def get_login(user, password):
+        session = requests.session()
+        sapu = session.post('http://sapu.ucpel.edu.br/portal/engine.php?class=LoginForm&method=onLogin', data={
+            "login": user,
+            "password": password,
+        })
+        return BeautifulSoup(sapu.content, 'html.parser')
+
+
 def get_session(email, password, html=False):
     session = requests.session()
 

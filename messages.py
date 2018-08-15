@@ -2,7 +2,7 @@ def comandos():
     return """
 <b>Lista de comandos</b>
 
-/login [usuário] [senha] - faz o login no SAPU ou altera o login existente
+/login - faz o login no SAPU ou altera o login existente
 /deletar - deleta suas informações de login do SAPU 
 /sugerir [mensagem] - envia uma sugestão aos desenvolvedores do bot
 /configurar - configura o estado das notificações push
@@ -123,11 +123,9 @@ Por favor, ajude-nos a melhorar. Caso haja alguma dúvida ou sugestão, entre em
 def not_logged_in(first_name):
     return """
 {}, para ter acesso a esta funcionalidade você deverá realizar o login em seu SAPU utilizando o comando \
-/login [usuário] [senha].
+/login.
 
-O usuário e a senha devem ser os mesmos utilizados no SAPU.
-
-O uso das chaves neste caso não é necessário, é apenas uma forma de exemplificar como os parametros devem ser enviados.""".format(first_name)
+O usuário e a senha devem ser os mesmos utilizados no SAPU.""".format(first_name)
 
 
 def message(msg, admin, user):
@@ -147,26 +145,14 @@ def alert(msg):
 
 def invalid_login(first_name):
     return """
-{}, utilize o comando /login [usuário] [senha].
+{}, utilize o comando /login.
 
-O usuário e a senha devem ser os mesmos utilizados no SAPU.
-
-O uso das chaves neste caso não é necessário, é apenas uma forma de exemplificar como os parametros devem ser enviados.""".format(first_name)
+O usuário e a senha devem ser os mesmos utilizados no SAPU.""".format(first_name)
 
 
 def valid_login(first_name):
     return """
 {}, seu login foi efetuado com sucesso!""".format(first_name)
-
-
-def wrong_password(first_name):
-    return """
-{}, sua senha está incorreta.""".format(first_name)
-
-
-def wrong_user(first_name):
-    return """
-{}, seu usuário está incorreto.""".format(first_name)
 
 
 def suggest_without_parameters(first_name):
@@ -179,11 +165,9 @@ O uso das chaves neste caso não é necessário, é apenas uma forma de exemplif
 def not_registered(first_name):
     return """
 {}, para ter acesso a esta funcionalidade você deverá realizar o login em seu SAPU utilizando o \ 
-comando /login [usuário] [senha].
+comando /login.
 
-O usuário e a senha devem ser os mesmos utilizados no SAPU.
-
-O uso das chaves neste caso não é necessário, é apenas uma forma de exemplificar como os parametros devem ser enviados.""".format(first_name)
+O usuário e a senha devem ser os mesmos utilizados no SAPU.""".format(first_name)
 
 
 def push_grades(first_name, materia, nota, media, msg):
@@ -254,11 +238,9 @@ Você concordou com os termos de uso."""
 
 def login_requirement():
     return """
-Para ter acesso a todas as funcionalidades você deverá realizar o login em seu SAPU utilizando o comando /login [usuário] [senha].
+Para ter acesso a todas as funcionalidades você deverá realizar o login em seu SAPU utilizando o comando /login.
 
 O usuário e a senha devem ser os mesmos utilizados no SAPU.
-
-O uso das chaves neste caso não é necessário, é apenas uma forma de exemplificar como os parametros devem ser enviados.
 
 Caso necessite de auxilio, digite ajuda a qualquer momento."""
 
@@ -594,3 +576,34 @@ def formata_provas(data, detalhe):
 def bugged(first_name):
     return """
 {}, esta funcionalidade está em manutenção no momento.""".format(first_name)
+
+
+def user_login():
+    return """
+Por favor, digite seu nome de usuário do SAPU.
+
+O usuário deve ser o mesmo utilizado no SAPU."""
+
+
+def user_invalido_login():
+    return """
+Usuario inválido. Por favor, digite novamente."""
+
+
+def pass_login():
+    return """
+E agora digite a sua senha.
+
+A senha deve ser a mesma utilizada no SAPU."""
+
+
+def pass_invalido_login():
+    return """
+Senha inválida. Por favor, digite novamente.
+
+Fique atento ao uso de letras maiúsculas e minúsculas, visto que o SAPU diferencia tais argumentos."""
+
+
+def cancelar_login():
+    return """
+Cancelado!"""

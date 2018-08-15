@@ -218,8 +218,10 @@ def button(bot, update):
 
     # Perfil
     elif query.data == 'login':
-        bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
-        login(bot, update['callback_query'], [])
+        bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
+                              message_id=query['message']['message_id'],
+                              text=messages.invalid_login(update['callback_query']['message']['chat']['first_name']),
+                              parse_mode=ParseMode.HTML)
     elif query.data == 'deletar':
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
         deletar(bot, update['callback_query'])
@@ -307,59 +309,6 @@ def button(bot, update):
                               text="No futuro vai abrir a função!")
     session.commit()
     session.close()
-
-
-@registered
-@restricted
-def login(bot, update, args):
-    telegram_id = update['message']['chat']['id']
-    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
-    usage(telegram_id, "Login", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
-
-    username = update['message']['chat']['username']
-    first_name = update['message']['chat']['first_name']
-
-    if len(args) != 2:
-        bot.send_message(chat_id=telegram_id, text=messages.invalid_login(first_name), parse_mode=ParseMode.HTML)
-        return
-
-    sapu_username = args[0]
-    sapu_password = args[1]
-
-    session = Session()
-    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
-
-    _, logado, error, chave, curso = crawlers.get_session(sapu_username, sapu_password, html=True)
-    if logado:
-        user.username = username
-        user.first_name = first_name
-        user.sapu_username = sapu_username
-        user.sapu_password = sapu_password
-        user.chave = chave
-        user.curso = curso
-
-        session.commit()
-
-        user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
-        notas_resumo, notas_detalhe = crawlers.get_notas(user, bot)
-        frequencia = crawlers.get_frequencia(user, bot)
-
-        dao.set_notas(user, notas_resumo, notas_detalhe, bot)
-        dao.set_frequencia(user, frequencia)
-        session.close()
-
-        bot.send_message(chat_id=telegram_id, text=messages.valid_login(first_name), parse_mode=ParseMode.HTML)
-        menu(bot, update, [])
-        return
-    else:
-        if error == "senha":
-            bot.send_message(chat_id=telegram_id, text=messages.wrong_password(first_name), parse_mode=ParseMode.HTML)
-        elif error == "usuario":
-            bot.send_message(chat_id=telegram_id, text=messages.wrong_user(first_name), parse_mode=ParseMode.HTML)
-        else:
-            bot.send_message(chat_id=telegram_id, text=error + ".", parse_mode=ParseMode.HTML)
-        session.close()
-        return
 
 
 @registered
@@ -795,12 +744,9 @@ def verifica_callback(bot, update, arg):
     elif "start" in arg:
         start(bot, update)
     elif "login" in arg:
-        args = []
-        text = str(update['message']['text']).split(" ")
-        if text[0].lower() == "login":
-            if len(text) == 3:
-                args = [text[1], text[2]]
-        login(bot, update, args)
+        bot.send_message(chat_id=update['message']['chat']['id'],
+                         text=messages.invalid_login(update['message']['chat']['first_name']),
+                         parse_mode=ParseMode.HTML)
     elif "delet" in arg:
         deletar(bot, update)
     elif "sugerir" in arg or "sugiro" in arg or "sugest" in arg:
