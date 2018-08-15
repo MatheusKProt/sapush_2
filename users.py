@@ -742,8 +742,6 @@ def comandos(bot, update):
     bot.send_message(chat_id=telegram_id, text=messages.comandos(), parse_mode=ParseMode.HTML)
 
 
-@registered
-@restricted
 def ajuda(bot, update):
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
@@ -848,8 +846,6 @@ def verifica_callback(bot, update, arg):
                          parse_mode=ParseMode.HTML)
 
 
-@registered
-@restricted
 def desenvolvedores(bot, update):
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
