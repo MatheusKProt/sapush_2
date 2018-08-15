@@ -154,11 +154,12 @@ def message(bot, update, args):
         if int(args[0]):
             session = Session()
             user = session.query(db.User).filter_by(telegram_id=int(args[0])).first()
+            first_name = user.first_name
             bot.send_message(chat_id=args[0], text=messages.message(msg, update['message']['chat']['first_name'], user.first_name), parse_mode=ParseMode.HTML)
             admin = session.query(db.Admins).filter_by(user_id=update['message']['chat']['id']).first()
             session.add(db.Alert(admin.id, int(args[0]), str(msg)))
             user = session.query(db.User).filter_by(telegram_id=admin.user_id).first()
-            bot.send_message(chat_id=update['message']['chat']['id'], text=messages.alert_success(user.first_name), parse_mode=ParseMode.HTML)
+            bot.send_message(chat_id=update['message']['chat']['id'], text=messages.alert_success(user.first_name, first_name), parse_mode=ParseMode.HTML)
 
             session.commit()
             session.close()
@@ -186,7 +187,7 @@ def breakdown(bot, update, args):
     try:
         if int(args[0]):
             bot.send_message(chat_id=args[0], text=messages.alert(msg), parse_mode=ParseMode.HTML)
-            bot.send_message(chat_id=update['message']['chat']['id'], text=messages.alert_success(update['message']['chat']['first_name']), parse_mode=ParseMode.HTML)
+            bot.send_message(chat_id=update['message']['chat']['id'], text=messages.alert_success(update['message']['chat']['first_name'], update['message']['chat']['first_name']), parse_mode=ParseMode.HTML)
     except ValueError:
         bot.send_message(chat_id=update['message']['chat']['id'], text=messages.alert_error(update['message']['chat']['first_name']), parse_mode=ParseMode.HTML)
     except Exception as error:

@@ -360,19 +360,19 @@ Faremos o possível para implementá-la nas próximas atualizações.""".format(
 
 def alert_error(first_name):
     return """
-{}, utilize o comando /alert [id]** [mensagem].
+{}, utilize o comando /message [id]** [mensagem].
 
 **Somente números são aceitos""".format(first_name)
 
 
 def statement_error(first_name):
     return """
-{}, utilize o comando /statement [mensagem].""".format(first_name)
+{}, utilize o comando /alert [mensagem].""".format(first_name)
 
 
-def alert_success(first_name):
+def alert_success(first_name, user):
     return """
-{}, sua mensagem foi enviada com sucesso!""".format(first_name)
+{}, sua mensagem para {} foi enviada com sucesso!""".format(first_name, user)
 
 
 def statistics(ligado, uso_processador, uso_memoria, uso_disco, memoria_total, memoria_usada, memoria_disponivel, disco_total,
