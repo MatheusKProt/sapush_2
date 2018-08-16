@@ -1,7 +1,7 @@
 import time
 
 from sqlalchemy.orm import sessionmaker
-from telegram import ParseMode
+from telegram import ParseMode, ChatAction
 from telegram.ext import ConversationHandler, CommandHandler, MessageHandler, Filters
 
 import crawlers
@@ -18,6 +18,7 @@ Session = sessionmaker(bind=engine)
 def login():
     def iniciar(bot, update):
         telegram_id = update['message']['chat']['id']
+        bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
         bot.send_message(chat_id=telegram_id, text=messages.user_login())
         return 'user'
 
@@ -28,6 +29,7 @@ def login():
 
     def test_user(bot, update, user_data):
         telegram_id = update['message']['chat']['id']
+        bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
         soup = crawlers.get_login(user_data['user'], "pass")
         for index in soup.find_all('script'):
             if str(index.get_text().lstrip()).split("'")[1] == "Erro":
@@ -46,6 +48,7 @@ def login():
 
     def test_senha(bot, update, user_data):
         telegram_id = update['message']['chat']['id']
+        bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
         first_name = update['message']['chat']['first_name']
         _, logado, _, chave, curso = crawlers.get_session(user_data['user'], user_data['senha'], html=True)
         if not logado:
@@ -82,6 +85,7 @@ def login():
 
     def cancelar(bot, update, user_data):
         telegram_id = update['message']['chat']['id']
+        bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
         bot.send_message(chat_id=telegram_id, text=messages.cancelar_login())
         user_data.clear()
         return -1
