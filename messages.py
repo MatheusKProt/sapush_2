@@ -553,7 +553,7 @@ O servidor foi reiniciado ou atualizado com sucesso."""
 
 def invalid(first_name):
     return """
-{}, não consigo interpretar a informação contida na mensagem que você enviou.""".format(first_name)
+{}, estou aprendendo a interpretar contextos e em breve poderei conversar com você de forma natural.""".format(first_name)
 
 
 def unknown_command(first_name):
