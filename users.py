@@ -22,9 +22,7 @@ import speech as sr
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-url = db.get_database_url()
-engine = db.gen_engine(url)
-Session = sessionmaker(bind=engine)
+Session = sessionmaker(bind=db.gen_engine(db.get_database_url()))
 
 
 def restricted(func):
@@ -280,8 +278,10 @@ def button(bot, update):
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
         ajuda(bot, update['callback_query'])
     elif query.data == 'sugerir':
-        bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
-        sugerir(bot, update['callback_query'], [])
+        bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
+                              message_id=query['message']['message_id'],
+                              text=messages.suggest_without_parameters(update['message']['chat']['first_name']),
+                              parse_mode=ParseMode.HTML)
     elif query.data == 'comandos':
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
         comandos(bot, update['callback_query'])
@@ -606,27 +606,6 @@ def emails(bot, update, args):
     session.close()
 
 
-@registered
-@restricted
-@logged
-def sugerir(bot, update, args):
-    telegram_id = update['message']['chat']['id']
-    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
-    session = Session()
-    usage(telegram_id, "Sugerir", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
-    if len(args) == 0:
-        bot.send_message(chat_id=telegram_id,
-                         text=messages.suggest_without_parameters(update['message']['chat']['first_name']),
-                         parse_mode=ParseMode.HTML)
-    else:
-        sugestao = db.Sugestoes(telegram_id, " ".join(args), time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
-        session.add(sugestao)
-        bot.send_message(chat_id=telegram_id, text=messages.sugestao(update['message']['chat']['first_name']), parse_mode=ParseMode.HTML)
-
-        session.commit()
-    session.close()
-
-
 def inlinequery(bot, update):
     if int(time.strftime("%m", time.localtime())) >= 7:
         semestre = str(time.strftime("%Y/2", time.localtime()))
@@ -754,12 +733,9 @@ def verifica_callback(bot, update, arg):
     elif "delet" in arg:
         deletar(bot, update)
     elif "sugerir" in arg or "sugiro" in arg or "sugest" in arg:
-        args = []
-        text = str(update['message']['text']).split(" ")
-        if text[0].lower() == "sugerir":
-            text.pop(0)
-            args = text
-        sugerir(bot, update, args)
+        bot.send_message(chat_id=update['message']['chat']['id'],
+                         text=messages.suggest_without_parameters(update['message']['chat']['first_name']),
+                         parse_mode=ParseMode.HTML)
     elif "menu" in arg:
         menu(bot, update, [])
     elif "atestado" in arg:

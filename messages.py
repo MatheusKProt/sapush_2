@@ -157,9 +157,7 @@ def valid_login(first_name):
 
 def suggest_without_parameters(first_name):
     return """
-{}, utilize o comando /sugerir [mensagem].
-
-O uso das chaves neste caso não é necessário, é apenas uma forma de exemplificar como os parametros devem ser enviados.""".format(first_name)
+{}, utilize o comando /sugerir.""".format(first_name)
 
 
 def not_registered(first_name):
@@ -605,4 +603,24 @@ Caso você queira cancelar o processo de login, digite /cancelar."""
 
 def cancelar_login():
     return """
-O processo de login foi cancelado. Caso você precise de auxílio, peça a qualquer momento através do comando /ajuda ou entre em contato através do comando /desenvolvedores."""
+O processo de login foi cancelado. Caso você precise de auxílio, peça a qualquer momento através do comando /ajuda ou \
+entre em contato através do comando /desenvolvedores."""
+
+
+def conversation_sugestao():
+    return """
+Por favor, digite a sua sugestão:
+
+Caso você queira cancelar o envio da sua sugestão, digite /cancelar."""
+
+
+def conversation_sugestao_invalida():
+    return """
+Sugestão inválida. O número mínimo de caracteres é 10.
+
+Caso você queira cancelar envio da sua sugestão, digite /cancelar."""
+
+
+def conversation_cancelar():
+    return """
+Você cancelou o envio da sua sugestão. Por favor, não se acanhe!"""

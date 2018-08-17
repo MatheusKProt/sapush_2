@@ -40,7 +40,9 @@ def main():
     dp = updater.dispatcher
     job = updater.job_queue
 
+    # conversations
     dp.add_handler(conversation.login())
+    dp.add_handler(conversation.sugerir())
 
     dp.add_handler(CallbackQueryHandler(users.button))
     dp.add_handler(MessageHandler(Filters.text, users.callback))
@@ -66,7 +68,6 @@ def main():
     # funções dos usuários
     dp.add_handler(CommandHandler("start", users.start))
     dp.add_handler(CommandHandler("deletar", users.deletar))
-    dp.add_handler(CommandHandler("sugerir", users.sugerir, pass_args=True))
     dp.add_handler(CommandHandler("notas", users.notas))
     dp.add_handler(CommandHandler("frequencia", users.frequencia))
     dp.add_handler(CommandHandler("horarios", users.horarios))

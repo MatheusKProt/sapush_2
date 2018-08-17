@@ -14,9 +14,7 @@ import main
 import messages
 import util
 
-url = db.get_database_url()
-engine = db.gen_engine(url)
-Session = sessionmaker(bind=engine)
+Session = sessionmaker(bind=db.gen_engine(db.get_database_url()))
 
 
 def restricted(func):
@@ -209,7 +207,10 @@ def alert(bot, update, args):
     session = Session()
     users = session.query(db.User)
     for u in users:
-        bot.send_message(chat_id=u.telegram_id, text=messages.alert(msg), parse_mode=ParseMode.HTML)
+        try:
+            bot.send_message(chat_id=u.telegram_id, text=messages.alert(msg), parse_mode=ParseMode.HTML)
+        except:
+            pass
     admin = session.query(db.Admins).filter_by(user_id=update['message']['chat']['id']).first()
     session.add(db.Statement(admin.id, str(msg)))
     session.commit()
@@ -438,7 +439,9 @@ def users_menu(bot, update, args):
         count += 1
     session.close()
 
-    usuarios += "\n\nExibindo {} do total de {} usuários".format(count, users.count())
+    users_logados = session.query(db.User).filter(db.User.sapu_username != " ").count()
+
+    usuarios += "\n\nExibindo {} do total de {}\n{} usuários ativos".format(count, users.count(), users_logados)
 
     keyboard = [[InlineKeyboardButton('Anterior', callback_data='users_anterior {}'.format(inicio)), InlineKeyboardButton('Próxima', callback_data='users_proxima {}'.format(inicio))],
                 [InlineKeyboardButton('Sair', callback_data='sair')]]

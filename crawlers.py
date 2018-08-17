@@ -1,4 +1,3 @@
-import lxml.html
 import requests
 from bs4 import BeautifulSoup
 from sqlalchemy.orm import sessionmaker
@@ -8,10 +7,7 @@ import db
 import messages
 import util
 
-
-url = db.get_database_url()
-engine = db.gen_engine(url)
-Session = sessionmaker(bind=engine)
+Session = sessionmaker(bind=db.gen_engine(db.get_database_url()))
 
 
 def get_login(user, password):

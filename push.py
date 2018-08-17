@@ -15,9 +15,7 @@ import util
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-url = db.get_database_url()
-engine = db.gen_engine(url)
-Session = sessionmaker(bind=engine)
+Session = sessionmaker(bind=db.gen_engine(db.get_database_url()))
 
 
 @run_async

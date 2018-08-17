@@ -10,9 +10,7 @@ import db
 import messages
 import users
 
-url = db.get_database_url()
-engine = db.gen_engine(url)
-Session = sessionmaker(bind=engine)
+Session = sessionmaker(bind=db.gen_engine(db.get_database_url()))
 
 
 def login():
@@ -96,6 +94,51 @@ def login():
         states={
             'user': [MessageHandler(Filters.text, get_user, pass_user_data=True)],
             'senha': [MessageHandler(Filters.text, get_senha, pass_user_data=True)],
+        },
+
+        fallbacks=[CommandHandler('cancelar', cancelar, pass_user_data=True)]
+    )
+
+
+def sugerir():
+    def iniciar(bot, update):
+        telegram_id = update['message']['chat']['id']
+        bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+        bot.send_message(chat_id=telegram_id, text=messages.conversation_sugestao())
+        return 'sugestao'
+
+    def get_sugestao(bot, update, user_data):
+        text = update['message']['text']
+        user_data['sugestao'] = text
+        return test_sugestao(bot, update, user_data)
+
+    def test_sugestao(bot, update, user_data):
+        telegram_id = update['message']['chat']['id']
+        bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+        if len(user_data['sugestao']) < 10:
+            bot.send_message(chat_id=telegram_id, text=messages.conversation_sugestao_invalida())
+            return 'sugestao'
+        else:
+            session = Session()
+            sugestao = db.Sugestoes(telegram_id, user_data['sugestao'], time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+            session.add(sugestao)
+            bot.send_message(chat_id=telegram_id, text=messages.sugestao(update['message']['chat']['first_name']), parse_mode=ParseMode.HTML)
+            session.commit()
+            session.close()
+            return -1
+
+    def cancelar(bot, update, user_data):
+        telegram_id = update['message']['chat']['id']
+        bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+        bot.send_message(chat_id=telegram_id, text=messages.conversation_cancelar())
+        user_data.clear()
+        return -1
+
+    return ConversationHandler(
+        entry_points=[CommandHandler('sugerir', iniciar)],
+
+        states={
+            'sugestao': [MessageHandler(Filters.text, get_sugestao, pass_user_data=True)],
         },
 
         fallbacks=[CommandHandler('cancelar', cancelar, pass_user_data=True)]
