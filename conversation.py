@@ -125,6 +125,7 @@ def sugerir():
             bot.send_message(chat_id=telegram_id, text=messages.sugestao(update['message']['chat']['first_name']), parse_mode=ParseMode.HTML)
             session.commit()
             session.close()
+            users.usage(telegram_id, "Sugestão", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
             return -1
 
     def cancelar(bot, update, user_data):
