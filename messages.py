@@ -580,7 +580,9 @@ O usuário deve ser o mesmo utilizado no SAPU."""
 
 def user_invalido_login():
     return """
-Usuario inválido. Por favor, digite novamente. 
+Usuario inválido. Por favor, digite novamente.
+
+Fique atento ao uso correto do usuário. Você pode usar tanto o seu CPF quanto seu e-mail cadastrado no SAPU.
 
 Caso você queira cancelar o processo de login, digite /cancelar."""
 
