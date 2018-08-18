@@ -277,13 +277,13 @@ Ao utilizar o bot, você provavelmente se deparou com uma nova sintaxe para troc
 
 /notas é um exemplo de comando disponível.
 
-Caso haja alguma dúvida quanto ao funcionamento, entre em contato através do comando /desenvolvedores. Não se acanhe, faremos o possível para ajudar. 
+Caso haja alguma dúvida quanto ao funcionamento, você poderá entrar em contato a qualquer hora através do comando /desenvolvedores, clicando em um dos desenvolvedores. Não se acanhe, faremos o possível para ajudar. 
 
-Além disso, recomendamos você a assistir ao <a href="https://youtu.be/B38cJfpi4XU">vídeo de demonstração do bot</a>.
+Recomendamos que você assista ao <a href="https://youtu.be/B38cJfpi4XU">vídeo de demonstração do bot</a> se estiver perdido e não sabe por onde começar. 
 
 Ao ler estas informações, esperamos que você esteja apto a utilizar o bot de maneira satisfatória.
 
-""".format(first_name)
+Obs: algumas funções foram alteradas no decorrer do desenvolvimento, com o intuíto de simplificar o uso do bot, e não funcionam mais da mesma forma retratada no vídeo de demonstração.""".format(first_name)
 
 
 def historico(historico):
