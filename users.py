@@ -283,7 +283,7 @@ def button(bot, update):
     elif query.data == 'sugerir':
         bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
                               message_id=query['message']['message_id'],
-                              text=messages.suggest_without_parameters(update['message']['chat']['first_name']),
+                              text=messages.suggest_without_parameters(update['callback_query']['message']['chat']['first_name']),
                               parse_mode=ParseMode.HTML)
     elif query.data == 'comandos':
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
