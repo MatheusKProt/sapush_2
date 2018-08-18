@@ -260,7 +260,7 @@ def get_boleto(user):
 
 def get_editais(quantidade):
     session = requests.session()
-    editais = session.get("http://www.ucpel.tche.br/portal/?secao=com_editais")
+    editais = session.get("http://www.ucpel.edu.br/portal/?secao=com_editais")
     soup = BeautifulSoup(editais.content, 'html.parser')
     count = 0
     msg = "<b>Editais</b>\n"
@@ -269,6 +269,19 @@ def get_editais(quantidade):
         msg += messages.editais(index.get_text().lstrip()[:-1], str(index).split("'")[1])
         if count >= quantidade:
             break
+    return msg
+
+
+def get_noticias():
+    session = requests.session()
+    editais = session.get("http://www.ucpel.edu.br/portal/?secao=noticias")
+    soup = BeautifulSoup(editais.content, 'html.parser')
+    msg = "<b>Notícias\n</b>"
+    for index in soup.find_all(class_='not_block'):
+        url = util.find_between(str(index), "href=\"", "\">").replace("amp;", "")
+        data = index.find(class_='not_data').get_text().lstrip()
+        titulo = index.find(class_='not_titulo').get_text().lstrip()
+        msg += messages.noticia(data, titulo, url)
     return msg
 
 

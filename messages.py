@@ -16,7 +16,8 @@ def comandos():
 /curriculo - exibe o currículo do seu curso
 /atestado - exibe seu atestado de matrícula
 /boleto - exibe o link para acesso
-/editais - exibe os ultimos editais publicados
+/editais - exibe os últimos editais publicados
+/noticias - exibe as últimas notícias acadêmicas 
 /chave - exibe sua chave de matrícula
 /email - exibe seus últimos emails recebidos
 /moodle - exibe o link para acesso
@@ -624,3 +625,8 @@ Caso você queira cancelar envio da sua sugestão, digite /cancelar."""
 def conversation_cancelar():
     return """
 Você cancelou o envio da sua sugestão. Por favor, não se acanhe!"""
+
+
+def noticia(data, titulo, url):
+    return """
+{} | <a href=\"http://www.ucpel.edu.br/portal/{}\">{}</a>""".format(data, url, titulo)

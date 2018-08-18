@@ -255,6 +255,9 @@ def button(bot, update):
     elif query.data == 'editais':
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
         editais(bot, update['callback_query'], [])
+    elif query.data == 'noticias':
+        bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
+        noticias(bot, update['callback_query'])
     elif query.data == 'chave':
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
         chave(bot, update['callback_query'])
@@ -722,6 +725,8 @@ def verifica_callback(bot, update, arg):
             if len(text) == 2:
                 args = [text[1]]
         editais(bot, update, args)
+    elif "noticia" in arg or "notícia" in arg:
+        noticias(bot, update)
     elif "configura" in arg:
         configurar(bot, update)
     elif "start" in arg:
@@ -796,6 +801,15 @@ def editais(bot, update, args):
 
 @registered
 @restricted
+def noticias(bot, update):
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    usage(telegram_id, "Notícias", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+    bot.send_message(chat_id=telegram_id, text=crawlers.get_noticias(), parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+
+
+@registered
+@restricted
 def configurar(bot, update):
     keyboard = [[InlineKeyboardButton('Notas', callback_data='configurar_notas'), InlineKeyboardButton('Frequência', callback_data='configurar_frequencia')],
                 [InlineKeyboardButton('Sair', callback_data='sair')]]
@@ -859,7 +873,8 @@ def menu_funcionalidades(bot, update, query):
                 [InlineKeyboardButton('Boleto', callback_data='boleto'), InlineKeyboardButton('Editais', callback_data='editais')],
                 [InlineKeyboardButton('Chave', callback_data='chave'), InlineKeyboardButton('Atestados', callback_data='atestados')],
                 [InlineKeyboardButton('Moodle', callback_data='moodle'), InlineKeyboardButton('Emails', callback_data='emails')],
-                [InlineKeyboardButton('Provas', callback_data='provas'), InlineKeyboardButton('Voltar', callback_data='voltar_menu')]]
+                [InlineKeyboardButton('Provas', callback_data='provas'), InlineKeyboardButton('Notícias', callback_data='noticias')],
+                [InlineKeyboardButton('Voltar', callback_data='voltar_menu')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
                           message_id=query['message']['message_id'],
