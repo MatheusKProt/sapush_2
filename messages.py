@@ -277,8 +277,12 @@ Ao utilizar o bot, você provavelmente se deparou com uma nova sintaxe para troc
 
 /notas é um exemplo de comando disponível.
 
-Ao ler estas informações, esperamos que você esteja apto a utilizar o bot de maneira satisfatória. Mas se, ainda assim você estiver com dúvidas em relação ao uso, \
-recomendamos você a assistir ao <a href="https://youtu.be/B38cJfpi4XU">vídeo de demonstração do bot</a>.
+Caso haja alguma dúvida quanto ao funcionamento, entre em contato através do comando /desenvolvedores. Não se acanhe, faremos o possível para ajudar. 
+
+Além disso, recomendamos você a assistir ao <a href="https://youtu.be/B38cJfpi4XU">vídeo de demonstração do bot</a>.
+
+Ao ler estas informações, esperamos que você esteja apto a utilizar o bot de maneira satisfatória.
+
 """.format(first_name)
 
 
