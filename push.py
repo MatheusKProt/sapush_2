@@ -27,12 +27,13 @@ def notas(bot, update):
         if user.push_notas and user.sapu_username != " ":
             soup = crawlers.get_login(user.sapu_username, user.sapu_password)
             if str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
-                bot.send_message(chat_id=user.telegram_id, text=messages.login_invalid(user.first_name), parse_mode=ParseMode.HTML)
-                dao.set_error("Login inválido /{}".format(user.telegram_id))
-                user_db = session.query(db.User).filter_by(telegram_id=user.telegram_id).first()
-                user_db.sapu_username = " "
-                user_db.sapu_password = " "
-                session.commit()
+                if "Usuário" in str(soup.find('script').get_text().lstrip()).split("'")[3] or "Senha" in str(soup.find('script').get_text().lstrip()).split("'")[3]:
+                    bot.send_message(chat_id=user.telegram_id, text=messages.login_invalid(user.first_name), parse_mode=ParseMode.HTML)
+                    dao.set_error("Login inválido /{}".format(user.telegram_id))
+                    user_db = session.query(db.User).filter_by(telegram_id=user.telegram_id).first()
+                    user_db.sapu_username = " "
+                    user_db.sapu_password = " "
+                    session.commit()
             else:
                 users_count += 1
                 get_notas(bot, update, user)
