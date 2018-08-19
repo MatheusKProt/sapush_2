@@ -593,7 +593,7 @@ Usuario inválido. Por favor, digite novamente.
 
 Fique atento ao uso correto do usuário. Você pode usar tanto o seu CPF quanto seu e-mail cadastrado no SAPU.
 
-Caso você queira cancelar o processo de login, digite /cancelar."""
+Caso você queira cancelar o processo de login, utilize o comando /cancelar."""
 
 
 def pass_login():
@@ -609,7 +609,7 @@ Senha inválida. Por favor, digite novamente.
 
 Fique atento ao uso de letras maiúsculas e minúsculas, visto que o SAPU diferencia tais argumentos.
 
-Caso você queira cancelar o processo de login, digite /cancelar."""
+Caso você queira cancelar o processo de login, utilize o comando /cancelar."""
 
 
 def cancelar_login():
@@ -622,14 +622,14 @@ def conversation_sugestao():
     return """
 Por favor, digite a sua sugestão:
 
-Caso você queira cancelar o envio da sua sugestão, digite /cancelar."""
+Caso você queira cancelar o envio da sua sugestão, utilize o comando /cancelar."""
 
 
 def conversation_sugestao_invalida():
     return """
 Sugestão inválida. O número mínimo de caracteres é 10.
 
-Caso você queira cancelar envio da sua sugestão, digite /cancelar."""
+Caso você queira cancelar envio da sua sugestão, utilize o comando /cancelar."""
 
 
 def conversation_cancelar():
