@@ -564,9 +564,13 @@ O servidor foi reiniciado ou atualizado com sucesso."""
 
 
 def invalid(first_name):
-    return """
-{}, estou aprendendo a interpretar contextos e em breve poderei conversar com você de forma natural.""".format(first_name)
-
+    random = randint(0, 2)
+    if random == 0:
+        return """{}, estou aprendendo a interpretar contextos e em breve poderei conversar com você de forma natural.""".format(first_name)
+    elif random == 1:
+        return """{}, não entendi o que você falou.""".format(first_name)
+    else:
+        return """{}, meus desenvolvedores ainda não me deram inteligência suficiente para lidar com isso.""".format(first_name)
 
 def unknown_command(first_name):
     random = randint(0, 1)
