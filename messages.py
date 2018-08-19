@@ -1,3 +1,6 @@
+from random import randint
+
+
 def comandos():
     return """
 <b>Lista de comandos</b>
@@ -566,8 +569,13 @@ def invalid(first_name):
 
 
 def unknown_command(first_name):
-    return """
+    random = randint(0, 1)
+    if random == 0:
+        return """
 {}, este comando é inválido.""".format(first_name)
+    else:
+        return """
+{}, ainda não conheço esse comando.""".format(first_name)
 
 
 def formata_provas(data, detalhe):
