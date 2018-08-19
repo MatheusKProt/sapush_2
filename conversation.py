@@ -48,7 +48,9 @@ def login():
         telegram_id = update['message']['chat']['id']
         bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
         first_name = update['message']['chat']['first_name']
-        _, logado, _, chave, curso = crawlers.get_session(user_data['user'], user_data['senha'], html=True)
+
+        logado, chave, curso = crawlers.get_login_completo(user_data['user'], user_data['senha'])
+
         if not logado:
             bot.send_message(chat_id=telegram_id, text=messages.pass_invalido_login())
             users.usage(telegram_id, "Login_pass", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))

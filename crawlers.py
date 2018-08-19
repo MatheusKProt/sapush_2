@@ -19,7 +19,7 @@ def get_login(user, password):
         return BeautifulSoup(sapu.content, 'html.parser')
 
 
-def get_session(email, password, html=False):
+def get_login_completo(email, password):
     session = requests.session()
 
     sapu = session.post('http://sapu.ucpel.edu.br/portal/engine.php?class=LoginForm&method=onLogin', data={
@@ -32,39 +32,33 @@ def get_session(email, password, html=False):
 
     for index in soup.find_all('script'):
         if str(index.get_text().lstrip()).split("'")[1] == "Erro":
-            if "Usuário" in str(index.get_text().lstrip()).split("'")[3]:
-                return session, False, "usuario", "", ""
-            elif "Senha" in str(index.get_text().lstrip()).split("'")[3]:
-                return session, False, "senha", "", ""
-            else:
-                return session, False, str(index.get_text().lstrip()).split("'")[3], "", ""
+            return False, "", ""
         else:
-            if html:
-                home_soup = BeautifulSoup(home.content, 'html.parser')
-                chave = str(home_soup.find(class_='div_matricula').get_text().lstrip()).split(" ")[1]
-                curso = util.formata_curso(str(home_soup.find(class_='div_curso').get_text().lstrip()).split(": ")[1])
-                return session, True, "True", chave, curso
-            else:
-                return session, True, "True", False, False
+            home_soup = BeautifulSoup(home.content, 'html.parser')
+            chave = str(home_soup.find(class_='div_matricula').get_text().lstrip()).split(" ")[1]
+            curso = util.formata_curso(str(home_soup.find(class_='div_curso').get_text().lstrip()).split(": ")[1])
+            return True, chave, curso
+
+
+def get_session(email, password):
+    session = requests.session()
+
+    session.post('http://sapu.ucpel.edu.br/portal/engine.php?class=LoginForm&method=onLogin', data={
+        "login": email,
+        "password": password,
+    })
+    session.get("http://sapu.ucpel.edu.br/portal/index.php?class=Dashboard&message=1")
+
+    return session
 
 
 def get_notas(user, bot):
     try:
         try:
-            session, logado, _, _, _ = get_session(user.sapu_username, user.sapu_password)
-            if not logado:
-                return [], []
+            session = get_session(user.sapu_username, user.sapu_password)
             notas = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=AvaliacaoFormList")
         except:
-            # session_bd = Session()
-            # admins = session_bd.query(db.Admins).all()
-            # for admin in admins:
-                # bot.send_message(chat_id=admin.user_id, text="<b>Erro</b>\n\n/{} | Erro ao conectar ao SAPU".format(user.telegram_id),
-                #                  parse_mode=ParseMode.HTML)
-            # session_bd.close()
-            session, logado, _, _, _ = get_session(user.sapu_username, user.sapu_password)
-            if not logado:
-                return [], []
+            session = get_session(user.sapu_username, user.sapu_password)
             notas = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=AvaliacaoFormList")
 
         soup = BeautifulSoup(notas.content, 'html.parser')
@@ -115,20 +109,10 @@ def get_notas(user, bot):
 def get_frequencia(user, bot):
     try:
         try:
-            session, logado, _, _, _ = get_session(user.sapu_username, user.sapu_password)
-            if not logado:
-                return []
+            session = get_session(user.sapu_username, user.sapu_password)
             frequencia = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=FrequenciaFormList")
         except:
-            # session_bd = Session()
-            # admins = session_bd.query(db.Admins).all()
-            # for admin in admins:
-                # bot.send_message(chat_id=admin.user_id, text="<b>Erro</b>\n\n/{} | Erro ao conectar ao SAPU".format(user.telegram_id),
-               #                   parse_mode=ParseMode.HTML)
-            # session_bd.close()
-            session, logado, _, _, _ = get_session(user.sapu_username, user.sapu_password)
-            if not logado:
-                return []
+            session = get_session(user.sapu_username, user.sapu_password)
             frequencia = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=FrequenciaFormList")
 
         soup = BeautifulSoup(frequencia.content, 'html.parser')
@@ -154,7 +138,7 @@ def get_frequencia(user, bot):
 
 
 def get_horarios(user):
-    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    session = get_session(user.sapu_username, user.sapu_password)
     horarios = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=HorarioFormList")
     soup = BeautifulSoup(horarios.content, 'html.parser')
     tdatagrid_body = soup.find(class_='tdatagrid_body')
@@ -173,7 +157,7 @@ def get_horarios(user):
 
 
 def get_disciplinas(user):
-    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    session = get_session(user.sapu_username, user.sapu_password)
     disciplinas = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=MatriculaFormList")
     soup = BeautifulSoup(disciplinas.content, 'html.parser')
     tdatagrid_body = soup.find(class_='tdatagrid_body')
@@ -194,7 +178,7 @@ def get_disciplinas(user):
 
 
 def get_curriculo(user):
-    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    session = get_session(user.sapu_username, user.sapu_password)
     curriculo = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=MatrizCurricularFormList")
     soup = BeautifulSoup(curriculo.content, 'html.parser')
     tdatagrid_body = soup.find(class_='tdatagrid_body')
@@ -211,7 +195,7 @@ def get_curriculo(user):
 
 
 def get_historico(user):
-    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    session = get_session(user.sapu_username, user.sapu_password)
     historico = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=HistoricoFormList&method=imprimir")
     soup = BeautifulSoup(historico.content, 'html.parser')
     index = soup.find('script')
@@ -219,7 +203,7 @@ def get_historico(user):
 
 
 def get_moodle(user):
-    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    session = get_session(user.sapu_username, user.sapu_password)
     historico = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=LoginMoodle&method=index")
     soup = BeautifulSoup(historico.content, 'html.parser')
     index = soup.find('script')
@@ -227,7 +211,7 @@ def get_moodle(user):
 
 
 def get_emails(user, args):
-    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    session = get_session(user.sapu_username, user.sapu_password)
     historico = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=MensagemForm&method=inbox")
     soup = BeautifulSoup(historico.content, 'html.parser')
     table = []
@@ -245,7 +229,7 @@ def get_emails(user, args):
 
 
 def get_boleto(user):
-    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    session = get_session(user.sapu_username, user.sapu_password)
     boleto = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=SolicitacaoBoletoFormList&method=emitirBoleto")
     soup = BeautifulSoup(boleto.content, 'html.parser')
     index = soup.find('script')
@@ -286,7 +270,7 @@ def get_noticias():
 
 
 def get_atestado_simples(user):
-    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    session = get_session(user.sapu_username, user.sapu_password)
     boleto = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=MatriculaFormList&method=imprimirSimples")
     soup = BeautifulSoup(boleto.content, 'html.parser')
     index = soup.find_all('script')
@@ -294,7 +278,7 @@ def get_atestado_simples(user):
 
 
 def get_atestado_completo(user):
-    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    session = get_session(user.sapu_username, user.sapu_password)
     boleto = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=MatriculaFormList&method=imprimirCompleto")
     soup = BeautifulSoup(boleto.content, 'html.parser')
     index = soup.find_all('script')
@@ -302,7 +286,7 @@ def get_atestado_completo(user):
 
 
 def get_atestado_apto(user):
-    session, _, _, _, _ = get_session(user.sapu_username, user.sapu_password)
+    session = get_session(user.sapu_username, user.sapu_password)
     boleto = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=MatriculaFormList&method=imprimirRematricula")
     soup = BeautifulSoup(boleto.content, 'html.parser')
     index = soup.find_all('script')

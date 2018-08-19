@@ -13,7 +13,6 @@ from telegram.ext import run_async
 import admins
 import config
 import crawlers
-import dao
 import db
 import messages
 import util
@@ -49,13 +48,20 @@ def logged(func):
         telegram_id = update['message']['chat']['id']
         session = Session()
         user = session.query(db.User).filter_by(telegram_id=telegram_id, termos=True).first()
+        session.close()
         if user.sapu_username == " ":
             bot.send_message(chat_id=update['message']['chat']['id'],
                              text=messages.not_logged_in(update['message']['chat']['first_name']),
                              parse_mode=ParseMode.HTML)
-            session.close()
             return
-        session.close()
+        else:
+            soup = crawlers.get_login(user.sapu_username, user.sapu_password)
+            for index in soup.find_all('script'):
+                if str(index.get_text().lstrip()).split("'")[1] == "Erro":
+                    bot.send_message(chat_id=update['message']['chat']['id'],
+                                     text=messages.login_invalid(update['message']['chat']['first_name']),
+                                     parse_mode=ParseMode.HTML)
+                    return
         return func(bot, update, *args, **kwargs)
 
     return wrapped

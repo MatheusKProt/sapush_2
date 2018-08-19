@@ -129,6 +129,12 @@ def not_logged_in(first_name):
 O usuário e a senha devem ser os mesmos utilizados no SAPU.""".format(first_name)
 
 
+def login_invalid(first_name):
+    return """
+{}, você alterou sua senha ou seu e-mail do SAPU recentemente? Achamos que sim. Se você quiser continuar recebendo \
+todas as informações que o bot pode fornecer, por favor, faça a autenticação novamente utilizando o comando /login.""".format(first_name)
+
+
 def message(msg, admin, user):
     return """
 <b>Mensagem</b>
