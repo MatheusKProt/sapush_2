@@ -640,3 +640,10 @@ Você cancelou o envio da sua sugestão. Por favor, não se acanhe!"""
 def noticia(data, titulo, url):
     return """
 {} | <a href=\"http://www.ucpel.edu.br/portal/{}\">{}</a>""".format(data, url, titulo)
+
+
+def ultima_noticia(url, titulo):
+    return """
+Essa é a ultima notícia acadêmica publicada no portal da ucpel:
+
+<a href=\"http://www.ucpel.edu.br/portal/{}\">{}</a>""".format(url, titulo)

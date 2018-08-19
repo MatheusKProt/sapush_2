@@ -761,17 +761,14 @@ def verifica_callback(bot, update, arg):
     elif "boa noite" in arg or "bom dia" in arg or "boa tarde" in arg:
         hora = datetime.datetime.now().hour
         if 6 <= hora < 12:
-            bot.send_message(chat_id=update['message']['chat']['id'],
-                             text="Bom dia, {}! O que você vai consultar hoje?".format(update['message']['chat']['first_name']),
-                             parse_mode=ParseMode.HTML)
+            turno = "Bom dia"
         elif 12 <= hora < 19:
-            bot.send_message(chat_id=update['message']['chat']['id'],
-                             text="Boa tarde, {}! O que você vai consultar hoje?".format(update['message']['chat']['first_name']),
-                             parse_mode=ParseMode.HTML)
+            turno = "Boa tarde"
         else:
-            bot.send_message(chat_id=update['message']['chat']['id'],
-                             text="Boa noite, {}! O que você vai consultar hoje?".format(update['message']['chat']['first_name']),
-                             parse_mode=ParseMode.HTML)
+            turno = "Boa noite"
+        bot.send_message(chat_id=update['message']['chat']['id'],
+                         text="{}, {}!\n{}".format(turno, update['message']['chat']['first_name'], crawlers.get_noticias(first=True)),
+                         parse_mode=ParseMode.HTML, disable_web_page_preview=True)
     elif "oi" == arg or "oie" == arg or "eai" == arg or "e ai" == arg:
         bot.send_message(chat_id=update['message']['chat']['id'],
                          text="Oi, {}! O que você vai consultar hoje?".format(update['message']['chat']['first_name']),

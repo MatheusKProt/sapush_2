@@ -256,17 +256,23 @@ def get_editais(quantidade):
     return msg
 
 
-def get_noticias():
+def get_noticias(first=False):
     session = requests.session()
     editais = session.get("http://www.ucpel.edu.br/portal/?secao=noticias")
     soup = BeautifulSoup(editais.content, 'html.parser')
-    msg = "<b>Notícias\n</b>"
-    for index in soup.find_all(class_='not_block'):
+    if first:
+        index = soup.find(class_='not_block')
         url = util.find_between(str(index), "href=\"", "\">").replace("amp;", "")
-        data = index.find(class_='not_data').get_text().lstrip()
         titulo = index.find(class_='not_titulo').get_text().lstrip()
-        msg += messages.noticia(data, titulo, url)
-    return msg
+        return messages.ultima_noticia(url, titulo)
+    else:
+        msg = "<b>Notícias\n</b>"
+        for index in soup.find_all(class_='not_block'):
+            url = util.find_between(str(index), "href=\"", "\">").replace("amp;", "")
+            data = index.find(class_='not_data').get_text().lstrip()
+            titulo = index.find(class_='not_titulo').get_text().lstrip()
+            msg += messages.noticia(data, titulo, url)
+        return msg
 
 
 def get_atestado_simples(user):
