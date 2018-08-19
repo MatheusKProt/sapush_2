@@ -25,8 +25,13 @@ def notas(bot, update):
     initial = time.strftime("%d/%m/%Y %H:%M:%S", time.localtime())
     for user in session.query(db.User):
         if user.push_notas and user.sapu_username != " ":
-            users_count += 1
-            get_notas(bot, update, user)
+            soup = crawlers.get_login(user.sapu_username, user.sapu_password)
+            if str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
+                bot.send_message(chat_id=user.telegram_id, text=messages.login_invalid(user.first_name), parse_mode=ParseMode.HTML)
+                dao.set_error("Login inválido /{}".format(user.telegram_id))
+            else:
+                users_count += 1
+                get_notas(bot, update, user)
     dao.set_push_notas(users_count, initial, time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     session.close()
 
@@ -38,8 +43,10 @@ def frequencia(bot, update):
     initial = time.strftime("%d/%m/%Y %H:%M:%S", time.localtime())
     for user in session.query(db.User):
         if user.push_frequencia and user.sapu_username != " ":
-            users_count += 1
-            get_frequencia(bot, update, user)
+            soup = crawlers.get_login(user.sapu_username, user.sapu_password)
+            if str(soup.find('script').get_text().lstrip()).split("'")[1] != "Erro":
+                users_count += 1
+                get_frequencia(bot, update, user)
     dao.set_push_frequencia(users_count, initial, time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     session.close()
 
