@@ -16,6 +16,7 @@ import crawlers
 import dao
 import db
 import messages
+import responses
 import util
 import speech as sr
 
@@ -698,6 +699,8 @@ def callback(bot, update):
 
 
 def verifica_callback(bot, update, arg):
+    telegram_id = update['message']['chat']['id']
+    first_name = update['message']['chat']['first_name']
     if "ajud" in arg or "help" in arg:
         ajuda(bot, update)
         dao.set_messages("Ajuda", True)
@@ -755,16 +758,16 @@ def verifica_callback(bot, update, arg):
         start(bot, update)
         dao.set_messages("Start", True)
     elif "login" in arg:
-        bot.send_message(chat_id=update['message']['chat']['id'],
-                         text=messages.invalid_login(update['message']['chat']['first_name']),
+        bot.send_message(chat_id=telegram_id,
+                         text=messages.invalid_login(first_name),
                          parse_mode=ParseMode.HTML)
         dao.set_messages("Login", True)
     elif "delet" in arg:
         deletar(bot, update)
         dao.set_messages("Deletar", True)
     elif "sugerir" in arg or "sugiro" in arg or "sugest" in arg:
-        bot.send_message(chat_id=update['message']['chat']['id'],
-                         text=messages.suggest_without_parameters(update['message']['chat']['first_name']),
+        bot.send_message(chat_id=telegram_id,
+                         text=messages.suggest_without_parameters(first_name),
                          parse_mode=ParseMode.HTML)
         dao.set_messages("Sugerir", True)
     elif "menu" in arg:
@@ -779,6 +782,8 @@ def verifica_callback(bot, update, arg):
     elif "email" in arg or "e-mail" in arg:
         emails(bot, update, [])
         dao.set_messages("E-mail", True)
+
+    # Respostas
     elif "boa noite" in arg or "bom dia" in arg or "boa tarde" in arg:
         hora = datetime.datetime.now().hour
         if 6 <= hora < 12:
@@ -787,18 +792,28 @@ def verifica_callback(bot, update, arg):
             turno = "Boa tarde"
         else:
             turno = "Boa noite"
-        bot.send_message(chat_id=update['message']['chat']['id'],
-                         text="{}, {}!\n{}".format(turno, update['message']['chat']['first_name'], crawlers.get_noticias(first=True)),
+        bot.send_message(chat_id=telegram_id,
+                         text="{}, {}!\n{}".format(turno, first_name, crawlers.get_noticias(first=True)),
                          parse_mode=ParseMode.HTML, disable_web_page_preview=True)
-        dao.set_messages(turno, True)
+        dao.set_messages(arg, True)
+    elif "obrigado" in arg or "obg" in arg or "vlw" in arg:
+        bot.send_message(chat_id=telegram_id,
+                         text=responses.obrigado(first_name),
+                         parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+        dao.set_messages(arg, True)
     elif "oi" == arg or "oie" == arg or "eai" == arg or "e ai" == arg:
-        bot.send_message(chat_id=update['message']['chat']['id'],
-                         text="Oi, {}! O que você vai consultar hoje?".format(update['message']['chat']['first_name']),
+        bot.send_message(chat_id=telegram_id,
+                         text=responses.oi(first_name),
                          parse_mode=ParseMode.HTML)
-        dao.set_messages("Oi", True)
+        dao.set_messages(arg, True)
+    elif "olá" == arg or "ola" == arg:
+        bot.send_message(chat_id=telegram_id,
+                         text=responses.ola(first_name),
+                         parse_mode=ParseMode.HTML)
+        dao.set_messages(arg, True)
     else:
-        bot.send_message(chat_id=update['message']['chat']['id'],
-                         text=messages.invalid(update['message']['chat']['first_name']),
+        bot.send_message(chat_id=telegram_id,
+                         text=messages.invalid(first_name),
                          parse_mode=ParseMode.HTML)
         dao.set_messages(arg, False)
 
