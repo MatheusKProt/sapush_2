@@ -13,6 +13,7 @@ from telegram.ext import run_async
 import admins
 import config
 import crawlers
+import dao
 import db
 import messages
 import util
@@ -699,30 +700,43 @@ def callback(bot, update):
 def verifica_callback(bot, update, arg):
     if "ajud" in arg or "help" in arg:
         ajuda(bot, update)
+        dao.set_messages("Ajuda", True)
     elif "nota" in arg:
         notas(bot, update)
+        dao.set_messages("Notas", True)
     elif "prova" in arg:
         provas(bot, update)
+        dao.set_messages("Provas", True)
     elif "frequencia" in arg or "frequência" in arg:
         frequencia(bot, update)
+        dao.set_messages("Frequência", True)
     elif "horario" in arg or "horário" in arg:
         horarios(bot, update)
+        dao.set_messages("Horários", True)
     elif "disciplina" in arg:
         disciplinas(bot, update)
+        dao.set_messages("Disciplinas", True)
     elif "historico" in arg or "histórico" in arg:
         historico(bot, update)
+        dao.set_messages("Histórico", True)
     elif "curriculo" in arg or "currículo" in arg:
         curriculo(bot, update)
+        dao.set_messages("Currículo", True)
     elif "boleto" in arg:
         boleto(bot, update)
+        dao.set_messages("Boleto", True)
     elif "chave" in arg:
         chave(bot, update)
+        dao.set_messages("Chave", True)
     elif "comando" in arg:
         comandos(bot, update)
+        dao.set_messages("Comandos", True)
     elif "termo" in arg:
         termos(bot, update)
+        dao.set_messages("Termos", True)
     elif "desenvolvedor" in arg or "desenvolveu" in arg:
         desenvolvedores(bot, update)
+        dao.set_messages("Desenvolvedores", True)
     elif "editais" in arg or "edital" in arg:
         args = []
         text = str(update['message']['text']).split(" ")
@@ -730,34 +744,41 @@ def verifica_callback(bot, update, arg):
             if len(text) == 2:
                 args = [text[1]]
         editais(bot, update, args)
+        dao.set_messages("Editais", True)
     elif "noticia" in arg or "notícia" in arg:
         noticias(bot, update)
+        dao.set_messages("Notícias", True)
     elif "configura" in arg:
         configurar(bot, update)
+        dao.set_messages("Configurar", True)
     elif "start" in arg:
         start(bot, update)
+        dao.set_messages("Start", True)
     elif "login" in arg:
         bot.send_message(chat_id=update['message']['chat']['id'],
                          text=messages.invalid_login(update['message']['chat']['first_name']),
                          parse_mode=ParseMode.HTML)
+        dao.set_messages("Login", True)
     elif "delet" in arg:
         deletar(bot, update)
+        dao.set_messages("Deletar", True)
     elif "sugerir" in arg or "sugiro" in arg or "sugest" in arg:
         bot.send_message(chat_id=update['message']['chat']['id'],
                          text=messages.suggest_without_parameters(update['message']['chat']['first_name']),
                          parse_mode=ParseMode.HTML)
+        dao.set_messages("Sugerir", True)
     elif "menu" in arg:
         menu(bot, update, [])
+        dao.set_messages("Menu", True)
     elif "atestado" in arg:
         atestado(bot, update)
+        dao.set_messages("Atestado", True)
     elif "moodle" in arg:
         moodle(bot, update)
+        dao.set_messages("Moogle", True)
     elif "email" in arg or "e-mail" in arg:
         emails(bot, update, [])
-    elif "olá" in arg or "ola" in arg or "olà" in arg:
-        bot.send_message(chat_id=update['message']['chat']['id'],
-                         text="Olá, {}! O que você vai consultar hoje?".format(update['message']['chat']['first_name']),
-                         parse_mode=ParseMode.HTML)
+        dao.set_messages("E-mail", True)
     elif "boa noite" in arg or "bom dia" in arg or "boa tarde" in arg:
         hora = datetime.datetime.now().hour
         if 6 <= hora < 12:
@@ -769,14 +790,17 @@ def verifica_callback(bot, update, arg):
         bot.send_message(chat_id=update['message']['chat']['id'],
                          text="{}, {}!\n{}".format(turno, update['message']['chat']['first_name'], crawlers.get_noticias(first=True)),
                          parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+        dao.set_messages(turno, True)
     elif "oi" == arg or "oie" == arg or "eai" == arg or "e ai" == arg:
         bot.send_message(chat_id=update['message']['chat']['id'],
                          text="Oi, {}! O que você vai consultar hoje?".format(update['message']['chat']['first_name']),
                          parse_mode=ParseMode.HTML)
+        dao.set_messages("Oi", True)
     else:
         bot.send_message(chat_id=update['message']['chat']['id'],
                          text=messages.invalid(update['message']['chat']['first_name']),
                          parse_mode=ParseMode.HTML)
+        dao.set_messages(arg, False)
 
 
 def desenvolvedores(bot, update):

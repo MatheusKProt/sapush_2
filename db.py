@@ -217,6 +217,20 @@ class Usage(base):
         self.data = data
 
 
+class Messages(base):
+    __tablename__ = 'messages'
+
+    id = Column('id', Integer, primary_key=True)
+    message = Column('message', String)
+    data = Column('data', String)
+    tratado = Column('tratado', Boolean)
+
+    def __init__(self, message, data, tratado):
+        self.message = message
+        self.data = data
+        self.tratado = tratado
+
+
 def gen_engine(url):
     engine = create_engine(url)
 
