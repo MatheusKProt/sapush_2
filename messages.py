@@ -87,7 +87,7 @@ regem seu uso, que podem mudar de tempos em tempos. No caso de qualquer conflito
 prevalecerão. Os recursos e conteúdos fornecidos por este podem ser alterados a qualquer momento sem aviso prévio. \
 Acredita-se que as informações fornecidas por este sejam confiáveis quando postadas, mas não há garantia de que elas \
 sejam precisas, completas ou atuais em todos os momentos. Devido à natureza dinâmica da internet, os \
-recursos que estão disponíveis no bot podem restringir o acesso no dia seguinte, e a localização dos itens pode mudar à \
+recursos que estão disponíveis no bot podem ser removidos a qualquer momento, e a localização dos itens pode mudar à \
 medida que menus e funcionalidades são reorganizados. O usuário concorda expressamente que o uso deste bot é de sua total \
 responsabilidade. Nenhum material pode ser modificado, editado ou retirado de contexto, de modo que seu uso crie uma \
 declaração ou impressão falsa ou enganosa sobre as posições, declarações, informações ou ações.
@@ -103,7 +103,7 @@ que detenhamos sobre você, exceto nas seguintes circunstâncias: (i) sob obriga
 (ii) onde você forneceu sua autorização prévia por escrito para fazê-lo. Você não pode usar, exportar ou reexportar as \
 informações ou qualquer cópia ou adaptação em violação de quaisquer leis ou regulamentos aplicáveis."
 
-<b>Nenhuma Garantia</b>
+<b>Garantia</b>
 Nós, desenvolvedores do bot, não fazemos quaisquer garantias, declarações, endossos ou condições, expressas ou implícitas, \
 com relação ao bot ou as informações contidas nele, incluindo, sem limitação, garantias de comerciabilidade, operação, \
 não infração, utilidade, integridade, precisão, atualidade, confiabilidade e adequação a uma finalidade específica. \
