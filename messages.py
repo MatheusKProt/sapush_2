@@ -36,7 +36,9 @@ def comandos_admin():
 <b>Lista de comandos administrativos</b>
 
 /users [nome]* [sobrenome]* - exibe todos os usuários cadastrados
-/alert [mensagem] - envia um alerta a todos os usuários 
+/poll - cria uma enquete e envia a todos os usuários
+/results - exibe os resultados da última enquete
+/alert [mensagem] - envia um alerta a todos os usuários
 /message [id]** [mensagem] - envia uma mensagem para uma pessoa específica
 /suggestions [número de sugestões]* ** - exibe as as sugestões recebidas
 /history [id/all]* ** [número de resultados]* ** - exibe o histórico de uso das funções de todos os usuários ou de um usuário específico
@@ -572,6 +574,7 @@ def invalid(first_name):
     else:
         return """{}, meus desenvolvedores ainda não me deram inteligência suficiente para lidar com isso.""".format(first_name)
 
+
 def unknown_command(first_name):
     random = randint(0, 1)
     if random == 0:
@@ -659,3 +662,78 @@ def ultima_noticia(url, titulo):
 Essa é a ultima notícia acadêmica publicada no portal da ucpel:
 
 <a href=\"http://www.ucpel.edu.br/portal/{}\">{}</a>""".format(url, titulo)
+
+
+def poll_titulo(first_name):
+    return """
+{}, qual é o título da sua enquete?""".format(first_name)
+
+
+def poll_pergunta():
+    return """
+Pronto. E agora, o que você quer perguntar?"""
+
+
+def poll_primeira_pergunta():
+    return """
+Anotado. Digite a primeira alternativa."""
+
+
+def poll_segunda_pergunta():
+    return """
+Anotado. Digite a segunda alternativa."""
+
+
+def poll_outra_pergunta():
+    return """
+E agora digite a próxima ou digite finalizar."""
+
+
+def poll_finalizar(conteudo):
+    return """
+{}
+
+Pronto para enviar? Caso contrário, utilize o comando /cancelar.""".format(conteudo)
+
+
+def poll_finalizar_dnv():
+    return """
+Pronto para enviar? Caso contrário, utilize o comando /cancelar."""
+
+
+def poll_cancelar(first_name):
+    return """
+{}, você cancelou o envio da enquete.""".format(first_name)
+
+
+def poll_agradecimento(first_name):
+    return """
+{}, agradecemos pela sua opinião!""".format(first_name)
+
+
+def perfil(user, curso, telegram_id, logado, termos, push_notas, push_frequencia, hist):
+    return """<b>Perfil</b>
+
+{}
+{}
+<a href="tg://user?id={}">Contato</a>
+
+<b>Configurações</b>
+
+Logado: {}
+Termos: {}
+Notas: {}
+Frequência: {}
+
+<b>Histórico</b>
+
+{}""".format(user, curso, telegram_id, logado, termos, push_notas, push_frequencia, hist)
+
+
+def formata_poll(titulo, pergunta, msg, total):
+    return """
+<b>{}</b>
+
+{}
+
+{}Total de votos: {}""".format(titulo, pergunta, msg, total)

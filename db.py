@@ -231,6 +231,48 @@ class Messages(base):
         self.tratado = tratado
 
 
+class Poll(base):
+    __tablename__ = 'poll'
+
+    id = Column('id', Integer, primary_key=True)
+    titulo = Column('titulo', String)
+    pergunta = Column('pergunta', String)
+
+    options_poll = relationship("OptionsPoll", cascade="all,delete", backref="poll")
+
+    def __init__(self, titulo, pergunta):
+        self.titulo = titulo
+        self.pergunta = pergunta
+
+
+class OptionsPoll(base):
+    __tablename__ = 'options_poll'
+
+    id = Column('id', Integer, primary_key=True)
+    poll_id = Column('poll_id', Integer, ForeignKey('poll.id'))
+    resposta = Column('resposta', String)
+
+    answer_poll = relationship("AnswerPoll", cascade="all,delete", backref="options_poll")
+
+    def __init__(self, poll_id, resposta):
+        self.poll_id = poll_id
+        self.resposta = resposta
+
+
+class AnswerPoll(base):
+    __tablename__ = 'answer_poll'
+
+    id = Column('id', Integer, primary_key=True)
+    options_poll_id = Column('options_poll_id', Integer, ForeignKey('options_poll.id'))
+    user_id = Column('user_id', Integer, ForeignKey('user.telegram_id'))
+    data = Column('data', String)
+
+    def __init__(self, options_poll_id, user_id, data):
+        self.options_poll_id = options_poll_id
+        self.user_id = user_id
+        self.data = data
+
+
 def gen_engine(url):
     engine = create_engine(url)
 

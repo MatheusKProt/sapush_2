@@ -310,13 +310,26 @@ def button(bot, update):
     elif 'atestado_apto' in query.data:
         atestado_apto(bot, update['callback_query'], query)
 
+    # Poll
+    elif 'poll | ' in query.data:
+        poll = str(query.data).split(" | ")
+        session = Session()
+        options_poll_db = session.query(db.OptionsPoll).filter_by(id=int(poll[2]), poll_id=int(poll[1])).first()
+        answer_poll_db = db.AnswerPoll(options_poll_db.id, update['callback_query']['message']['chat']['id'], time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+        session.add(answer_poll_db)
+        session.commit()
+        session.close()
+        bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
+                              message_id=query['message']['message_id'],
+                              text=messages.poll_agradecimento(update['callback_query']['message']['chat']['first_name']))
+
     # Geral
     elif query.data == 'sair':
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
     else:
         bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
                               message_id=query['message']['message_id'],
-                              text="No futuro vai abrir a função!")
+                              text="Erro!")
     session.commit()
     session.close()
 
