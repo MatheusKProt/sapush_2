@@ -158,8 +158,8 @@ def poll():
                 msg += index + " - " + data + "\n"
         return """
 <b>{}</b>
-
 {}
+
 {}""".format(titulo, questao, msg)
 
     def top(user_data):
@@ -168,7 +168,9 @@ def poll():
         return """
 <b>{}</b>
 
-{}""".format(titulo, questao)
+{}
+
+Seu voto é totalmente anônimo e sua opinião é muito importante para que possamos melhorar cada vez mais.""".format(titulo, questao)
 
     def criar_votacao(bot, update):
         telegram_id = update['message']['chat']['id']

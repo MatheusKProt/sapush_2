@@ -692,7 +692,6 @@ E agora digite a próxima ou digite finalizar."""
 def poll_finalizar(conteudo):
     return """
 {}
-
 Pronto para enviar? Caso contrário, utilize o comando /cancelar.""".format(conteudo)
 
 

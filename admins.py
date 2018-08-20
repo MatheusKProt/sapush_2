@@ -529,16 +529,18 @@ def poll(bot, update):
     poll_db = session.query(db.Poll).order_by(db.Poll.id.desc()).first()
     msg = ""
     total = 0
-    for option in poll_db.options_poll:
-        count = 0
-        for _ in option.answer_poll:
-            count += 1
-        total += count
-    for option in poll_db.options_poll:
-        count = 0
-        for _ in option.answer_poll:
-            count += 1
-        msg += option.resposta + "\nVotos: {0} - {1:.2f}%\n\n".format(str(count), (count*100)/total)
-
+    try:
+        for option in poll_db.options_poll:
+            count = 0
+            for _ in option.answer_poll:
+                count += 1
+            total += count
+        for option in poll_db.options_poll:
+            count = 0
+            for _ in option.answer_poll:
+                count += 1
+            msg += option.resposta + "\nVotos: {0} - {1:.2f}%\n\n".format(str(count), (count*100)/total)
+    except:
+        pass
     bot.sendMessage(chat_id=telegram_id, text=messages.formata_poll(poll_db.titulo, poll_db.pergunta, msg, total), parse_mode=ParseMode.HTML)
     session.close()
