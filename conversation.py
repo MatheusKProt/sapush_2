@@ -153,9 +153,9 @@ def poll():
         titulo = user_data['titulo']
         questao = user_data['questao']
         msg = ""
-        for index, data in user_data.items():
-            if index != 'titulo' and index != 'questao':
-                msg += index + " - " + data + "\n"
+        tam = len(user_data) - 1
+        for i in range(1, tam):
+            msg += str(i) + " - " + user_data['{}'.format(i)] + "\n"
         return """
 <b>{}</b>
 {}
@@ -217,12 +217,12 @@ Seu voto é totalmente anônimo e sua opinião é muito importante para que poss
             session.add(poll_db)
             session.commit()
             keyboard = []
-            for index, data in user_data.items():
-                if index != 'titulo' and index != 'questao':
-                    options_poll_db = db.OptionsPoll(poll_db.id, data)
-                    session.add(options_poll_db)
-                    session.commit()
-                    keyboard.append([InlineKeyboardButton('{}'.format(data), callback_data='poll | {} | {}'.format(poll_db.id, options_poll_db.id))])
+            tam = len(user_data) - 1
+            for i in range(1, tam):
+                options_poll_db = db.OptionsPoll(poll_db.id, user_data['{}'.format(i)])
+                session.add(options_poll_db)
+                session.commit()
+                keyboard.append([InlineKeyboardButton('{}'.format(user_data['{}'.format(i)]), callback_data='poll | {} | {}'.format(poll_db.id, options_poll_db.id))])
             options_poll_db = db.OptionsPoll(poll_db.id, 'Não sou capaz de opinar')
             session.add(options_poll_db)
             session.commit()

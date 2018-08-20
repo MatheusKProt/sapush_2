@@ -316,13 +316,23 @@ def button(bot, update):
         poll = str(query.data).split(" | ")
         session = Session()
         options_poll_db = session.query(db.OptionsPoll).filter_by(id=int(poll[2]), poll_id=int(poll[1])).first()
-        answer_poll_db = db.AnswerPoll(options_poll_db.id, update['callback_query']['message']['chat']['id'], time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
-        session.add(answer_poll_db)
-        session.commit()
-        session.close()
-        bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
-                              message_id=query['message']['message_id'],
-                              text=messages.poll_agradecimento(update['callback_query']['message']['chat']['first_name']))
+        resposta = False
+        i = session.query(db.Poll).filter_by(id=int(poll[1])).first()
+        for options in i.options_poll:
+            for answer in options.answer_poll:
+                if update['callback_query']['message']['chat']['id'] == answer.user_id:
+                    resposta = True
+
+        if not resposta:
+            answer_poll_db = db.AnswerPoll(options_poll_db.id, update['callback_query']['message']['chat']['id'], time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+            session.add(answer_poll_db)
+            session.commit()
+            session.close()
+            bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
+                                  message_id=query['message']['message_id'],
+                                  text=messages.poll_agradecimento(update['callback_query']['message']['chat']['first_name']))
+    elif 'atualiza_poll' in query.data:
+        admins.poll(bot, update['callback_query'], arg=True, message_id=query['message']['message_id'])
 
     # Geral
     elif query.data == 'sair':

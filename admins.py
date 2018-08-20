@@ -523,7 +523,7 @@ def unknown(bot, update):
 
 @restricted
 @run_async
-def poll(bot, update):
+def poll(bot, update, arg=False, message_id=0):
     telegram_id = update['message']['chat']['id']
     session = Session()
     poll_db = session.query(db.Poll).order_by(db.Poll.id.desc()).first()
@@ -542,5 +542,13 @@ def poll(bot, update):
             msg += option.resposta + "\nVotos: {0} - {1:.2f}%\n\n".format(str(count), (count*100)/total)
     except:
         pass
-    bot.sendMessage(chat_id=telegram_id, text=messages.formata_poll(poll_db.titulo, poll_db.pergunta, msg, total), parse_mode=ParseMode.HTML)
+    keyboard = [[InlineKeyboardButton('Atualizar', callback_data='atualiza_poll')]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    try:
+        if arg:
+            bot.edit_message_text(chat_id=telegram_id, message_id=message_id, text=messages.formata_poll(poll_db.titulo, poll_db.pergunta, msg, total), reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+        else:
+            bot.sendMessage(chat_id=telegram_id, text=messages.formata_poll(poll_db.titulo, poll_db.pergunta, msg, total), reply_markup=reply_markup, parse_mode=ParseMode.HTML)
+    except:
+        pass
     session.close()
