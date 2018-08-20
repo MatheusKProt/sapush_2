@@ -158,6 +158,7 @@ def do_you_agree(bot, update):
                      reply_markup=reply_markup)
 
 
+@run_async
 def button(bot, update):
     query = update.callback_query
     telegram_id = query['message']['chat']['id']
