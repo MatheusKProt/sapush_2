@@ -98,7 +98,7 @@ def main():
     dp.add_handler(CommandHandler("suggestions", admins.suggestions, pass_args=True))
     dp.add_handler(CommandHandler("history", admins.history, pass_args=True))
     dp.add_handler(CommandHandler("push", admins.push, pass_args=True))
-    dp.add_handler(CommandHandler("results", admins.poll))
+    dp.add_handler(CommandHandler("results", admins.results))
     dp.add_handler(CommandHandler("statistics", admins.statistics))
     dp.add_handler(CommandHandler("reboot", admins.reboot))
     dp.add_handler(CommandHandler("commands", admins.commands))

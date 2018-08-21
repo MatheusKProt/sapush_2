@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from telegram import ParseMode, ChatAction, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ConversationHandler, CommandHandler, MessageHandler, Filters
 
+import admins
 import crawlers
 import dao
 import db
@@ -172,6 +173,7 @@ def poll():
 
 Seu voto é totalmente anônimo e sua opinião é muito importante para que possamos melhorar cada vez mais.""".format(titulo, questao)
 
+    @admins.restricted
     def criar_votacao(bot, update):
         telegram_id = update['message']['chat']['id']
         bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
