@@ -19,3 +19,13 @@ Oi, {}! O que você vai consultar hoje?""".format(first_name)
 def ola(first_name):
     return """
 Olá, {}! O que você vai consultar hoje?""".format(first_name)
+
+
+def ok():
+    return """
+👍"""
+
+
+def risos():
+    return """
+😂😂😂"""

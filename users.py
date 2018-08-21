@@ -734,7 +734,7 @@ def verifica_callback(bot, update, arg):
     elif "prova" in arg:
         provas(bot, update)
         dao.set_messages("Provas", True)
-    elif "frequencia" in arg or "frequência" in arg:
+    elif "frequencia" in arg or "frequência" in arg or "falta" in arg:
         frequencia(bot, update)
         dao.set_messages("Frequência", True)
     elif "horario" in arg or "horário" in arg:
@@ -794,7 +794,7 @@ def verifica_callback(bot, update, arg):
                          text=messages.suggest_without_parameters(first_name),
                          parse_mode=ParseMode.HTML)
         dao.set_messages("Sugerir", True)
-    elif "menu" in arg:
+    elif "menu" in arg or "funcionalidad" in arg:
         menu(bot, update, [])
         dao.set_messages("Menu", True)
     elif "atestado" in arg:
@@ -820,19 +820,29 @@ def verifica_callback(bot, update, arg):
                          text="{}, {}!\n{}".format(turno, first_name, crawlers.get_noticias(first=True)),
                          parse_mode=ParseMode.HTML, disable_web_page_preview=True)
         dao.set_messages(arg, True)
-    elif "obrigado" in arg or "obg" in arg or "vlw" in arg:
+    elif "obrigad" in arg or "obg" in arg or "vlw" in arg or "thank" in arg:
         bot.send_message(chat_id=telegram_id,
                          text=responses.obrigado(first_name),
                          parse_mode=ParseMode.HTML, disable_web_page_preview=True)
         dao.set_messages(arg, True)
-    elif "oi" == arg or "oie" == arg or "eai" == arg or "e ai" == arg:
+    elif "oi " in arg or "oie " in arg or "eai " in arg or "e ai " in arg:
         bot.send_message(chat_id=telegram_id,
                          text=responses.oi(first_name),
                          parse_mode=ParseMode.HTML)
         dao.set_messages(arg, True)
-    elif "olá" == arg or "ola" == arg:
+    elif "olá " in arg or "ola " in arg:
         bot.send_message(chat_id=telegram_id,
                          text=responses.ola(first_name),
+                         parse_mode=ParseMode.HTML)
+        dao.set_messages(arg, True)
+    elif "👍" in arg:
+        bot.send_message(chat_id=telegram_id,
+                         text=responses.ok(),
+                         parse_mode=ParseMode.HTML)
+        dao.set_messages(arg, True)
+    elif "😂" in arg or "kkk" in arg or "rsrs" in arg:
+        bot.send_message(chat_id=telegram_id,
+                         text=responses.risos(),
                          parse_mode=ParseMode.HTML)
         dao.set_messages(arg, True)
     else:

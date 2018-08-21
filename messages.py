@@ -5,7 +5,7 @@ def comandos():
     return """
 <b>Lista de comandos</b>
 
-/login - faz o login no SAPU ou altera o login existente
+/login - realiza o login no SAPU ou altera o login existente
 /deletar - deleta suas informações de login do SAPU 
 /sugerir [mensagem] - envia uma sugestão aos desenvolvedores do bot
 /configurar - configura o estado das notificações push
