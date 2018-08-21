@@ -583,20 +583,20 @@ def atestado_apto(bot, update, query):
 @restricted
 @logged
 def boleto(bot, update):
-    bug(bot, update)
-    # telegram_id = update['message']['chat']['id']
-    # bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
-    # session = Session()
-    # usage(telegram_id, "Boleto", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
-    # user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
-    # boleto, status = crawlers.get_boleto(user)
-    # if status:
-    #     bot.send_message(chat_id=telegram_id, text=messages.boleto(user.first_name, boleto, 1),
-    #                      parse_mode=ParseMode.HTML, disable_web_page_preview=True)
-    # else:
-    #     bot.send_message(chat_id=telegram_id, text=messages.boleto(user.first_name, boleto, 2),
-    #                      parse_mode=ParseMode.HTML, disable_web_page_preview=True)
-    # session.close()
+    # bug(bot, update)
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    session = Session()
+    usage(telegram_id, "Boleto", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
+    boleto, status = crawlers.get_boleto(user)
+    if status:
+        bot.send_message(chat_id=telegram_id, text=messages.boleto(user.first_name, boleto, 1),
+                         parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+    else:
+        bot.send_message(chat_id=telegram_id, text=messages.boleto(user.first_name, boleto, 2),
+                         parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+    session.close()
 
 
 @registered

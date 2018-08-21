@@ -227,16 +227,17 @@ def get_emails(user, args):
 
 def get_boleto(user):
     session = get_session(user.sapu_username, user.sapu_password)
-    boleto = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=SolicitacaoBoletoFormList&method=emitirBoleto")
+    boleto = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=EmitirBoletoFormList")
     soup = BeautifulSoup(boleto.content, 'html.parser')
-    index = soup.find('script')
-    if str(index.get_text().lstrip()).split("'")[1] == "Erro":
-        if "títulos em aberto" in str(index.get_text().lstrip()).split("'")[3]:
-            return "Você não possui boletos em aberto", False
-        else:
-            return "Você não possui boletos", False
-    else:
-        return str(index.get_text().lstrip()).split("'")[1], True
+    try:
+        index = soup.find(class_='tdatagrid_body').find_all('td')[1].find('a')
+        url = util.find_between(str(index), "href=\"", "\">")
+        boleto = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=EmitirBoletoFormList&method=onBoleto&target=1&key={}".format(url.split("key=")[1]))
+        soup = BeautifulSoup(boleto.content, 'html.parser')
+        index = soup.find_all(language="JavaScript")
+        return str(index[2].get_text().lstrip()).split("'")[1], True
+    except:
+        return "Você não possui boletos em aberto", False
 
 
 def get_editais(quantidade):

@@ -309,7 +309,7 @@ def boleto(first_name, boleto, option):
         return """
 <b>Boleto</b>
 
-Seu boleto está disponível <a href=\"{}\">aqui</a>.""".format(boleto)
+Seu boleto está disponível <a href=\"http://sapu.ucpel.edu.br/portal/{}\">aqui</a>.""".format(boleto)
     else:
         return """
 {}, você não possui boletos em aberto.""".format(first_name)
