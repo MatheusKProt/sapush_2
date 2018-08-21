@@ -825,12 +825,12 @@ def verifica_callback(bot, update, arg):
                          text=responses.obrigado(first_name),
                          parse_mode=ParseMode.HTML, disable_web_page_preview=True)
         dao.set_messages(arg, True)
-    elif "oi " in arg or "oie " in arg or "eai " in arg or "e ai " in arg:
+    elif "oi " in arg or "oie " in arg or "eai " in arg or "e ai " in arg or "oi" == arg or "oie" == arg or "eai" == arg or "e ai" == arg:
         bot.send_message(chat_id=telegram_id,
                          text=responses.oi(first_name),
                          parse_mode=ParseMode.HTML)
         dao.set_messages(arg, True)
-    elif "olá " in arg or "ola " in arg:
+    elif "olá " in arg or "ola " in arg or "olá" == arg or "ola" == arg:
         bot.send_message(chat_id=telegram_id,
                          text=responses.ola(first_name),
                          parse_mode=ParseMode.HTML)
