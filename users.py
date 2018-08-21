@@ -730,94 +730,65 @@ def verifica_callback(bot, update, arg):
     request.session_id = 'sapu_bot'
 
     request.query = arg
-    responseJson = json.loads(request.getresponse().read().decode('utf-8'))
-    response = responseJson['result']['fulfillment']['speech']
+    response_json = json.loads(request.getresponse().read().decode('utf-8'))
+    response = response_json['result']['fulfillment']['speech']
 
     telegram_id = update['message']['chat']['id']
     first_name = update['message']['chat']['first_name']
     if response == "/ajuda":
         ajuda(bot, update)
-        dao.set_messages("Ajuda", True)
     elif response == "/notas":
         notas(bot, update)
-        dao.set_messages("Notas", True)
     elif response == "/provas":
         provas(bot, update)
-        dao.set_messages("Provas", True)
     elif response == "/frequencia":
         frequencia(bot, update)
-        dao.set_messages("Frequência", True)
     elif response == "/horarios":
         horarios(bot, update)
-        dao.set_messages("Horários", True)
     elif response == "/disciplinas":
         disciplinas(bot, update)
-        dao.set_messages("Disciplinas", True)
     elif response == "/historico":
         historico(bot, update)
-        dao.set_messages("Histórico", True)
     elif response == "/curriculo":
         curriculo(bot, update)
-        dao.set_messages("Currículo", True)
     elif response == "/boleto":
         boleto(bot, update)
-        dao.set_messages("Boleto", True)
     elif response == "/chave":
         chave(bot, update)
-        dao.set_messages("Chave", True)
     elif response == "/comandos":
         comandos(bot, update)
-        dao.set_messages("Comandos", True)
     elif response == "/termos":
         termos(bot, update)
-        dao.set_messages("Termos", True)
     elif response == "/desenvolvedores":
         desenvolvedores(bot, update)
-        dao.set_messages("Desenvolvedores", True)
-    elif response == "/editais":
-        args = []
-        text = str(update['message']['text']).split(" ")
-        if text[0].lower() == "editais":
-            if len(text) == 2:
-                args = [text[1]]
-        editais(bot, update, args)
-        dao.set_messages("Editais", True)
     elif response == "/noticias":
         noticias(bot, update)
-        dao.set_messages("Notícias", True)
     elif response == "/configurar":
         configurar(bot, update)
-        dao.set_messages("Configurar", True)
+    elif response == "/deletar":
+        deletar(bot, update)
+    elif response == "/atestado":
+        atestado(bot, update)
+    elif response == "/moodle":
+        moodle(bot, update)
+    elif response == "/editais":
+        editais(bot, update, [])
+    elif response == "/menu":
+        menu(bot, update, [])
+    elif response == "/email":
+        emails(bot, update, [])
     elif response == "/login":
         bot.send_message(chat_id=telegram_id,
                          text=messages.invalid_login(first_name),
                          parse_mode=ParseMode.HTML)
-        dao.set_messages("Login", True)
-    elif response == "/deletar":
-        deletar(bot, update)
-        dao.set_messages("Deletar", True)
     elif response == "/sugerir":
         bot.send_message(chat_id=telegram_id,
                          text=messages.suggest_without_parameters(first_name),
                          parse_mode=ParseMode.HTML)
-        dao.set_messages("Sugerir", True)
-    elif response == "/menu":
-        menu(bot, update, [])
-        dao.set_messages("Menu", True)
-    elif response == "/atestado":
-        atestado(bot, update)
-        dao.set_messages("Atestado", True)
-    elif response == "/moodle":
-        moodle(bot, update)
-        dao.set_messages("Moogle", True)
-    elif response == "/emails":
-        emails(bot, update, [])
-        dao.set_messages("E-mail", True)
     else:
         bot.send_message(chat_id=telegram_id,
                          text=response,
                          parse_mode=ParseMode.HTML)
-        dao.set_messages(arg, False)
 
 
 def desenvolvedores(bot, update):

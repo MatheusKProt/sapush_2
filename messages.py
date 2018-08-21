@@ -7,7 +7,7 @@ def comandos():
 
 /login - realiza o login no SAPU ou altera o login existente
 /deletar - deleta suas informações de login do SAPU 
-/sugerir [mensagem] - envia uma sugestão aos desenvolvedores do bot
+/sugerir - envia uma sugestão aos desenvolvedores do bot
 /configurar - configura o estado das notificações push
 
 /notas - exibe suas notas atuais

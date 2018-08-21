@@ -138,12 +138,3 @@ def set_error(erro):
     session.add(error)
     session.commit()
     session.close()
-
-
-def set_messages(message, tratado):
-    session = Session()
-    messages = db.Messages(message, str(time.strftime("%d/%m/%Y %H:%M:%S", time.localtime())), tratado)
-
-    session.add(messages)
-    session.commit()
-    session.close()
