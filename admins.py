@@ -9,7 +9,6 @@ from sqlalchemy.orm import sessionmaker
 from telegram import ParseMode, ChatAction, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import run_async
 
-import conversation
 import db
 import main
 import messages
@@ -528,7 +527,6 @@ def results(bot, update, arg=False, message_id=0):
     telegram_id = update['message']['chat']['id']
     session = Session()
     poll_db = session.query(db.Poll).order_by(db.Poll.id.desc()).first()
-    session.close()
     msg = ""
     total = 0
     try:
@@ -552,4 +550,5 @@ def results(bot, update, arg=False, message_id=0):
         else:
             bot.sendMessage(chat_id=telegram_id, text=messages.formata_poll(poll_db.titulo, poll_db.pergunta, msg, total), reply_markup=reply_markup, parse_mode=ParseMode.HTML)
     except:
-        return
+        pass
+    session.close()
