@@ -1,3 +1,5 @@
+import json
+
 import requests
 from bs4 import BeautifulSoup
 from sqlalchemy.orm import sessionmaker
@@ -271,6 +273,14 @@ def get_noticias(first=False):
             titulo = index.find(class_='not_titulo').get_text().lstrip()
             msg += messages.noticia(data, titulo, url)
         return msg
+
+
+def get_minhabiblioteca(user):
+    session = get_session(user.sapu_username, user.sapu_password)
+    editais = session.get("http://sapu.ucpel.edu.br/portal/engine.php?class=BibliotecaService&method=loginUser&static=1")
+    soup = BeautifulSoup(editais.content, 'html.parser')
+    response = json.loads(str(soup))
+    return response['message']
 
 
 def get_atestado_simples(user):

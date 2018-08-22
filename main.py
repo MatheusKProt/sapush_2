@@ -87,6 +87,7 @@ def main():
     dp.add_handler(CommandHandler("desenvolvedores", users.desenvolvedores))
     dp.add_handler(CommandHandler("editais", users.editais, pass_args=True))
     dp.add_handler(CommandHandler("noticias", users.noticias))
+    dp.add_handler(CommandHandler("minhabiblioteca", users.minhabiblioteca))
     dp.add_handler(CommandHandler("configurar", users.configurar))
     dp.add_handler(CommandHandler("menu", users.menu, pass_args=True))
 

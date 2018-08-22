@@ -24,6 +24,7 @@ def comandos():
 /chave - exibe sua chave de matrícula
 /email - exibe seus últimos emails recebidos
 /moodle - exibe o link para acesso
+/minhabiblioteca - exibe o link para acesso
 
 /desenvolvedores - exibe os desenvolvedores do bot
 /termos - exibe os termos de uso
@@ -736,3 +737,10 @@ def formata_poll(titulo, pergunta, msg, total):
 {}
 
 {}Total de votos: {}""".format(titulo, pergunta, msg, total)
+
+
+def minhabiblioteca(url):
+    return """
+<b>Minha Biblioteca</b>
+
+Para acessar a minha biblioteca, clique <a href=\"{}\">aqui</a>.""".format(url)

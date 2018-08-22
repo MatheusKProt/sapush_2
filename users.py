@@ -274,6 +274,9 @@ def button(bot, update):
     elif query.data == 'moodle':
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
         moodle(bot, update['callback_query'])
+    elif query.data == 'minhabiblioteca':
+        bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
+        minhabiblioteca(bot, update['callback_query'])
     elif query.data == 'emails':
         bot.delete_message(chat_id=update['callback_query']['message']['chat']['id'], message_id=query['message']['message_id'])
         emails(bot, update['callback_query'], [])
@@ -769,6 +772,8 @@ def verifica_callback(bot, update, arg):
         atestado(bot, update)
     elif response == "/moodle":
         moodle(bot, update)
+    elif response == "/minhabiblioteca":
+        minhabiblioteca(bot, update)
     elif response == "/editais":
         editais(bot, update, [])
     elif response == "/menu":
@@ -823,6 +828,17 @@ def noticias(bot, update):
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
     usage(telegram_id, "Notícias", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     bot.send_message(chat_id=telegram_id, text=crawlers.get_noticias(), parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+
+
+@registered
+@restricted
+def minhabiblioteca(bot, update):
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    session = Session()
+    usage(telegram_id, "Minha_biblioteca", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
+    user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
+    bot.send_message(chat_id=telegram_id, text=messages.minhabiblioteca(crawlers.get_minhabiblioteca(user)), parse_mode=ParseMode.HTML, disable_web_page_preview=True)
 
 
 @registered
@@ -891,7 +907,7 @@ def menu_funcionalidades(bot, update, query):
                 [InlineKeyboardButton('Chave', callback_data='chave'), InlineKeyboardButton('Atestados', callback_data='atestados')],
                 [InlineKeyboardButton('Moodle', callback_data='moodle'), InlineKeyboardButton('Emails', callback_data='emails')],
                 [InlineKeyboardButton('Provas', callback_data='provas'), InlineKeyboardButton('Notícias', callback_data='noticias')],
-                [InlineKeyboardButton('Voltar', callback_data='voltar_menu')]]
+                [InlineKeyboardButton('Minha Biblioteca', callback_data='minhabiblioteca'), InlineKeyboardButton('Voltar', callback_data='voltar_menu')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     bot.edit_message_text(chat_id=update['callback_query']['message']['chat']['id'],
                           message_id=query['message']['message_id'],
