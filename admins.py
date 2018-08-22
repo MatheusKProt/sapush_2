@@ -542,7 +542,7 @@ def results(bot, update, arg=False, message_id=0):
             msg += option.resposta + "\nVotos: {0} - {1:.2f}%\n\n".format(str(count), (count*100)/total)
     except:
         pass
-    keyboard = [[InlineKeyboardButton('Atualizar', callback_data='atualiza_poll')]]
+    keyboard = [[InlineKeyboardButton('Atualizar', callback_data='atualiza_poll'), InlineKeyboardButton('Sair', callback_data='sair')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     try:
         if arg:
