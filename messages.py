@@ -659,7 +659,7 @@ def noticia(data, titulo, url):
 
 def ultima_noticia(url, titulo):
     return """
-Essa é a ultima notícia acadêmica publicada no portal da ucpel:
+Essa é a última notícia acadêmica que foi publicada no portal da UCPel:
 
 <a href=\"http://www.ucpel.edu.br/portal/{}\">{}</a>""".format(url, titulo)
 

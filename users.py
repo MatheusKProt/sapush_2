@@ -15,10 +15,8 @@ from telegram.ext import run_async
 import admins
 import config
 import crawlers
-import dao
 import db
 import messages
-import responses
 import util
 import speech as sr
 
@@ -778,17 +776,22 @@ def verifica_callback(bot, update, arg):
     elif response == "/email":
         emails(bot, update, [])
     elif response == "/login":
-        bot.send_message(chat_id=telegram_id,
-                         text=messages.invalid_login(first_name),
-                         parse_mode=ParseMode.HTML)
+        bot.send_message(chat_id=telegram_id, text=messages.invalid_login(first_name), parse_mode=ParseMode.HTML)
     elif response == "/sugerir":
+        bot.send_message(chat_id=telegram_id, text=messages.suggest_without_parameters(first_name), parse_mode=ParseMode.HTML)
+    elif response == "/saudacoes":
+        hora = datetime.datetime.now().hour
+        if 6 <= hora < 12:
+            turno = "Bom dia"
+        elif 12 <= hora < 19:
+            turno = "Boa tarde"
+        else:
+            turno = "Boa noite"
         bot.send_message(chat_id=telegram_id,
-                         text=messages.suggest_without_parameters(first_name),
-                         parse_mode=ParseMode.HTML)
+                         text="{}, {}!\n{}".format(turno, first_name, crawlers.get_noticias(first=True)),
+                         parse_mode=ParseMode.HTML, disable_web_page_preview=True)
     else:
-        bot.send_message(chat_id=telegram_id,
-                         text=response,
-                         parse_mode=ParseMode.HTML)
+        bot.send_message(chat_id=telegram_id, text=response, parse_mode=ParseMode.HTML)
 
 
 def desenvolvedores(bot, update):
