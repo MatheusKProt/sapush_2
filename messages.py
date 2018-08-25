@@ -382,11 +382,8 @@ Disco total: {}GB
 Disco usado: {}GB
 Disco disponível: {}GB
 
-Os processos com maior consumo de memória são:{}""".format(ligado, uso_processador, uso_memoria, uso_disco,
-                                                           round(memoria_total, 2), round(memoria_usada, 2),
-                                                           round(memoria_disponivel, 2), round(disco_total, 2),
-                                                           round(disco_usado, 2), round(disco_disponivel, 2),
-                                                           processos_consumindo)
+{}""".format(ligado, uso_processador, uso_memoria, uso_disco, round(memoria_total, 2), round(memoria_usada, 2),
+             round(memoria_disponivel, 2), round(disco_total, 2), round(disco_usado, 2), round(disco_disponivel, 2), processos_consumindo)
 
 
 def formata_horario(materia, inicio, fim, predio, sala):

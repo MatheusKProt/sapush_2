@@ -14,11 +14,21 @@ Session = sessionmaker(bind=db.gen_engine(db.get_database_url()))
 
 def get_login(user, password):
     session = requests.session()
-    sapu = session.post('http://sapu.ucpel.edu.br/portal/engine.php?class=LoginForm&method=onLogin', data={
-        "login": user,
-        "password": password,
-    })
-    return BeautifulSoup(sapu.content, 'html.parser')
+    try:
+        sapu = session.post('http://sapu.ucpel.edu.br/portal/engine.php?class=LoginForm&method=onLogin', data={
+            "login": user,
+            "password": password,
+        })
+        return BeautifulSoup(sapu.content, 'html.parser')
+    except:
+        try:
+            sapu = session.post('http://sapu.ucpel.edu.br/portal/engine.php?class=LoginForm&method=onLogin', data={
+                "login": user,
+                "password": password,
+            })
+            return BeautifulSoup(sapu.content, 'html.parser')
+        except:
+            return []
 
 
 def get_login_completo(email, password):

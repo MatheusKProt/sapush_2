@@ -219,7 +219,7 @@ def alert(bot, update, args):
 
 @restricted
 @run_async
-def statistics(bot, update):
+def statistics(bot, update, args):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
     tempo_ligado = time.time() - psutil.boot_time()
     dias_ligado = int(tempo_ligado / 24 / 60 / 60)
@@ -230,26 +230,28 @@ def statistics(bot, update):
     memoria = psutil.virtual_memory()
     disco = psutil.disk_usage('/')
 
-    pids = psutil.pids()
-    processos_consumindo = ''
-    processos = {}
+    if args:
+        pids = psutil.pids()
+        processos_consumindo = "Os processos com maior consumo de memória são:"
+        processos = {}
 
-    for pid in pids:
-        processo = psutil.Process(pid)
-        try:
-            memoria_processo = processo.memory_percent()
-            if memoria_processo > 0.5:
-                if processo.name() in processos:
-                    processos[processo.name()] += memoria_processo
-                else:
-                    processos[processo.name()] = memoria_processo
-        except():
-            bot.send_message(chat_id=update['message']['chat']['id'], text="Erro", parse_mode=ParseMode.HTML)
-    ordenar_processos = sorted(processos.items(), key=operator.itemgetter(1), reverse=True)
-    for proc in ordenar_processos:
-        processos_consumindo += """
-{}, usando {}% de memória""".format(proc[0], round(proc[1]), 2)
+        for pid in pids:
+            processo = psutil.Process(pid)
+            try:
+                memoria_processo = processo.memory_percent()
+                if memoria_processo > 0.5:
+                    if processo.name() in processos:
+                        processos[processo.name()] += memoria_processo
+                    else:
+                        processos[processo.name()] = memoria_processo
+            except():
+                bot.send_message(chat_id=update['message']['chat']['id'], text="Erro", parse_mode=ParseMode.HTML)
 
+        ordenar_processos = sorted(processos.items(), key=operator.itemgetter(1), reverse=True)
+        for proc in ordenar_processos:
+            processos_consumindo += "\n{}, usando {}% de memória".format(proc[0], round(proc[1]), 2)
+    else:
+        processos_consumindo = ""
     ligado = "Ligado há %d dias, %d horas, %d minutos e %d segundos" % (dias_ligado, horas_ligado, minutos_ligado, segundos_ligado)
     memoria_total = memoria.total / 1000000000
     memoria_disponivel = memoria.available / 1000000000
@@ -259,9 +261,8 @@ def statistics(bot, update):
     disco_disponivel = disco.free / 1073741824
 
     bot.send_message(chat_id=update['message']['chat']['id'],
-                     text=messages.statistics(ligado, processador, memoria.percent, disco.percent, memoria_total,
-                                              memoria_usada, memoria_disponivel, disco_total, disco_usado, disco_disponivel,
-                                              processos_consumindo),
+                     text=messages.statistics(ligado, processador, memoria.percent, disco.percent, memoria_total, memoria_usada,
+                                              memoria_disponivel, disco_total, disco_usado, disco_disponivel, processos_consumindo),
                      parse_mode=ParseMode.HTML)
 
 

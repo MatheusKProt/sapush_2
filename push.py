@@ -27,21 +27,24 @@ def notas(bot, update):
     initial = time.strftime("%d/%m/%Y %H:%M:%S", time.localtime())
     for user in session.query(db.User):
         if user.push_notas and user.sapu_username != " ":
-            soup = crawlers.get_login(user.sapu_username, user.sapu_password)
-            if str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
-                if "Usuário" in str(soup.find('script').get_text().lstrip()).split("'")[3] or "Senha" in str(soup.find('script').get_text().lstrip()).split("'")[3]:
-                    bot.send_message(chat_id=user.telegram_id, text=messages.login_invalid(user.first_name), parse_mode=ParseMode.HTML)
-                    dao.set_error("Login inválido /{}".format(user.telegram_id))
-                    user_db = session.query(db.User).filter_by(telegram_id=user.telegram_id).first()
-                    user_db.sapu_username = " "
-                    user_db.sapu_password = " "
-                    session.commit()
-            else:
-                t = threading.Thread(target=get_notas, args=(bot, update, user))
-                while psutil.cpu_percent(0.3) > 50:
-                    time.sleep(0.7)
-                t.start()
-                users_count += 1
+            try:
+                soup = crawlers.get_login(user.sapu_username, user.sapu_password)
+                if str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
+                    if "Usuário" in str(soup.find('script').get_text().lstrip()).split("'")[3] or "Senha" in str(soup.find('script').get_text().lstrip()).split("'")[3]:
+                        bot.send_message(chat_id=user.telegram_id, text=messages.login_invalid(user.first_name), parse_mode=ParseMode.HTML)
+                        dao.set_error("Login inválido /{}".format(user.telegram_id))
+                        user_db = session.query(db.User).filter_by(telegram_id=user.telegram_id).first()
+                        user_db.sapu_username = " "
+                        user_db.sapu_password = " "
+                        session.commit()
+                else:
+                    t = threading.Thread(target=get_notas, args=(bot, update, user))
+                    while psutil.cpu_percent(0.3) > 50:
+                        time.sleep(0.7)
+                    t.start()
+                    users_count += 1
+            except:
+                pass
     dao.set_push_notas(users_count, initial, time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     session.close()
 
@@ -53,13 +56,16 @@ def frequencia(bot, update):
     initial = time.strftime("%d/%m/%Y %H:%M:%S", time.localtime())
     for user in session.query(db.User):
         if user.push_frequencia and user.sapu_username != " ":
-            soup = crawlers.get_login(user.sapu_username, user.sapu_password)
-            if str(soup.find('script').get_text().lstrip()).split("'")[1] != "Erro":
-                t = threading.Thread(target=get_frequencia, args=(bot, update, user))
-                while psutil.cpu_percent(0.3) > 50:
-                    time.sleep(0.7)
-                t.start()
-                users_count += 1
+            try:
+                soup = crawlers.get_login(user.sapu_username, user.sapu_password)
+                if str(soup.find('script').get_text().lstrip()).split("'")[1] != "Erro":
+                    t = threading.Thread(target=get_frequencia, args=(bot, update, user))
+                    while psutil.cpu_percent(0.3) > 50:
+                        time.sleep(0.7)
+                    t.start()
+                    users_count += 1
+            except:
+                pass
     dao.set_push_frequencia(users_count, initial, time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     session.close()
 
