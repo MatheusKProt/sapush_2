@@ -1,4 +1,6 @@
 import logging
+import psutil
+import threading
 import time
 
 from sqlalchemy.orm import sessionmaker
@@ -35,8 +37,11 @@ def notas(bot, update):
                     user_db.sapu_password = " "
                     session.commit()
             else:
+                t = threading.Thread(target=get_notas, args=(bot, update, user))
+                while psutil.cpu_percent(0.3) > 50:
+                    time.sleep(0.7)
+                t.start()
                 users_count += 1
-                get_notas(bot, update, user)
     dao.set_push_notas(users_count, initial, time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     session.close()
 
@@ -50,8 +55,11 @@ def frequencia(bot, update):
         if user.push_frequencia and user.sapu_username != " ":
             soup = crawlers.get_login(user.sapu_username, user.sapu_password)
             if str(soup.find('script').get_text().lstrip()).split("'")[1] != "Erro":
+                t = threading.Thread(target=get_frequencia, args=(bot, update, user))
+                while psutil.cpu_percent(0.3) > 50:
+                    time.sleep(0.7)
+                t.start()
                 users_count += 1
-                get_frequencia(bot, update, user)
     dao.set_push_frequencia(users_count, initial, time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     session.close()
 
