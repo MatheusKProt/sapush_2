@@ -459,7 +459,7 @@ def historico(bot, update):
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
     usage(telegram_id, "Histórico", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
-    bot.send_message(chat_id=telegram_id, text=messages.historico(crawlers.get_historico(user)),
+    bot.send_message(chat_id=telegram_id, text=crawlers.get_historico(user),
                      parse_mode=ParseMode.HTML, disable_web_page_preview=True)
     session.close()
 
@@ -549,10 +549,16 @@ def atestado_simples(bot, update, query):
     usage(telegram_id, "Atestado simples", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     atestado = crawlers.get_atestado_simples(user)
-    bot.edit_message_text(chat_id=update['message']['chat']['id'],
-                          message_id=query['message']['message_id'],
-                          text=messages.formata_atestado("simples ", atestado), parse_mode=ParseMode.HTML,
-                          disable_web_page_preview=True)
+    if atestado != "ERRO":
+        bot.edit_message_text(chat_id=update['message']['chat']['id'],
+                              message_id=query['message']['message_id'],
+                              text=messages.formata_atestado("simples ", atestado), parse_mode=ParseMode.HTML,
+                              disable_web_page_preview=True)
+    else:
+        bot.edit_message_text(chat_id=update['message']['chat']['id'],
+                              message_id=query['message']['message_id'],
+                              text=messages.perfil_errado(user.first_name), parse_mode=ParseMode.HTML,
+                              disable_web_page_preview=True)
     session.close()
 
 
@@ -562,10 +568,16 @@ def atestado_completo(bot, update, query):
     usage(telegram_id, "Atestado completo", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     atestado = crawlers.get_atestado_completo(user)
-    bot.edit_message_text(chat_id=update['message']['chat']['id'],
-                          message_id=query['message']['message_id'],
-                          text=messages.formata_atestado("completo ", atestado), parse_mode=ParseMode.HTML,
-                          disable_web_page_preview=True)
+    if atestado != "ERRO":
+        bot.edit_message_text(chat_id=update['message']['chat']['id'],
+                              message_id=query['message']['message_id'],
+                              text=messages.formata_atestado("completo ", atestado), parse_mode=ParseMode.HTML,
+                              disable_web_page_preview=True)
+    else:
+        bot.edit_message_text(chat_id=update['message']['chat']['id'],
+                              message_id=query['message']['message_id'],
+                              text=messages.perfil_errado(user.first_name), parse_mode=ParseMode.HTML,
+                              disable_web_page_preview=True)
     session.close()
 
 
@@ -575,10 +587,15 @@ def atestado_apto(bot, update, query):
     usage(telegram_id, "Atestado apto", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
     atestado = crawlers.get_atestado_apto(user)
-    bot.edit_message_text(chat_id=update['message']['chat']['id'],
-                          message_id=query['message']['message_id'],
-                          text=messages.formata_atestado("", atestado), parse_mode=ParseMode.HTML,
-                          disable_web_page_preview=True)
+    if atestado != "ERRO":
+        bot.edit_message_text(chat_id=update['message']['chat']['id'],
+                              message_id=query['message']['message_id'],
+                              text=messages.formata_atestado("", atestado), parse_mode=ParseMode.HTML,
+                              disable_web_page_preview=True)
+        bot.edit_message_text(chat_id=update['message']['chat']['id'],
+                              message_id=query['message']['message_id'],
+                              text=messages.perfil_errado(user.first_name), parse_mode=ParseMode.HTML,
+                              disable_web_page_preview=True)
     session.close()
 
 
@@ -625,7 +642,7 @@ def moodle(bot, update):
     session = Session()
     usage(telegram_id, "Moodle", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
-    bot.send_message(chat_id=telegram_id, text=messages.formata_moodle(crawlers.get_moodle(user)), parse_mode=ParseMode.HTML)
+    bot.send_message(chat_id=telegram_id, text=crawlers.get_moodle(user), parse_mode=ParseMode.HTML)
     session.close()
 
 

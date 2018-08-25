@@ -744,3 +744,9 @@ def minhabiblioteca(url):
 <b>Minha Biblioteca</b>
 
 Para acessar a minha biblioteca, clique <a href=\"{}\">aqui</a>.""".format(url)
+
+
+def perfil_errado(first_name):
+    return """
+{}, seu perfil selecionado atualmente parece não atender aos requisitos de funcionamento atuais. \
+Por favor, altere o seu perfil para aluno dentro do SAPU.""".format(first_name)
