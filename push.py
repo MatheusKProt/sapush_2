@@ -39,7 +39,7 @@ def notas(bot, update):
                         session.commit()
                 else:
                     t = threading.Thread(target=get_notas, args=(bot, update, user))
-                    while psutil.cpu_percent(0.3) > 80:
+                    while psutil.cpu_percent(0.3) > 60:
                         time.sleep(0.7)
                     t.start()
                     users_count += 1
@@ -60,7 +60,7 @@ def frequencia(bot, update):
                 soup = crawlers.get_login(user.sapu_username, user.sapu_password)
                 if str(soup.find('script').get_text().lstrip()).split("'")[1] != "Erro":
                     t = threading.Thread(target=get_frequencia, args=(bot, update, user))
-                    while psutil.cpu_percent(0.3) > 80:
+                    while psutil.cpu_percent(0.3) > 60:
                         time.sleep(0.7)
                     t.start()
                     users_count += 1
