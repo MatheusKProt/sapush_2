@@ -226,7 +226,7 @@ def statistics(bot, update, args):
     horas_ligado = int(tempo_ligado / 60 / 60 % 24)
     minutos_ligado = int(tempo_ligado / 60 % 60)
     segundos_ligado = int(tempo_ligado % 60)
-    processador = psutil.cpu_percent()
+    processador = psutil.cpu_percent(1)
     memoria = psutil.virtual_memory()
     disco = psutil.disk_usage('/')
 
