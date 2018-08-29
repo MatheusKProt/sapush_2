@@ -302,7 +302,7 @@ def historico(historico):
     return """
 <b>Histórico</b>
 
-Seu histórico está disponível <a href=\"http://sapu.ucpel.edu.br/portal/{}\">aqui</a>.""".format(historico)
+Seu histórico está disponível <a href=\"https://sapu.ucpel.edu.br/portal/{}\">aqui</a>.""".format(historico)
 
 
 def boleto(first_name, boleto, option):
@@ -310,7 +310,7 @@ def boleto(first_name, boleto, option):
         return """
 <b>Boleto</b>
 
-Seu boleto está disponível <a href=\"http://sapu.ucpel.edu.br/portal/{}\">aqui</a>.""".format(boleto)
+Seu boleto está disponível <a href=\"https://sapu.ucpel.edu.br/portal/{}\">aqui</a>.""".format(boleto)
     else:
         return """
 {}, você não possui boletos em aberto.""".format(first_name)
@@ -518,7 +518,7 @@ def formata_atestado(nome, atestado):
     return """
 <b>Atestado de Matrícula</b>
 
-Seu atestado de matrícula {}está disponível <a href=\"http://sapu.ucpel.edu.br/portal/{}\">aqui</a>.""".format(nome, atestado)
+Seu atestado de matrícula {}está disponível <a href=\"https://sapu.ucpel.edu.br/portal/{}\">aqui</a>.""".format(nome, atestado)
 
 
 def formata_moodle(moodle):
@@ -652,14 +652,14 @@ Você cancelou o envio da sua sugestão. Por favor, não se acanhe!"""
 
 def noticia(data, titulo, url):
     return """
-{} | <a href=\"http://www.ucpel.edu.br/portal/{}\">{}</a>""".format(data, url, titulo)
+{} | <a href=\"https://www.ucpel.edu.br/portal/{}\">{}</a>""".format(data, url, titulo)
 
 
 def ultima_noticia(url, titulo):
     return """
 Essa é a última notícia acadêmica que foi publicada no portal da UCPel:
 
-<a href=\"http://www.ucpel.edu.br/portal/{}\">{}</a>""".format(url, titulo)
+<a href=\"https://www.ucpel.edu.br/portal/{}\">{}</a>""".format(url, titulo)
 
 
 def poll_titulo(first_name):

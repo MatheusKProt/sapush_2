@@ -117,15 +117,21 @@ def start(bot, update):
     try:
         user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
         if user:
-            if not user.termos:
-                bot.send_message(chat_id=update['message']['chat']['id'],
-                                 text=messages.start(update['message']['chat']['first_name']),
-                                 parse_mode=ParseMode.HTML)
-                do_you_agree(bot, update)
-            else:
-                bot.send_message(chat_id=update['message']['chat']['id'],
-                                 text=messages.agreed(user.first_name),
-                                 parse_mode=ParseMode.HTML)
+            # if not user.termos:
+            #     bot.send_message(chat_id=update['message']['chat']['id'],
+            #                      text=messages.start(update['message']['chat']['first_name']),
+            #                      parse_mode=ParseMode.HTML)
+            #     do_you_agree(bot, update)
+            # else:
+            #     bot.send_message(chat_id=update['message']['chat']['id'],
+            #                      text=messages.agreed(user.first_name),
+            #                      parse_mode=ParseMode.HTML)
+            bot.send_message(chat_id=update['message']['chat']['id'],
+                             text="""
+{}, devido ao interesse da UCPel no projeto, estamos trabalhando para vincular o serviço oficialmente aos sistemas da \
+universidade. Sendo assim, suspendemos o acesso aos novos usuários temporariamente até estabilizarmos nossos serviços.""".format(
+                                 first_name),
+                             parse_mode=ParseMode.HTML)
             session.close()
             return
         user = db.User(telegram_id, username, first_name, last_name, " ", " ", False, True, True, data_criacao, " ", " ")
@@ -137,9 +143,14 @@ def start(bot, update):
         session.close()
 
     bot.send_message(chat_id=update['message']['chat']['id'],
-                     text=messages.start(update['message']['chat']['first_name']),
+                     text="""
+{}, devido ao interesse da UCPel no projeto, estamos trabalhando para vincular o serviço oficialmente aos sistemas da \
+universidade. Sendo assim, suspendemos o acesso aos novos usuários temporariamente até estabilizarmos nossos serviços.""".format(first_name),
                      parse_mode=ParseMode.HTML)
-    do_you_agree(bot, update)
+    # bot.send_message(chat_id=update['message']['chat']['id'],
+    #                  text=messages.start(update['message']['chat']['first_name']),
+    #                  parse_mode=ParseMode.HTML)
+    # do_you_agree(bot, update)
 
 
 def termos(bot, update):
@@ -959,7 +970,7 @@ def voice_to_text(bot, update):
     telegram_id = update['message']['chat']['id']
     usage(telegram_id, "Audio", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     first_name = update['message']['chat']['first_name']
-    file_name = '/home/pi/SAPU/audios/' + str(telegram_id) + '_' + str(update.message.from_user.id) + str(update.message.message_id) + '.ogg'
+    file_name = 'audios/' + str(telegram_id) + '_' + str(update.message.from_user.id) + str(update.message.message_id) + '.ogg'
 
     update['message']['voice'].get_file().download(file_name)
 

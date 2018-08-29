@@ -80,7 +80,6 @@ def get_notas(bot, update, user):
                 bot.send_message(chat_id=user.telegram_id,
                                  text=messages.push_grades_null(user.first_name, util.formata_nome_materia(detalhe[8])[:-1], detalhe[1]),
                                  parse_mode=ParseMode.HTML)
-                admin(bot, messages.push_grades_null(user.first_name, util.formata_nome_materia(detalhe[8])[:-1], detalhe[1]))
             except Exception as error:
                 main.error_callback(bot, update, error)
         else:
@@ -106,10 +105,8 @@ def get_notas(bot, update, user):
                         main.error_callback(bot, update, error)
                 else:
                     bot.send_message(chat_id=user.telegram_id,
-                                     text=messages.push_provas(user.first_name,
-                                                               util.formata_nome_materia(resumo.materia))[:-2],
+                                     text=messages.push_provas(user.first_name, util.formata_nome_materia(resumo.materia)),
                                      parse_mode=ParseMode.HTML)
-                    admin(bot, messages.push_provas(user.first_name, util.formata_nome_materia(resumo.materia))[:-2])
     dao.set_notas(user, notas_resumo, notas_detalhe, bot)
     session.close()
 
@@ -126,15 +123,7 @@ def get_frequencia(bot, update, user):
                                  text=messages.push_frequencia(user.first_name, float(freq[2].split("%")[0]),
                                                                util.formata_nome_materia_frequencia(freq[0])[:-1]),
                                  parse_mode=ParseMode.HTML)
-                admin(bot, messages.push_frequencia(user.first_name, float(freq[2].split("%")[0]), util.formata_nome_materia_frequencia(freq[0])[:-1]))
             except Exception as error:
                 main.error_callback(bot, update, error)
     dao.set_frequencia(user, frequencias)
     session.close()
-
-
-def admin(bot, text):
-    session = Session()
-    admins = session.query(db.Admins).all()
-    for adm in admins:
-        bot.send_message(chat_id=adm.user_id, text=text, parse_mode=ParseMode.HTML)

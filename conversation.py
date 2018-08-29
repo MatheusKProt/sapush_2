@@ -15,6 +15,8 @@ Session = sessionmaker(bind=db.gen_engine(db.get_database_url()))
 
 
 def login():
+    @users.restricted
+    @users.registered
     def iniciar(bot, update):
         telegram_id = update['message']['chat']['id']
         bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
