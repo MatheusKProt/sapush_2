@@ -77,12 +77,12 @@ def get_notas(bot, update, user):
         resumo = session.query(db.NotasResumo).filter_by(user_id=user.telegram_id, materia=detalhe[8]).first()
         if not resumo:
             pass
-             try:
-                 bot.send_message(chat_id=user.telegram_id,
+                try:
+                    bot.send_message(chat_id=user.telegram_id,
                                   text=messages.push_grades_null(user.first_name, util.formata_nome_materia(detalhe[8])[:-1], detalhe[1]),
                                   parse_mode=ParseMode.HTML)
-             except Exception as error:
-                 main.error_callback(bot, update, error)
+                except Exception as error:
+                    main.error_callback(bot, update, error)
         else:
             detalhe_sapu = session.query(db.NotasDetalhe).filter_by(materia=resumo.id,
                                                                     descricao=str(detalhe[0]),
@@ -97,7 +97,7 @@ def get_notas(bot, update, user):
                 if detalhe_sapu:
                     pass
                      try:
-                         bot.send_message(chat_id=user.telegram_id,
+                        bot.send_message(chat_id=user.telegram_id,
                                           text=messages.push_grades(user.first_name, util.formata_nome_materia(resumo.materia),
                                                                     float(util.verifica_vazio(detalhe[3])),
                                                                     resumo.media,
