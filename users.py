@@ -58,11 +58,13 @@ def logged(func):
             return
         else:
             soup = crawlers.get_login(user.sapu_username, user.sapu_password)
-            if str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
-                bot.send_message(chat_id=update['message']['chat']['id'],
-                                 text=messages.login_invalid(update['message']['chat']['first_name']),
-                                 parse_mode=ParseMode.HTML)
-                return
+            #print(soup)
+            # if str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
+            #     print(soup)
+            #     bot.send_message(chat_id=update['message']['chat']['id'],
+            #                      text=messages.login_invalid(update['message']['chat']['first_name']),
+            #                      parse_mode=ParseMode.HTML)
+            #     return
         return func(bot, update, *args, **kwargs)
 
     return wrapped
