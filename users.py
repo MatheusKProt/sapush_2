@@ -972,7 +972,7 @@ def voice_to_text(bot, update):
     telegram_id = update['message']['chat']['id']
     usage(telegram_id, "Audio", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
     first_name = update['message']['chat']['first_name']
-    file_name = 'audios/' + str(telegram_id) + '_' + str(update.message.from_user.id) + str(update.message.message_id) + '.ogg'
+    file_name = '/home/pi/SAPU/audios/' + str(telegram_id) + '_' + str(update.message.from_user.id) + str(update.message.message_id) + '.ogg'
 
     update['message']['voice'].get_file().download(file_name)
 
