@@ -194,10 +194,10 @@ def push_provas(first_name, materia):
 {}, sua avaliação de <b>{}</b> foi alterada. Por favor, verifique através do comando /provas.""".format(first_name, materia[:-1])
 
 
-def push_grades_null(first_name, materia, data):
+def push_grades_null(first_name, prova, materia, data):
     return """
-{}, sua avaliação de <b>{}</b> acabou de ser cadastrada no sistema e está marcada para o dia <b>{}</b>.
-Bons estudos!""".format(first_name, materia, data)
+{}, sua {} de <b>{}</b> acabou de ser cadastrada no sistema e está marcada para o dia <b>{}</b>. 
+Bons estudos!""".format(first_name, prova, materia, data)
 
 
 def push_frequencia(first_name, frequencia, materia):

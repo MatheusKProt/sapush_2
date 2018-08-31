@@ -77,28 +77,25 @@ def get_notas(bot, update, user):
         resumo = session.query(db.NotasResumo).filter_by(user_id=user.telegram_id, materia=detalhe[8]).first()
         if not resumo:
             try:
+                print(detalhe)
                 bot.send_message(chat_id=user.telegram_id,
-                                 text=messages.push_grades_null(user.first_name, util.formata_nome_materia(detalhe[8])[:-1], detalhe[1]),
+                                 text=messages.push_grades_null(user.first_name, str(detalhe[0]).split(" - ")[0].lower(),
+                                                                util.formata_nome_materia(detalhe[8])[:-1], detalhe[1]),
                                  parse_mode=ParseMode.HTML)
             except Exception as error:
                 main.error_callback(bot, update, error)
         else:
-            detalhe_sapu = session.query(db.NotasDetalhe).filter_by(materia=resumo.id,
-                                                                    descricao=str(detalhe[0]),
-                                                                    data=str(detalhe[1]),
-                                                                    peso=float(util.verifica_vazio_menos_um(detalhe[2])),
+            detalhe_sapu = session.query(db.NotasDetalhe).filter_by(materia=resumo.id, descricao=str(detalhe[0]),
+                                                                    data=str(detalhe[1]), peso=float(util.verifica_vazio_menos_um(detalhe[2])),
                                                                     nota=float(util.verifica_vazio_menos_um(detalhe[3])),
                                                                     peso_x_nota=float(util.verifica_vazio_menos_um(detalhe[5]))).first()
             if not detalhe_sapu:
-                detalhe_sapu = session.query(db.NotasDetalhe).filter_by(materia=resumo.id,
-                                                                        descricao=str(detalhe[0]),
-                                                                        data=str(detalhe[1])).first()
+                detalhe_sapu = session.query(db.NotasDetalhe).filter_by(materia=resumo.id, descricao=str(detalhe[0]), data=str(detalhe[1])).first()
                 if detalhe_sapu:
                     try:
                         bot.send_message(chat_id=user.telegram_id,
                                          text=messages.push_grades(user.first_name, util.formata_nome_materia(resumo.materia),
-                                                                   float(util.verifica_vazio(detalhe[3])),
-                                                                   resumo.media,
+                                                                   float(util.verifica_vazio(detalhe[3])), resumo.media,
                                                                    util.formata_notas_msg(detalhe[3])),
                                          parse_mode=ParseMode.HTML)
                     except Exception as error:
