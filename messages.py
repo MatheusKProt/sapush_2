@@ -4,7 +4,7 @@ from random import randint
 def comandos():
     return """
 <b>Lista de comandos</b>
-.
+
 /login - realiza o login no SAPU ou altera o login existente
 /deletar - deleta suas informações de login do SAPU 
 /sugerir - envia uma sugestão aos desenvolvedores do bot
