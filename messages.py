@@ -329,7 +329,7 @@ def formata_users(telegram_id, first_name, last_name, sapu_username):
 
 def formata_sugestoes(first_name, last_name, sugestao):
     return """
-{} {}: {}""".format(first_name, last_name, sugestao)
+<b>{} {}</b>: {}""".format(first_name, last_name, sugestao)
 
 
 def formata_error(erro, data):

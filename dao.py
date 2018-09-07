@@ -15,7 +15,7 @@ def set_notas(user, notas_resumo, notas_detalhe, bot):
         semestre = str(time.strftime("%Y/1", time.localtime()))
     for resumo in notas_resumo:
         session = Session()
-        materias = session.query(db.NotasResumo).filter_by(user_id=user.telegram_id, materia=str(resumo[0]), semestre=semestre).first()
+        notas_resumo_db = session.query(db.NotasResumo).filter_by(user_id=user.telegram_id, materia=str(resumo[0]), semestre=semestre).first()
 
         user_id = user.telegram_id
         materia = str(resumo[0])
@@ -25,21 +25,21 @@ def set_notas(user, notas_resumo, notas_detalhe, bot):
         av_complementar = float(util.verifica_vazio(resumo[4]))
         media_final = float(util.verifica_vazio(resumo[5]))
 
-        if not materias:
-            materias = db.NotasResumo(user_id, materia, primeira_av, segunda_av, media, av_complementar, media_final, semestre)
+        if not notas_resumo_db:
+            notas_resumo_db = db.NotasResumo(user_id, materia, primeira_av, segunda_av, media, av_complementar, media_final, semestre)
 
-            session.add(materias)
+            session.add(notas_resumo_db)
             session.commit()
             session.close()
         else:
-            materias.user_id = user_id
-            materias.materia = materia
-            materias.primeira_av = primeira_av
-            materias.segunda_av = segunda_av
-            materias.media = media
-            materias.av_complementar = av_complementar
-            materias.media_final = media_final
-            materias.semestre = semestre
+            notas_resumo_db.user_id = user_id
+            notas_resumo_db.materia = materia
+            notas_resumo_db.primeira_av = primeira_av
+            notas_resumo_db.segunda_av = segunda_av
+            notas_resumo_db.media = media
+            notas_resumo_db.av_complementar = av_complementar
+            notas_resumo_db.media_final = media_final
+            notas_resumo_db.semestre = semestre
 
             session.commit()
             session.close()
