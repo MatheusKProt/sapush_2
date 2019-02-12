@@ -31,6 +31,7 @@ class User(base):
     admins = relationship("Admins", cascade="all,delete", backref="user")
     sugestoes = relationship("Sugestoes", cascade="all,delete", backref="user")
     alert = relationship("Alert", cascade="all,delete", backref="user")
+    usage = relationship("Usage", cascade="all,delete", backref="user")
 
     def __init__(self, telegram_id, username, first_name, last_name, sapu_username, sapu_password, termos, push_notas, push_frequencia, data_criacao, chave, curso):
         self.telegram_id = telegram_id

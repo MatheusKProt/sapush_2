@@ -9,7 +9,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/sapush_2$main.coverage" NAME="main Coverage Results" MODIFIED="1536287887518" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/sapush_2$main.coverage" NAME="main Coverage Results" MODIFIED="1549933443932" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -25,94 +25,16 @@
     <expand />
     <select />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-62231222">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="14" />
-          <entry key="project.open.time.1" value="3" />
-          <entry key="project.open.time.10" value="1" />
-          <entry key="project.open.time.11" value="1" />
-          <entry key="project.open.time.12" value="1" />
-          <entry key="project.open.time.13" value="1" />
-          <entry key="project.open.time.2" value="4" />
-          <entry key="project.open.time.3" value="2" />
-          <entry key="project.open.time.33" value="1" />
-          <entry key="project.open.time.35" value="1" />
-          <entry key="project.open.time.36" value="1" />
-          <entry key="project.open.time.37" value="1" />
-          <entry key="project.open.time.42" value="1" />
-          <entry key="project.opened" value="18" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="py" value="2660" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="Python" value="2660" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="py" value="33" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="Python" value="33" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.js.language.service.starts" />
-    </session>
-    <session id="-1494643199">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="10" />
-          <entry key="project.open.time.1" value="3" />
-          <entry key="project.open.time.11" value="2" />
-          <entry key="project.open.time.12" value="2" />
-          <entry key="project.open.time.13" value="3" />
-          <entry key="project.open.time.14" value="2" />
-          <entry key="project.open.time.16" value="1" />
-          <entry key="project.opened" value="13" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="py" value="4266" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="Python" value="4266" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="py" value="32" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="Python" value="32" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.js.language.service.starts" />
-    </session>
-  </component>
   <component name="FavoritesManager">
     <favorites_list name="sapush_2" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="466">
-              <caret line="126" lean-forward="true" selection-start-line="126" selection-end-line="126" />
+            <state relative-caret-position="297">
+              <caret line="117" column="4" lean-forward="true" selection-start-line="117" selection-start-column="4" selection-end-line="117" selection-end-column="4" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -123,8 +45,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/users.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="16847">
-              <caret line="991" column="9" selection-start-line="991" selection-start-column="9" selection-end-line="991" selection-end-column="9" />
+            <state relative-caret-position="223">
+              <caret line="368" column="31" selection-start-line="368" selection-start-column="31" selection-end-line="368" selection-end-column="31" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -133,37 +55,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/conversation.py">
+        <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="534">
-              <caret line="79" column="12" selection-start-line="79" selection-start-column="12" selection-end-line="79" selection-end-column="12" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dao.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="129" column="20" lean-forward="true" selection-start-line="129" selection-start-column="20" selection-end-line="129" selection-end-column="20" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admins.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="70" column="29" selection-start-line="70" selection-start-column="29" selection-end-line="70" selection-end-column="29" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="51">
+              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
             </state>
           </provider>
         </entry>
@@ -171,47 +66,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/db.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3655">
-              <caret line="218" selection-start-line="218" selection-end-line="218" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/messages.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="191" column="4" selection-start-line="191" selection-start-column="4" selection-end-line="191" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/speech.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="26" column="29" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/push.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="102" column="63" lean-forward="true" selection-start-line="102" selection-start-column="63" selection-end-line="102" selection-end-column="63" />
+            <state relative-caret-position="425">
+              <caret line="31" column="79" lean-forward="true" selection-start-line="31" selection-start-column="79" selection-end-line="31" selection-end-column="79" />
               <folding>
-                <element signature="e#0#14#0" expanded="true" />
+                <element signature="e#0#48#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/crawlers.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="41" column="51" selection-start-line="41" selection-start-column="51" selection-end-line="41" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -227,16 +86,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>login_requirement</find>
-      <find>erro</find>
-      <find>remove</find>
-      <find>refres</find>
-      <find>ei</find>
-      <find>seu aler</find>
-      <find>str(update['message']['text']).lower()</find>
-      <find>admin</find>
-      <find>desenvolvedores</find>
-      <find>error</find>
       <find>se voc</find>
       <find>comuni</find>
       <find>notas</find>
@@ -257,6 +106,16 @@
       <find>/prova</find>
       <find>/portal</find>
       <find>sugesto</find>
+      <find>not_a</find>
+      <find>sugges</find>
+      <find>ulti</find>
+      <find>bug</find>
+      <find>not_re</find>
+      <find>agree</find>
+      <find>do_you_agree</find>
+      <find>count</find>
+      <find>unknow</find>
+      <find>deletar_conta</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -270,34 +129,28 @@
         <option value="$PROJECT_DIR$/speech.py" />
         <option value="$PROJECT_DIR$/util.py" />
         <option value="$PROJECT_DIR$/responses.py" />
-        <option value="$PROJECT_DIR$/db.py" />
-        <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/admins.py" />
         <option value="$PROJECT_DIR$/conversation.py" />
-        <option value="$PROJECT_DIR$/crawlers.py" />
-        <option value="$PROJECT_DIR$/users.py" />
         <option value="$PROJECT_DIR$/messages.py" />
         <option value="$PROJECT_DIR$/dao.py" />
         <option value="$PROJECT_DIR$/push.py" />
+        <option value="$PROJECT_DIR$/crawlers.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/config.py" />
+        <option value="$PROJECT_DIR$/users.py" />
+        <option value="$PROJECT_DIR$/db.py" />
       </list>
     </option>
   </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsFlowSettings">
     <service-enabled>true</service-enabled>
     <exe-path />
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
-  </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="24" />
+    <option name="y" value="-20" />
     <option name="width" value="1696" />
     <option name="height" value="1026" />
   </component>
@@ -330,7 +183,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -347,15 +199,16 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/python-correios-master/python-correios-master/correios" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.stylelint" value="true" />
     <property name="node.js.path.for.package.stylelint" value="project" />
     <property name="node.js.selected.package.stylelint" value="" />
-    <property name="settings.editor.selected.configurable" value="configurable.stylesheets.stylelint" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -459,8 +312,23 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1530377143167</updated>
+      <workItem from="1545747422552" duration="18602000" />
+      <workItem from="1545785224556" duration="1209000" />
+      <workItem from="1546174535136" duration="10560000" />
+      <workItem from="1546283595063" duration="4138000" />
+      <workItem from="1546538936963" duration="5184000" />
+      <workItem from="1546572453342" duration="1232000" />
+      <workItem from="1546624002780" duration="2995000" />
+      <workItem from="1546711320190" duration="1678000" />
+      <workItem from="1546745628997" duration="21000" />
+      <workItem from="1546750667378" duration="1533000" />
+      <workItem from="1546791914185" duration="6000" />
+      <workItem from="1549932868751" duration="736000" />
     </task>
     <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="47894000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -475,19 +343,19 @@
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49112427" visible="true" weight="0.12163814" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49112427" visible="true" weight="0.13630807" />
       <window_info id="Structure" order="1" sideWeight="0.5088757" side_tool="true" weight="0.15281174" />
       <window_info id="Favorites" order="2" sideWeight="0.5010846" side_tool="true" weight="0.1401919" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286334" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30941704" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30907056" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.329718" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" weight="0.32943678" />
       <window_info anchor="bottom" id="Python Console" order="8" weight="0.3295964" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3264642" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32586786" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
@@ -501,321 +369,60 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/matplotlib/contour.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16320">
-          <caret line="988" column="23" selection-start-line="988" selection-start-column="8" selection-end-line="988" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/inline/inlinequeryresultarticle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="31" lean-forward="true" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/subprocess.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1634">
-          <caret line="705" column="27" lean-forward="true" selection-start-line="705" selection-start-column="27" selection-end-line="705" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/user.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="160" column="33" selection-start-line="160" selection-start-column="33" selection-end-line="160" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/handler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1078">
-          <caret line="21" column="6" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/replykeyboardmarkup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="63" column="23" selection-start-line="63" selection-start-column="23" selection-end-line="63" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/inline/inlinekeyboardbutton.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="75" column="29" selection-start-line="75" selection-start-column="29" selection-end-line="75" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/keyboardbutton.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="50" column="8" selection-start-line="50" selection-start-column="8" selection-end-line="50" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/inline/inlinequeryresult.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="37" column="39" selection-start-line="37" selection-start-column="39" selection-end-line="37" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/inline/inputtextmessagecontent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="45" column="8" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/callbackquery.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="152" column="51" lean-forward="true" selection-start-line="152" selection-start-column="51" selection-end-line="152" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/inline/inlinekeyboardmarkup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="38" column="44" selection-start-line="38" selection-start-column="44" selection-end-line="38" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/keyboardbutton.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/inline/inlinequeryresult.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/inline/inputtextmessagecontent.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/callbackquery.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/inline/inlinekeyboardmarkup.py" />
     <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/google/cloud/speech_v1/types.py" />
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/callbackqueryhandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="911">
-          <caret line="84" column="8" selection-start-line="84" selection-start-column="8" selection-end-line="84" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/callbackqueryhandler.py" />
     <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/speech_recognition/__init__.py" />
     <entry file="file://$PROJECT_DIR$/audios/junk.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/urllib/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/urllib/request.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="227" selection-start-line="227" selection-end-line="227" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/logging/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-34">
-          <caret line="1737" column="4" selection-start-line="1737" selection-start-column="4" selection-end-line="1737" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/parsemode.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="14" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/filters.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="139" column="6" selection-start-line="139" selection-start-column="6" selection-end-line="139" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/messagehandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="90" column="8" selection-start-line="90" selection-start-column="8" selection-end-line="90" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/commandhandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="91" column="21" selection-start-line="91" selection-start-column="21" selection-end-line="91" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/datetime.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="1576" column="8" selection-start-line="1576" selection-start-column="8" selection-end-line="1576" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/conversationhandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="120" column="4" selection-start-line="120" selection-start-column="4" selection-end-line="120" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/requests/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="609" column="13" selection-start-line="609" selection-start-column="13" selection-end-line="609" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/pandas/compat/chainmap_impl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
-          <caret line="147" column="8" selection-start-line="147" selection-start-column="8" selection-end-line="147" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/pkgs/nltk-3.2.5-py36h76d52bb_0/Lib/site-packages/nltk/draw/table.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3273">
-          <caret line="742" column="8" selection-start-line="742" selection-start-column="8" selection-end-line="742" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/sqlalchemy/orm/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="109" selection-start-line="109" selection-end-line="109" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/dispatcher.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="185" column="8" selection-start-line="185" selection-start-column="8" selection-end-line="185" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/bot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3109">
-          <caret line="198" column="26" lean-forward="true" selection-start-line="198" selection-start-column="26" selection-end-line="198" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/urllib/__init__.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/urllib/request.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/__init__.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/logging/__init__.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/parsemode.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/filters.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/messagehandler.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/commandhandler.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/datetime.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/conversationhandler.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/requests/models.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/pandas/compat/chainmap_impl.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/pkgs/nltk-3.2.5-py36h76d52bb_0/Lib/site-packages/nltk/draw/table.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/sqlalchemy/orm/__init__.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/dispatcher.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/bot.py" />
     <entry file="file://$PROJECT_DIR$/responses.py" />
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/json/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/jobqueue.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="344" column="22" lean-forward="true" selection-start-line="344" selection-start-column="22" selection-end-line="344" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/updater.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="201" column="36" lean-forward="true" selection-start-line="201" selection-start-column="36" selection-end-line="201" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/json/__init__.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/jobqueue.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/telegram/ext/updater.py" />
     <entry file="file://$USER_HOME$/.PyCharm2018.2/system/python_stubs/1999704280/builtins.py" />
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/psutil/__init__.py">
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/psutil/__init__.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/threading.py" />
+    <entry file="file://$PROJECT_DIR$/push.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="1658" column="4" selection-start-line="1658" selection-start-column="4" selection-end-line="1658" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/threading.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6460">
-          <caret line="1123" column="46" selection-start-line="1123" selection-start-column="46" selection-end-line="1123" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/util.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3774">
-          <caret line="222" column="5" selection-start-line="222" selection-start-column="5" selection-end-line="222" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/users.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16847">
-          <caret line="991" column="9" selection-start-line="991" selection-start-column="9" selection-end-line="991" selection-end-column="9" />
+        <state relative-caret-position="647">
+          <caret line="120" column="47" selection-start-line="120" selection-start-column="47" selection-end-line="120" selection-end-column="47" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3655">
-          <caret line="218" selection-start-line="218" selection-end-line="218" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/crawlers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="41" column="51" selection-start-line="41" selection-start-column="51" selection-end-line="41" selection-end-column="51" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/admins.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="70" column="29" selection-start-line="70" selection-start-column="29" selection-end-line="70" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conversation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="534">
-          <caret line="79" column="12" selection-start-line="79" selection-start-column="12" selection-end-line="79" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/messages.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="191" column="4" selection-start-line="191" selection-start-column="4" selection-end-line="191" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="129" column="20" lean-forward="true" selection-start-line="129" selection-start-column="20" selection-end-line="129" selection-end-column="20" />
+        <state relative-caret-position="366">
+          <caret line="165" column="28" selection-start-line="165" selection-start-column="28" selection-end-line="165" selection-end-column="28" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
@@ -824,25 +431,132 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/speech.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="26" column="29" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
+        <state relative-caret-position="471">
+          <caret line="40" column="7" selection-start-line="40" selection-start-column="7" selection-end-line="40" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/push.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/telegram/base.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="102" column="63" lean-forward="true" selection-start-line="102" selection-start-column="63" selection-end-line="102" selection-end-column="63" />
+        <state relative-caret-position="-430" />
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/telegram/error.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="58" column="6" selection-start-line="58" selection-start-column="6" selection-end-line="58" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/telegram/bot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="142" column="32" lean-forward="true" selection-start-line="142" selection-start-column="32" selection-end-line="142" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/telegram/ext/callbackqueryhandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="84" column="8" selection-start-line="84" selection-start-column="8" selection-end-line="84" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/telegram/ext/stringregexhandler.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/telegram/ext/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="44" column="75" selection-start-line="44" selection-start-column="63" selection-end-line="44" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/telegram/ext/messagehandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1479">
+          <caret line="90" column="8" selection-start-line="90" selection-start-column="8" selection-end-line="90" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1496">
+          <caret line="93" column="30" selection-start-line="93" selection-start-column="30" selection-end-line="93" selection-end-column="30" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crawlers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4556">
+          <caret line="277" column="66" selection-start-line="277" selection-start-column="19" selection-end-line="277" selection-end-column="66" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/messages.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="811">
+          <caret line="745" column="4" selection-start-line="745" selection-start-column="4" selection-end-line="745" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="811">
+          <caret line="117" column="22" selection-start-line="117" selection-start-column="22" selection-end-line="117" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conversation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="811">
+          <caret line="79" column="17" selection-start-line="79" selection-start-column="17" selection-end-line="79" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="31" column="79" lean-forward="true" selection-start-line="31" selection-start-column="79" selection-end-line="31" selection-end-column="79" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/users.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="368" column="31" selection-start-line="368" selection-start-column="31" selection-end-line="368" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="466">
-          <caret line="126" lean-forward="true" selection-start-line="126" selection-end-line="126" />
+        <state relative-caret-position="297">
+          <caret line="117" column="4" lean-forward="true" selection-start-line="117" selection-start-column="4" selection-end-line="117" selection-end-column="4" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>

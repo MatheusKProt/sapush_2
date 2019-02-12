@@ -58,7 +58,7 @@ def logged(func):
             return
         else:
             soup = crawlers.get_login(user.sapu_username, user.sapu_password)
-            #print(soup)
+            # print(soup)
             # if str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
             #     print(soup)
             #     bot.send_message(chat_id=update['message']['chat']['id'],
@@ -119,21 +119,15 @@ def start(bot, update):
     try:
         user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
         if user:
-            # if not user.termos:
-            #     bot.send_message(chat_id=update['message']['chat']['id'],
-            #                      text=messages.start(update['message']['chat']['first_name']),
-            #                      parse_mode=ParseMode.HTML)
-            #     do_you_agree(bot, update)
-            # else:
-            #     bot.send_message(chat_id=update['message']['chat']['id'],
-            #                      text=messages.agreed(user.first_name),
-            #                      parse_mode=ParseMode.HTML)
-            bot.send_message(chat_id=update['message']['chat']['id'],
-                             text="""
-{}, devido ao interesse da UCPel no projeto, estamos trabalhando para vincular o serviço oficialmente aos sistemas da \
-universidade. Sendo assim, suspendemos o acesso aos novos usuários temporariamente até estabilizarmos nossos serviços.""".format(
-                                 first_name),
-                             parse_mode=ParseMode.HTML)
+            if not user.termos:
+                bot.send_message(chat_id=update['message']['chat']['id'],
+                                 text=messages.start(update['message']['chat']['first_name']),
+                                 parse_mode=ParseMode.HTML)
+                do_you_agree(bot, update)
+            else:
+                bot.send_message(chat_id=update['message']['chat']['id'],
+                                 text=messages.agreed(user.first_name),
+                                 parse_mode=ParseMode.HTML)
             session.close()
             return
         user = db.User(telegram_id, username, first_name, last_name, " ", " ", False, True, True, data_criacao, " ", " ")
@@ -145,14 +139,9 @@ universidade. Sendo assim, suspendemos o acesso aos novos usuários temporariame
         session.close()
 
     bot.send_message(chat_id=update['message']['chat']['id'],
-                     text="""
-{}, devido ao interesse da UCPel no projeto, estamos trabalhando para vincular o serviço oficialmente aos sistemas da \
-universidade. Sendo assim, suspendemos o acesso aos novos usuários temporariamente até estabilizarmos nossos serviços.""".format(first_name),
+                     text=messages.start(update['message']['chat']['first_name']),
                      parse_mode=ParseMode.HTML)
-    # bot.send_message(chat_id=update['message']['chat']['id'],
-    #                  text=messages.start(update['message']['chat']['first_name']),
-    #                  parse_mode=ParseMode.HTML)
-    # do_you_agree(bot, update)
+    do_you_agree(bot, update)
 
 
 def termos(bot, update):
@@ -375,18 +364,10 @@ def deletar_conta(bot, update):
     telegram_id = update['callback_query']['message']['chat']['id']
     first_name = update['callback_query']['message']['chat']['first_name']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
-    usage(telegram_id, "Deletar", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
 
     session = Session()
     user = session.query(db.User).filter_by(telegram_id=telegram_id).first()
-
-    if user.sapu_username == " ":
-        bot.send_message(chat_id=telegram_id, text=messages.user_doesnt_exist(first_name), parse_mode=ParseMode.HTML)
-        session.close()
-        return
-
-    user.sapu_username = " "
-    user.sapu_password = " "
+    session.delete(user)
 
     session.commit()
     session.close()
