@@ -285,7 +285,7 @@ def help_user(first_name):
 
 {}, você pediu por ajuda. Sendo assim, vou lhe mostrar algumas dicas de como tirar proveito de todas as funcionalidades disponíveis.
 
-Ao utilizar o bot, você provavelmente se deparou com uma nova sintaxe para troca de mensagens: o uso da / antes de uma mensagem. Essa barra significa, na verdade, que a palavra que segue a mensagem é um comando. Qualquer função que vocë precisar acessar, você recorrerá a ela.
+Ao utilizar o bot, você provavelmente se deparou com uma nova sintaxe para troca de mensagens: o uso da / antes de uma mensagem. Essa barra significa, na verdade, que a palavra que segue a mensagem é um comando. Qualquer função que você precisar acessar, você recorrerá a ela.
 
 /notas é um exemplo de comando disponível.
 
