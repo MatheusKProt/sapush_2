@@ -101,10 +101,10 @@ def get_notas(bot, update, user):
                                                  parse_mode=ParseMode.HTML)
                     except Exception as error:
                         main.error_callback(bot, update, error)
-                else:
-                    bot.send_message(chat_id=user.telegram_id,
-                                     text=messages.push_provas(user.first_name, util.formata_nome_materia(resumo.materia)),
-                                     parse_mode=ParseMode.HTML)
+                # else:
+                #     bot.send_message(chat_id=user.telegram_id,
+                #                      text=messages.push_provas(user.first_name, util.formata_nome_materia(resumo.materia)),
+                #                      parse_mode=ParseMode.HTML)
     dao.set_notas(user, notas_resumo, notas_detalhe, bot)
     session.close()
 
