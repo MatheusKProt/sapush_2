@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from sqlalchemy.orm import sessionmaker
 from telegram import ParseMode
+from random import randint
 
 import db
 import messages
