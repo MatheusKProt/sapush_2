@@ -1,5 +1,5 @@
 def token():
-    return "557724029:AAGfT4zWxI6qxfRkM1WqYShwtyyUwf4y5kA"
+    return "578171262:AAE1XZs99ZVqANBVIERj4CUpuC55yliyupY"
 
 
 def bing(key):
