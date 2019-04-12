@@ -2,7 +2,7 @@ import time
 
 from sqlalchemy.orm import sessionmaker
 from telegram import ParseMode, ChatAction, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import ConversationHandler, CommandHandler, MessageHandler, Filters
+from telegram.ext import ConversationHandler, CommandHandler, MessageHandler, Filters, run_async
 
 import admins
 import crawlers
@@ -17,6 +17,7 @@ Session = sessionmaker(bind=db.gen_engine(db.get_database_url()))
 def login():
     @users.restricted
     @users.registered
+    @run_async
     def iniciar(bot, update):
         telegram_id = update['message']['chat']['id']
         bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
@@ -106,6 +107,9 @@ def login():
 
 
 def sugerir():
+    @users.restricted
+    @users.registered
+    @run_async
     def iniciar(bot, update):
         telegram_id = update['message']['chat']['id']
         bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
