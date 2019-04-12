@@ -144,6 +144,7 @@ def start(bot, update):
     do_you_agree(bot, update)
 
 
+@run_async
 def termos(bot, update):
     telegram_id = update['message']['chat']['id']
     usage(telegram_id, "Termos", time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()))
@@ -352,6 +353,7 @@ def button(bot, update):
 
 @registered
 @restricted
+@run_async
 def deletar(bot, update):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
     keyboard = [[InlineKeyboardButton('Sim', callback_data='deletar_conta'), InlineKeyboardButton('Não', callback_data='nao_deletar_conta')]]
@@ -379,6 +381,7 @@ def deletar_conta(bot, update):
 @registered
 @restricted
 @logged
+@run_async
 def notas(bot, update):
     session = Session()
     telegram_id = update['message']['chat']['id']
@@ -411,6 +414,7 @@ def notas(bot, update):
 @registered
 @restricted
 @logged
+@run_async
 def frequencia(bot, update):
     session = Session()
     telegram_id = update['message']['chat']['id']
@@ -434,6 +438,7 @@ def frequencia(bot, update):
 @registered
 @restricted
 @logged
+@run_async
 def horarios(bot, update):
     session = Session()
     telegram_id = update['message']['chat']['id']
@@ -447,6 +452,7 @@ def horarios(bot, update):
 @registered
 @restricted
 @logged
+@run_async
 def historico(bot, update):
     session = Session()
     telegram_id = update['message']['chat']['id']
@@ -461,6 +467,7 @@ def historico(bot, update):
 @registered
 @restricted
 @logged
+@run_async
 def disciplinas(bot, update):
     session = Session()
     telegram_id = update['message']['chat']['id']
@@ -482,6 +489,7 @@ def bug(bot, update):
 @registered
 @restricted
 @logged
+@run_async
 def provas(bot, update):
     session = Session()
     telegram_id = update['message']['chat']['id']
@@ -596,6 +604,7 @@ def atestado_apto(bot, update, query):
 @registered
 @restricted
 @logged
+@run_async
 def boleto(bot, update):
     # bug(bot, update)
     telegram_id = update['message']['chat']['id']
@@ -616,6 +625,7 @@ def boleto(bot, update):
 @registered
 @restricted
 @logged
+@run_async
 def chave(bot, update):
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
@@ -714,6 +724,7 @@ def horarios_inline(user):
 
 @registered
 @restricted
+@run_async
 def comandos(bot, update):
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
@@ -722,6 +733,7 @@ def comandos(bot, update):
     bot.send_message(chat_id=telegram_id, text=messages.comandos(), parse_mode=ParseMode.HTML)
 
 
+@run_async
 def ajuda(bot, update):
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
@@ -810,6 +822,7 @@ def verifica_callback(bot, update, arg):
         bot.send_message(chat_id=telegram_id, text=response, parse_mode=ParseMode.HTML)
 
 
+@run_async
 def desenvolvedores(bot, update):
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
@@ -820,6 +833,7 @@ def desenvolvedores(bot, update):
 
 @registered
 @restricted
+@run_async
 def editais(bot, update, args):
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
@@ -834,6 +848,7 @@ def editais(bot, update, args):
 
 @registered
 @restricted
+@run_async
 def noticias(bot, update):
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
@@ -843,6 +858,7 @@ def noticias(bot, update):
 
 @registered
 @restricted
+@run_async
 def minhabiblioteca(bot, update):
     telegram_id = update['message']['chat']['id']
     bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
@@ -854,6 +870,7 @@ def minhabiblioteca(bot, update):
 
 @registered
 @restricted
+@run_async
 def configurar(bot, update):
     keyboard = [[InlineKeyboardButton('Notas', callback_data='configurar_notas'), InlineKeyboardButton('Frequência', callback_data='configurar_frequencia')],
                 [InlineKeyboardButton('Sair', callback_data='sair')]]

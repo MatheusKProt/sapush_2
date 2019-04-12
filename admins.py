@@ -337,6 +337,7 @@ def history(bot, update, args):
 
 
 @restricted
+@run_async
 def reboot(bot, update):
     bot.sendChatAction(chat_id=update['message']['chat']['id'], action=ChatAction.TYPING)
     session = Session()
