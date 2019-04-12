@@ -19,9 +19,7 @@ headers = {
     "Accept-Language": 'pt-br',
     "Accept-Encoding": 'br, gzip, deflate',
     "Origin": 'https://sapu.ucpel.edu.br',
-    "Referer": 'https://sapu.ucpel.edu.br/noticias',
     'Connection': 'keep-alive',
-    'Content-Length': '37',
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Safari/605.1.15',
     'X-Requested-With': 'XMLHttpRequest'
 }
@@ -52,9 +50,8 @@ def get_login_completo(email, password):
         "login": email,
         "password": password,
     }, headers=headers)
-
     soup = BeautifulSoup(sapu.content, 'html.parser')
-    home = session.get("https://sapu.ucpel.edu.br/index.php?class=Dashboard&message=1", headers=headers)
+    home = session.get("https://sapu.ucpel.edu.br/index.php?class=Dashboard&message=1")
 
     for index in soup.find_all('script'):
         if str(index.get_text().lstrip()).split("'")[1] == "Erro":
@@ -72,7 +69,7 @@ def get_session(email, password):
         "login": email,
         "password": password,
     }, headers=headers)
-    session.get("https://sapu.ucpel.edu.br/index.php?class=Dashboard&message=1", headers=headers)
+    session.get("https://sapu.ucpel.edu.br/index.php?class=Dashboard&message=1")
     return session
 
 
