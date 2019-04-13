@@ -33,32 +33,59 @@ def get_login(user, password):
 
 
 def get_login_completo(email, password):
-    session = requests.session()
-    sapu = session.post('https://sapu.ucpel.edu.br/engine.php?class=LoginForm&method=onLogin', data={
-        "login": email,
-        "password": password,
-    }, headers=headers(), proxies=proxies())
-    soup = BeautifulSoup(sapu.content, 'html.parser')
-    home = session.get("https://sapu.ucpel.edu.br/index.php?class=Dashboard&message=1")
+    try:
+        session = requests.session()
+        sapu = session.post('https://sapu.ucpel.edu.br/engine.php?class=LoginForm&method=onLogin', data={
+            "login": email,
+            "password": password,
+        }, headers=headers(), proxies=proxies())
+        soup = BeautifulSoup(sapu.content, 'html.parser')
+        home = session.get("https://sapu.ucpel.edu.br/index.php?class=Dashboard&message=1")
 
-    for index in soup.find_all('script'):
-        if str(index.get_text().lstrip()).split("'")[1] == "Erro":
-            return False, "", ""
-        else:
-            home_soup = BeautifulSoup(home.content, 'html.parser')
-            chave = str(home_soup.find(class_='div_matricula').get_text().lstrip()).split(" ")[1]
-            curso = util.formata_curso(str(home_soup.find(class_='div_curso').get_text().lstrip()).split(": ")[1])
-            return True, chave, curso
+        for index in soup.find_all('script'):
+            if str(index.get_text().lstrip()).split("'")[1] == "Erro":
+                return False, "", ""
+            else:
+                home_soup = BeautifulSoup(home.content, 'html.parser')
+                chave = str(home_soup.find(class_='div_matricula').get_text().lstrip()).split(" ")[1]
+                curso = util.formata_curso(str(home_soup.find(class_='div_curso').get_text().lstrip()).split(": ")[1])
+                return True, chave, curso
+    except:
+        session = requests.session()
+        sapu = session.post('https://sapu.ucpel.edu.br/engine.php?class=LoginForm&method=onLogin', data={
+            "login": email,
+            "password": password,
+        }, headers=headers(), proxies=proxies())
+        soup = BeautifulSoup(sapu.content, 'html.parser')
+        home = session.get("https://sapu.ucpel.edu.br/index.php?class=Dashboard&message=1")
+
+        for index in soup.find_all('script'):
+            if str(index.get_text().lstrip()).split("'")[1] == "Erro":
+                return False, "", ""
+            else:
+                home_soup = BeautifulSoup(home.content, 'html.parser')
+                chave = str(home_soup.find(class_='div_matricula').get_text().lstrip()).split(" ")[1]
+                curso = util.formata_curso(str(home_soup.find(class_='div_curso').get_text().lstrip()).split(": ")[1])
+                return True, chave, curso
 
 
 def get_session(email, password):
-    session = requests.session()
-    session.post('https://sapu.ucpel.edu.br/engine.php?class=LoginForm&method=onLogin', data={
-        "login": email,
-        "password": password,
-    }, headers=headers(), proxies=proxies())
-    session.get("https://sapu.ucpel.edu.br/index.php?class=Dashboard&message=1")
-    return session
+    try:
+        session = requests.session()
+        session.post('https://sapu.ucpel.edu.br/engine.php?class=LoginForm&method=onLogin', data={
+            "login": email,
+            "password": password,
+        }, headers=headers(), proxies=proxies())
+        session.get("https://sapu.ucpel.edu.br/index.php?class=Dashboard&message=1")
+        return session
+    except:
+        session = requests.session()
+        session.post('https://sapu.ucpel.edu.br/engine.php?class=LoginForm&method=onLogin', data={
+            "login": email,
+            "password": password,
+        }, headers=headers(), proxies=proxies())
+        session.get("https://sapu.ucpel.edu.br/index.php?class=Dashboard&message=1")
+        return session
 
 
 def get_notas(user, bot):
