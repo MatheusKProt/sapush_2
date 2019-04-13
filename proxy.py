@@ -39,9 +39,8 @@ def proxies():
             "https": "https://{}:{}".format(proxies_[0]['ip'], proxies_[0]['port']),
         }
         try:
-            print(requests.get('https://sapu.ucpel.edu.br/noticias', proxies=proxy, headers=headers(), timeout=5))
+            requests.get('https://sapu.ucpel.edu.br/noticias', proxies=proxy, headers=headers(), timeout=5)
         except:
-            print('Erro: ', proxy)
             proxies_.pop(0)
         else:
             return proxy
