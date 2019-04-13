@@ -4,27 +4,13 @@ import requests
 from bs4 import BeautifulSoup
 from sqlalchemy.orm import sessionmaker
 from telegram import ParseMode
-from random import randint
 
 import db
 import messages
 import util
+from proxy import headers, proxies
 
 Session = sessionmaker(bind=db.gen_engine(db.get_database_url()))
-
-
-headers = {
-    "Content-Type": 'application/x-www-form-urlencoded; charset=UTF-8',
-    "Accept": '*/*',
-    "Host": 'sapu.ucpel.edu.br',
-    "Accept-Language": 'pt-br',
-    "Accept-Encoding": 'br, gzip, deflate',
-    "Origin": 'https://sapu.ucpel.edu.br',
-    'Connection': 'keep-alive',
-    'User-Agent': str(randint(0, 9999999999)),
-    #  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Safari/605.1.15',
-    'X-Requested-With': 'XMLHttpRequest'
-}
 
 
 def get_login(user, password):
@@ -33,14 +19,14 @@ def get_login(user, password):
         sapu = session.post('https://sapu.ucpel.edu.br/engine.php?class=LoginForm&method=onLogin', data={
             "login": user,
             "password": password,
-        }, headers=headers)
+        }, headers=headers(), proxies=proxies())
         return BeautifulSoup(sapu.content, 'html.parser')
     except:
         try:
             sapu = session.post('https://sapu.ucpel.edu.br/engine.php?class=LoginForm&method=onLogin', data={
                 "login": user,
                 "password": password,
-            }, headers=headers)
+            }, headers=headers(), proxies=proxies())
             return BeautifulSoup(sapu.content, 'html.parser')
         except:
             return []
@@ -51,7 +37,7 @@ def get_login_completo(email, password):
     sapu = session.post('https://sapu.ucpel.edu.br/engine.php?class=LoginForm&method=onLogin', data={
         "login": email,
         "password": password,
-    }, headers=headers)
+    }, headers=headers(), proxies=proxies())
     soup = BeautifulSoup(sapu.content, 'html.parser')
     home = session.get("https://sapu.ucpel.edu.br/index.php?class=Dashboard&message=1")
 
@@ -70,7 +56,7 @@ def get_session(email, password):
     session.post('https://sapu.ucpel.edu.br/engine.php?class=LoginForm&method=onLogin', data={
         "login": email,
         "password": password,
-    }, headers=headers)
+    }, headers=headers(), proxies=proxies())
     session.get("https://sapu.ucpel.edu.br/index.php?class=Dashboard&message=1")
     return session
 
@@ -79,10 +65,10 @@ def get_notas(user, bot):
     try:
         try:
             session = get_session(user.sapu_username, user.sapu_password)
-            notas = session.get("https://sapu.ucpel.edu.br/engine.php?class=AvaliacaoFormList", headers=headers)
+            notas = session.get("https://sapu.ucpel.edu.br/engine.php?class=AvaliacaoFormList", headers=headers(), proxies=proxies())
         except:
             session = get_session(user.sapu_username, user.sapu_password)
-            notas = session.get("https://sapu.ucpel.edu.br/engine.php?class=AvaliacaoFormList", headers=headers)
+            notas = session.get("https://sapu.ucpel.edu.br/engine.php?class=AvaliacaoFormList", headers=headers(), proxies=proxies())
 
         soup = BeautifulSoup(notas.content, 'html.parser')
         if not str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
@@ -136,10 +122,10 @@ def get_frequencia(user, bot):
     try:
         try:
             session = get_session(user.sapu_username, user.sapu_password)
-            frequencia = session.get("https://sapu.ucpel.edu.br/engine.php?class=FrequenciaFormList", headers=headers)
+            frequencia = session.get("https://sapu.ucpel.edu.br/engine.php?class=FrequenciaFormList", headers=headers(), proxies=proxies())
         except:
             session = get_session(user.sapu_username, user.sapu_password)
-            frequencia = session.get("https://sapu.ucpel.edu.br/engine.php?class=FrequenciaFormList", headers=headers)
+            frequencia = session.get("https://sapu.ucpel.edu.br/engine.php?class=FrequenciaFormList", headers=headers(), proxies=proxies())
 
         soup = BeautifulSoup(frequencia.content, 'html.parser')
         if not str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
@@ -168,7 +154,7 @@ def get_frequencia(user, bot):
 
 def get_horarios(user):
     session = get_session(user.sapu_username, user.sapu_password)
-    horarios = session.get("https://sapu.ucpel.edu.br/engine.php?class=HorarioFormList", headers=headers)
+    horarios = session.get("https://sapu.ucpel.edu.br/engine.php?class=HorarioFormList", headers=headers(), proxies=proxies())
     soup = BeautifulSoup(horarios.content, 'html.parser')
     if not str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
         tdatagrid_body = soup.find(class_='tdatagrid_body')
@@ -190,7 +176,7 @@ def get_horarios(user):
 
 def get_disciplinas(user):
     session = get_session(user.sapu_username, user.sapu_password)
-    disciplinas = session.get("https://sapu.ucpel.edu.br/engine.php?class=MatriculaFormList", headers=headers)
+    disciplinas = session.get("https://sapu.ucpel.edu.br/engine.php?class=MatriculaFormList", headers=headers(), proxies=proxies())
     soup = BeautifulSoup(disciplinas.content, 'html.parser')
     if not str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
         tdatagrid_body = soup.find(class_='tdatagrid_body')
@@ -214,7 +200,7 @@ def get_disciplinas(user):
 
 def get_curriculo(user):
     session = get_session(user.sapu_username, user.sapu_password)
-    curriculo = session.get("https://sapu.ucpel.edu.br/engine.php?class=MatrizCurricularFormList", headers=headers)
+    curriculo = session.get("https://sapu.ucpel.edu.br/engine.php?class=MatrizCurricularFormList", headers=headers(), proxies=proxies())
     soup = BeautifulSoup(curriculo.content, 'html.parser')
     if not str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
         tdatagrid_body = soup.find(class_='tdatagrid_body')
@@ -234,7 +220,7 @@ def get_curriculo(user):
 
 def get_historico(user):
     session = get_session(user.sapu_username, user.sapu_password)
-    historico = session.get("https://sapu.ucpel.edu.br/engine.php?class=HistoricoFormList&method=imprimir", headers=headers)
+    historico = session.get("https://sapu.ucpel.edu.br/engine.php?class=HistoricoFormList&method=imprimir", headers=headers(), proxies=proxies())
     soup = BeautifulSoup(historico.content, 'html.parser')
     if not str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
         index = soup.find('script')
@@ -246,7 +232,7 @@ def get_historico(user):
 
 def get_moodle(user):
     session = get_session(user.sapu_username, user.sapu_password)
-    historico = session.get("https://sapu.ucpel.edu.br/engine.php?class=LoginMoodle&method=index", headers=headers)
+    historico = session.get("https://sapu.ucpel.edu.br/engine.php?class=LoginMoodle&method=index", headers=headers(), proxies=proxies())
     soup = BeautifulSoup(historico.content, 'html.parser')
     if not str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
         index = soup.find('script')
@@ -258,7 +244,7 @@ def get_moodle(user):
 
 def get_emails(user, args):
     session = get_session(user.sapu_username, user.sapu_password)
-    historico = session.get("https://sapu.ucpel.edu.br/engine.php?class=MensagemForm&method=inbox", headers=headers)
+    historico = session.get("https://sapu.ucpel.edu.br/engine.php?class=MensagemForm&method=inbox", headers=headers(), proxies=proxies())
     soup = BeautifulSoup(historico.content, 'html.parser')
     if not str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
         table = []
@@ -280,13 +266,13 @@ def get_emails(user, args):
 
 def get_boleto(user):
     session = get_session(user.sapu_username, user.sapu_password)
-    boleto = session.get("https://sapu.ucpel.edu.br/engine.php?class=EmitirBoletoFormList", headers=headers)
+    boleto = session.get("https://sapu.ucpel.edu.br/engine.php?class=EmitirBoletoFormList", headers=headers(), proxies=proxies())
     soup = BeautifulSoup(boleto.content, 'html.parser')
     if not str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
         try:
             index = soup.find(class_='tdatagrid_body').find_all('td')[1].find('a')
             url = util.find_between(str(index), "href=\"", "\">")
-            boleto = session.get("https://sapu.ucpel.edu.br/engine.php?class=EmitirBoletoFormList&method=onBoleto&target=1&key={}".format(url.split("key=")[1]), headers=headers)
+            boleto = session.get("https://sapu.ucpel.edu.br/engine.php?class=EmitirBoletoFormList&method=onBoleto&target=1&key={}".format(url.split("key=")[1]), headers=headers(), proxies=proxies())
             soup = BeautifulSoup(boleto.content, 'html.parser')
             index = soup.find_all(language="JavaScript")
             return str(index[2].get_text().lstrip()).split("'")[1], True
@@ -299,7 +285,7 @@ def get_boleto(user):
 
 def get_editais(quantidade):
     session = requests.session()
-    editais = session.get("http://www.ucpel.edu.br/portal/?secao=com_editais", headers=headers)
+    editais = session.get("http://www.ucpel.edu.br/portal/?secao=com_editais", headers=headers(), proxies=proxies())
     soup = BeautifulSoup(editais.content, 'html.parser')
     count = 0
     msg = "<b>Editais</b>\n"
@@ -313,7 +299,7 @@ def get_editais(quantidade):
 
 def get_noticias(first=False):
     session = requests.session()
-    editais = session.get("http://www.ucpel.edu.br/portal/?secao=noticias", headers=headers)
+    editais = session.get("http://www.ucpel.edu.br/portal/?secao=noticias", headers=headers(), proxies=proxies())
     soup = BeautifulSoup(editais.content, 'html.parser')
     if first:
         index = soup.find(class_='not_block')
@@ -332,7 +318,7 @@ def get_noticias(first=False):
 
 def get_minhabiblioteca(user):
     session = get_session(user.sapu_username, user.sapu_password)
-    editais = session.get("https://sapu.ucpel.edu.br/engine.php?class=BibliotecaService&method=loginUser&static=1", headers=headers)
+    editais = session.get("https://sapu.ucpel.edu.br/engine.php?class=BibliotecaService&method=loginUser&static=1", headers=headers(), proxies=proxies())
     soup = BeautifulSoup(editais.content, 'html.parser')
     response = json.loads(str(soup))
     return response['message']
@@ -340,7 +326,7 @@ def get_minhabiblioteca(user):
 
 def get_atestado_simples(user):
     session = get_session(user.sapu_username, user.sapu_password)
-    boleto = session.get("https://sapu.ucpel.edu.br/engine.php?class=MatriculaFormList&method=imprimirSimples", headers=headers)
+    boleto = session.get("https://sapu.ucpel.edu.br/engine.php?class=MatriculaFormList&method=imprimirSimples", headers=headers(), proxies=proxies())
     soup = BeautifulSoup(boleto.content, 'html.parser')
     if not str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
         index = soup.find_all('script')
@@ -351,7 +337,7 @@ def get_atestado_simples(user):
 
 def get_atestado_completo(user):
     session = get_session(user.sapu_username, user.sapu_password)
-    boleto = session.get("https://sapu.ucpel.edu.br/engine.php?class=MatriculaFormList&method=imprimirCompleto", headers=headers)
+    boleto = session.get("https://sapu.ucpel.edu.br/engine.php?class=MatriculaFormList&method=imprimirCompleto", headers=headers(), proxies=proxies())
     soup = BeautifulSoup(boleto.content, 'html.parser')
     if not str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
         index = soup.find_all('script')
@@ -362,7 +348,7 @@ def get_atestado_completo(user):
 
 def get_atestado_apto(user):
     session = get_session(user.sapu_username, user.sapu_password)
-    boleto = session.get("https://sapu.ucpel.edu.br/engine.php?class=MatriculaFormList&method=imprimirRematricula", headers=headers)
+    boleto = session.get("https://sapu.ucpel.edu.br/engine.php?class=MatriculaFormList&method=imprimirRematricula", headers=headers(), proxies=proxies())
     soup = BeautifulSoup(boleto.content, 'html.parser')
     if not str(soup.find('script').get_text().lstrip()).split("'")[1] == "Erro":
         index = soup.find_all('script')
