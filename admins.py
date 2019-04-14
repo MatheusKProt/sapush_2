@@ -554,3 +554,20 @@ def results(bot, update, arg=False, message_id=0):
     except:
         pass
     session.close()
+
+
+@restricted
+@run_async
+def chat(bot, update, args):
+    if args:
+        limit = int(args[0])
+    else:
+        limit = 10
+    session = Session()
+    telegram_id = update['message']['chat']['id']
+    bot.sendChatAction(chat_id=telegram_id, action=ChatAction.TYPING)
+    usages = session.query(db.Chat).order_by(db.Chat.id.desc()).limit(limit)
+    msg = "<b>Chat</b>\n"
+    for chat in usages:
+        msg += messages.formata_history(chat.data[:-3], chat.texto, chat.user_id)
+    bot.send_message(chat_id=telegram_id, text=msg, parse_mode=ParseMode.HTML)

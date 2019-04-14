@@ -98,6 +98,7 @@ def main():
     dp.add_handler(CommandHandler("breakdown", admins.breakdown, pass_args=True))
     dp.add_handler(CommandHandler("suggestions", admins.suggestions, pass_args=True))
     dp.add_handler(CommandHandler("history", admins.history, pass_args=True))
+    dp.add_handler(CommandHandler("chat", admins.chat, pass_args=True))
     dp.add_handler(CommandHandler("push", admins.push, pass_args=True))
     dp.add_handler(CommandHandler("results", admins.results))
     dp.add_handler(CommandHandler("statistics", admins.statistics, pass_args=True))
