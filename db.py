@@ -260,6 +260,20 @@ class AnswerPoll(base):
         self.data = data
 
 
+class Chat(base):
+    __tablename__ = 'chat'
+
+    id = Column('id', Integer, primary_key=True)
+    user_id = Column('user_id', Integer)
+    texto = Column('texto', String)
+    data = Column('data', String)
+
+    def __init__(self, user_id, texto, data):
+        self.user_id = user_id
+        self.texto = texto
+        self.data = data
+
+
 def gen_engine(url):
     engine = create_engine(url)
 
