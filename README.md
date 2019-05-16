@@ -10,6 +10,8 @@ O bot é desenvolvido e mantido por mim e pelo [Lucas Ferreira](https://github.c
 
 ## Uso
 
+**ESTE SERVIÇO NÃO ESTÁ MAIS DISPONÍVEL PARA USO.**
+
 Você pode começar a utilizar agora mesmo! Basta você baixar o aplicativo do Telegram em qualquer uma das plataformas disponíveis e procurar por [@sapu_bot](https://telegram.me/sapu_bot).
 
 ## Como ele funciona?
